@@ -16,9 +16,17 @@ namespace RandomThoughts.Controllers
             _thoughtsRepository = thoughtsRepository;
         }
 
+        /// <summary>
+        ///     Returns all the thoughts that belongs to the current user.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
-            return View();
+            var currentUserId = HttpContext.User.Identity.Name;
+
+            var userThoughts = _thoughtsRepository.ReadAll(thought => thought.ApplicationUserId == currentUserId);
+
+            return View(userThoughts);
         }
     }
 }
