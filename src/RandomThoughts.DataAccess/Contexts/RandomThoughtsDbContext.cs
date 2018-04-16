@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RandomThoughts.DataAccess.Repositories.Base;
 using RandomThoughts.Domain;
 
 namespace RandomThoughts.DataAccess.Contexts
 {
-    public class RandomThoughtsDbContext : IdentityDbContext<ApplicationUser>
+    public class RandomThoughtsDbContext : SqlUnitOfWork
     {
         public RandomThoughtsDbContext(DbContextOptions<RandomThoughtsDbContext> options)
             : base(options)
