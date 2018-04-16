@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using RandomThoughts.Domain.Base;
 using RandomThoughts.Domain.Enums;
@@ -26,6 +27,9 @@ namespace RandomThoughts.Domain
         /// <summary>
         ///     FK to relate the Thought with the creator.
         /// </summary>
-        public string UserId => CreatedBy;
+        public string ApplicationUserId { get; set; }
+
+        
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
