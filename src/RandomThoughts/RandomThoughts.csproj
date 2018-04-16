@@ -18,4 +18,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
+    <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
