@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RandomThoughts.Models;
+using RandomThoughts.DataAccess.Repositories.Base;
+using RandomThoughts.Domain;
 
-namespace RandomThoughts.Data
+namespace RandomThoughts.DataAccess.Contexts
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class RandomThoughtsDbContext : SqlUnitOfWork
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public RandomThoughtsDbContext(DbContextOptions<RandomThoughtsDbContext> options)
             : base(options)
         {
         }
@@ -22,5 +22,6 @@ namespace RandomThoughts.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+    
     }
 }

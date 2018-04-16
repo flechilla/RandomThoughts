@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RandomThoughts.Domain;
 using RandomThoughts.Models;
 using RandomThoughts.Models.ManageViewModels;
 using RandomThoughts.Services;
