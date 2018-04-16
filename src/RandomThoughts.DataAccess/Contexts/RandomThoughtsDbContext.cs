@@ -22,6 +22,11 @@ namespace RandomThoughts.DataAccess.Contexts
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        /// <summary>
+        ///     Gets or sets the 
+        /// </summary>
+        public DbSet<Thought> Thoughts { get; set; }
     
     }
 }
