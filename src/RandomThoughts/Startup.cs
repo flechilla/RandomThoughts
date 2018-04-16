@@ -15,6 +15,7 @@ using RandomThoughts.Domain;
 using RandomThoughts.Models;
 using RandomThoughts.Services;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
 {
@@ -47,6 +48,13 @@ namespace RandomThoughts
             services.AddScoped<IMapper, Mapper>();
 
             services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "RandomThought Api", Version = "v1" });
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +80,13 @@ namespace RandomThoughts
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "RandomThought Api");
             });
         }
     }
