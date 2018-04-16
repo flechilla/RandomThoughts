@@ -237,7 +237,7 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// </summary>
         /// <param name="id">The <value>Id</value> of the Entity to remove</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task RemoveAsync(TKey);
+        Task RemoveAsync(TKey id);
 
         /// <summary>
         ///     Asynchronously begins tracking the given Entities
@@ -266,7 +266,7 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// </summary>
         /// <param name="id">The Id of the desired element</param>
         /// <returns>The element with the given Id</returns>
-        Task<TEntity> SingleOrDefaultAsync(TKey);
+        Task<TEntity> SingleOrDefaultAsync(TKey id);
 
         /// <summary>
         ///     Asynchronously check if the given <paramref name="obj"/> exists in the table
@@ -280,7 +280,7 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// </summary>
         /// <param name="id">The PK to be checked</param>
         /// <returns><value>True</value> if the PK exists, false otherwise</returns>
-        Task<bool> ExistsAsync(TKey);
+        Task<bool> ExistsAsync(TKey id);
 
         /// <summary>
         ///     Asynchronously checks if there is at least one element that satisfies the condition
