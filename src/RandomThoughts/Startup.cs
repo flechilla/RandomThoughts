@@ -45,7 +45,6 @@ namespace RandomThoughts
             services.AddDataAccessServices();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IMapper, Mapper>();
 
             services.AddMvc();
 
