@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using RandomThoughts.DataAccess.Contexts;
 using RandomThoughts.DataAccess.Repositories.Base;
 using RandomThoughts.DataAccess.Repositories.Thoughts;
 
@@ -21,7 +22,7 @@ namespace RandomThoughts.DataAccess.Extensions
         public static void AddDataAccessServices(this IServiceCollection service)
         {
             service.AddScoped<IThoughtsRepository, ThoughtsRepository>();
-            service.AddScoped<IUnitOfWork, SqlUnitOfWork>();
+            service.AddScoped<ISqlDbContext, RandomThoughtsDbContext>();
 
         }
     }

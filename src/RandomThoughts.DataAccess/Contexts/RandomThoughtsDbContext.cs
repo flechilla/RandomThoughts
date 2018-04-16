@@ -8,7 +8,7 @@ using RandomThoughts.Domain;
 
 namespace RandomThoughts.DataAccess.Contexts
 {
-    public class RandomThoughtsDbContext : SqlUnitOfWork
+    public class RandomThoughtsDbContext : IdentityDbContext, ISqlDbContext
     {
         public RandomThoughtsDbContext(DbContextOptions<RandomThoughtsDbContext> options)
             : base(options)

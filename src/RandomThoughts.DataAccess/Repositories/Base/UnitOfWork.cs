@@ -58,13 +58,7 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             return new BaseRepository<TEntity, TKey>(this);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(ConnectionStringName);
-            }
-        }
+    
 
         public Task<int> SaveChangesAsync()
         {
@@ -85,6 +79,14 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(ConnectionStringName);
+            }
         }
     }
 }

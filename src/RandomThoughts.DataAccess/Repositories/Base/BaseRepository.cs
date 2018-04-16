@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using RandomThoughts.DataAccess.Contexts;
 using RandomThoughts.Domain.Base;
 
 namespace RandomThoughts.DataAccess.Repositories.Base
@@ -21,7 +23,7 @@ namespace RandomThoughts.DataAccess.Repositories.Base
     /// <typeparam name="TKey">
     ///     The type of the <typeparamref name="TEntity"/>'s Primary Key
     /// </typeparam>
-    public class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey>
+    public class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey>, IUnitOfWork
         where TEntity : Entity<TKey>
     {
         private bool disposedValue = false; // To detect redundant calls
@@ -30,10 +32,9 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// Initializes a new instance of the <see cref="BaseRepository{TEntity, TKey}"/> class.
         /// </summary>
         /// <param name="dbContext">The implementation of <see cref="DbContext"/></param>
-        public BaseRepository(IUnitOfWork unitOfWork)
+        public BaseRepository(RandomThoughtsDbContext dbContext)
         {
-            UnitOfWork = unitOfWork;
-            DbContext = (DbContext)unitOfWork;
+            DbContext = dbContext;
             this.Entities = this.DbContext.Set<TEntity>();
         }
 
@@ -47,12 +48,6 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// Gets the Actual DBContext
         /// </summary>
         public DbContext DbContext { get; }
-
-        /// <summary>
-        ///     Gets the object that represents the Unit of work patterns.
-        /// </summary>
-        public IUnitOfWork UnitOfWork { get; set; }
-
         /// <summary>
         ///     Gets an instance of the <see cref="IDbConnection"/> using the ConenctionString from the context.
         /// </summary>
@@ -393,7 +388,7 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// <returns>The number of state entries written to the DB</returns>
         public int SaveChanges()
         {
-            return this.UnitOfWork.SaveChanges();
+            return DbContext.SaveChanges();
         }
 
         /// <summary>
@@ -402,7 +397,12 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// <returns>The number of state entries written to the DB</returns>
         public Task<int> SaveChangesAsync()
         {
-            return this.UnitOfWork.SaveChangesAsync();
+            return this.DbContext.SaveChangesAsync();
+        }
+
+        public IBaseRepository<TEntity1, TKey1> Set<TEntity1, TKey1>() where TEntity1 : Entity<TKey1>
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -567,16 +567,48 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             return obj;
         }
 
-        /// <summary>
-        ///     Create and instance of the DBConnection and open it
-        /// </summary>
-        /// <returns>An open instance of a connection to the DB.</returns>
-        protected IDbConnection OpenConnection()
+        #region UnitOfWork implementation
+        protected string ConnectionStringName { get; set; }
+
+        protected IDbConnection OpenConnection(out bool closeManually)
         {
-            var connection = DbConnection;
-            connection.Open();
-            return connection;
+            var conn = DbContext.Database.GetDbConnection();
+            closeManually = false;
+            // Not sure here, should asume always opened??
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+                closeManually = true;
+            }
+
+            return conn;
         }
+
+        public ICollection<TResult> RawQuery<TResult>(string query, object queryParams = null)
+        {
+            var connection = OpenConnection(out bool closeConnection);
+            var queryResult = connection.Query<TResult>(query, queryParams).ToList();
+            if (closeConnection)
+            {
+                connection.Close();
+            }
+
+            return queryResult;
+        }
+
+        public async Task<ICollection<TResult>> RawQueryAsync<TResult>(string query, object queryParams = null)
+        {
+            var connection = OpenConnection(out bool closeConnection);
+            var queryResult = await connection.QueryAsync<TResult>(query, queryParams);
+            if (closeConnection)
+            {
+                connection.Close();
+            }
+            return queryResult.ToList();
+        }
+
+
+        #endregion
 
         #region IDisposable Support
 
