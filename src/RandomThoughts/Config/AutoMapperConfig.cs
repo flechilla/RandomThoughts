@@ -15,6 +15,11 @@ namespace RandomThoughts.Config
         {
             this.CreateMap<Thought, ThoughtIndexViewModel>()
                 .AfterMap((src, dest) => dest.CreateAtHumanized = src.CreatedAt.Humanize());
+
+            this.CreateMap<ThoughtCreateViewModel, Thought>();
+
+            this.CreateMap<ThoughtCreateViewModel, Thought>();
+
         }
     }
 }
