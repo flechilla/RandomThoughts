@@ -14,7 +14,11 @@ namespace RandomThoughts.Config
         public AutoMapperConfig()
         {
             this.CreateMap<Thought, ThoughtIndexViewModel>()
-                .AfterMap((src, dest) => dest.CreateAtHumanized = src.CreatedAt.Humanize());
+                .AfterMap((src, dest) =>
+                {
+                    dest.CreateAtHumanized = src.CreatedAt.Humanize();
+                    dest.ModifiedAtHumanized = src.ModifiedAt.Humanize();
+                });
 
             this.CreateMap<ThoughtCreateViewModel, Thought>();
 
