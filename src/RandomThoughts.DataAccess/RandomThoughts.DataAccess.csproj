@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\Base\UnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
   </ItemGroup>
 
