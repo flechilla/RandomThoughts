@@ -15,7 +15,8 @@
     <button id="add-new-thoughtHole" type="button" class="btn btn-success pull-right">Create New Hole</button>
 </div>
 <div class="hs-100">
-    </div>
+</div>
+
 <div class="row" id="thoughtHoles-container">
 
     @foreach (var thoughtHole in thoughtHoles)
@@ -23,7 +24,7 @@
         <div data-likes="@thoughtHole.Likes" data-views="@thoughtHole.Views" data-amountOfThoughts="@(thoughtHole.AmountOfThought)" data-id="@(thoughtHole.Id)" class="thoughtHole-inner-container col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                   <span class="thought-title"> @thoughtHole.Name</span>
+                   <span class="thought-title"> <a href="@Url.Action("HoleThoughts", new {holeId = thoughtHole.Id})">@thoughtHole.Name</a> </span>
                     <span class="thought-action-container pull-right">     
                         <button class="thought-view-btn">                   
                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

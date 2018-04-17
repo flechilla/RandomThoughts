@@ -6,8 +6,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.DataAccess.Repositories.ThoughtHoles;
+using RandomThoughts.DataAccess.Repositories.Thoughts;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtHoleViewModels;
+using RandomThoughts.Models.ThoughtViewModels;
 
 namespace RandomThoughts.Controllers
 {
@@ -15,13 +17,16 @@ namespace RandomThoughts.Controllers
     {
         private readonly IThoughtHolesRepository _thoughtHolesRepository;
         private readonly IMapper _mapper;
+        private readonly IThoughtsRepository _thoughtsRepository;
 
         public ThoughtHolesController(IHttpContextAccessor httpContextAccessor,
             IThoughtHolesRepository thoughtHolesRepository,
-            IMapper mapper) : base(httpContextAccessor)
+            IMapper mapper,
+            IThoughtsRepository thoughtsRepository) : base(httpContextAccessor)
         {
             _thoughtHolesRepository = thoughtHolesRepository;
             _mapper = mapper;
+            _thoughtsRepository = thoughtsRepository;
         }
 
         [HttpGet]
@@ -36,7 +41,8 @@ namespace RandomThoughts.Controllers
                     Description = th.Description.Length > 50? th.Description.Substring(0, 50) + "..." : th.Description,
                     AmountOfThought = th.Thoughts.Count(),
                     Likes = th.Likes,
-                    Views = th.Views
+                    Views = th.Views,
+                    Id = th.Id
                 }).
                 ToList();
 
@@ -60,6 +66,17 @@ namespace RandomThoughts.Controllers
                 ToList();
 
             return View("Index" ,thoughtHolesVM);
+        }
+
+        /// <summary>
+        ///     Returns all the thoughts that belongs to the Hole
+        ///     with the given <paramref name="holeId"/>.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult HoleThoughts(int holeId)
+        {
+            return RedirectToAction("HoleThoughts", "Thoughts", new { holeId = holeId });
+        
         }
 
 
