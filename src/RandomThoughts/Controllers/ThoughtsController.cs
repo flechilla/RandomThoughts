@@ -30,6 +30,7 @@ namespace RandomThoughts.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
+            ViewData["Title"] = "My Thoughts";
             var userThoughts = _thoughtsRepository.ReadAll(thought => thought.ApplicationUserId == this.CurrentUserId).ToList();
 
             var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
@@ -43,9 +44,13 @@ namespace RandomThoughts.Controllers
         /// <returns></returns>
         public IActionResult PublicThoughts()
         {
-            var userThoughts = _thoughtsRepository.Entities.Take(20);
+            ViewData["Title"] = "Public Thoughts";
 
-            return View("Index", userThoughts);
+            var userThoughts = _thoughtsRepository.ReadAll(_ => true).ToList();
+
+            var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
+
+            return View("Index", userThoughtsVM);
         }
     }
 }
