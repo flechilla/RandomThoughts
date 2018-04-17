@@ -16,7 +16,14 @@ $(document).ready(function(){
     $('#add-new-thought').click(function(){
         $('#thought-edit-modal').modal('show');
     });
-    $('#save-thought-btn').click(saveNewThought);
+    $('#save-thought-btn').click(function(e){
+        e.preventDefault();
+        saveNewThought();
+    });
+
+    $('#thought-edit-modal').on('hidden.bs.modal', function () {
+        cleanModal();
+    });
 });
 
 /**
@@ -39,17 +46,24 @@ function displayThoughtDetails(data){
 }
 
 function saveNewThought(){
-    let inputsSelector = $('#thought-edit-modal input');
+    let inputsSelector = $('#thought-edit-modal input, #thought-edit-modal textarea');
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
         if(data[key].value==""){
-            var outerSelector = $('input#'+data[key].name.toLowerCase()).closest('.form-group');
+            var outerSelector = $('input[name="'+data[key].name+'"]').closest('.form-group');
+            if(outerSelector.length == 0)   
+                outerSelector = $('textarea[name="'+data[key].name+'"]').closest('.form-group');
             outerSelector.addClass('has-error');
-            console.error(data[key]);
+            console.log(data[key]);
             hasError = true;
         }
     }
+    if(hasError){
+        toastr.error('There are some error in the form, please fix them', 'Opps');
+        return false;
+    }
+
     let dataJson = {};
     let form = new FormData();
     data.map(function (x) {
@@ -66,9 +80,17 @@ function saveNewThought(){
     }).done(function (res) {
         console.log('res', res);      
         toastr.success("The Thought have been created!!!");     
+        cleanModal();
+
     }).error(function (jqXHR, textStatus, errorThrown) {
         toastr.error('There is an error in the server, please try again :(', 'Opps');
     });
+}
+
+function cleanModal(){
+    $('#thought-edit-modal .form-group').removeClass('has-error');
+    $('#thought-edit-modal input, #thought-edit-modal textarea').val('');
+    $('#thought-edit-modal').modal('hide');
 }
 
 function displayThoughtEditModal(thoughtId){
@@ -91,17 +113,26 @@ function displayThoughtEditModal(thoughtId){
 }
 
 function saveThoughtChanges(thoughtId){
-    let inputsSelector = $('#thought-edit-modal input');
+    let inputsSelector = $('#thought-edit-modal input, #thought-edit-modal textarea');
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
         if(data[key].value==""){
-            var outerSelector = $('input#'+data[key].name.toLowerCase()).closest('.form-group');
+            var outerSelector = $('input[name="'+data[key].name+'"]').closest('.form-group');
+
+            if(outerSelector.length == 0)   
+                 outerSelector = $('textarea[name="'+data[key].name+'"]').closest('.form-group');
+
             outerSelector.addClass('has-error');
-            console.error(data[key]);
+            console.log(data[key]);
             hasError = true;
         }
     }
+    if(hasError){
+        toastr.error('There are some error in the form, please fix them', 'Opps');
+        return false;
+    }
+
     let dataJson = {};
     let form = new FormData();
     data.map(function (x) {
@@ -118,7 +149,17 @@ function saveThoughtChanges(thoughtId){
     }).done(function (res) {
         console.log('res', res);      
         toastr.success("The Thought have been modified!!!");     
+        $(".thought-edit-btn").unbind('click').click(function() {
+            let thoughtId = $(this).closest(".thought-inner-container").data("id");
+            displayThoughtEditModal(thoughtId);        
+        });
+        cleanModal();
+        editThoughtCard(res);
     }).error(function (jqXHR, textStatus, errorThrown) {
         toastr.error('There is an error in the server, please try again :(', 'Opps');
     });
+}
+
+function editThoughtCard(thought){
+
 }
