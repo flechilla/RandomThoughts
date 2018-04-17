@@ -60,9 +60,16 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         /// <returns>Returns the <paramref name="obj"/> after being inserted</returns>
         public TEntity Add(TEntity obj)
         {
+           
             if (obj == null)
             {
                 throw new ArgumentNullException("The given object must not be null");
+            }
+            if (obj is ITrackableEntity)
+            {
+                ITrackableEntity entity = obj as ITrackableEntity;
+                entity.CreatedAt = DateTime.UtcNow;
+                entity.ModifiedAt = DateTime.UtcNow;
             }
 
             this.Entities.Add(obj);
@@ -80,7 +87,12 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             {
                 throw new ArgumentNullException(nameof(obj), "The given object must not be null");
             }
-
+            if (obj is ITrackableEntity)
+            {
+                ITrackableEntity entity = obj as ITrackableEntity;
+                entity.CreatedAt = DateTime.UtcNow;
+                entity.ModifiedAt = DateTime.UtcNow;
+            }
             await this.Entities.AddAsync(obj);
             return obj;
         }
@@ -103,6 +115,16 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             if (!objs.Any())
             {
                 throw new ArgumentException(nameof(objs), "The given param must contains at least on element");
+            }
+            if (objs.First() is ITrackableEntity)
+            {
+                IEnumerable<ITrackableEntity> entities = objs as IEnumerable<ITrackableEntity>;
+                foreach (var trackableEntity in entities)
+                {
+                    trackableEntity.CreatedAt = DateTime.UtcNow;
+                    trackableEntity.ModifiedAt = DateTime.UtcNow;
+                }
+              
             }
 
             this.Entities.AddRange(objs);
@@ -127,6 +149,17 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             if (!objs.Any())
             {
                 throw new ArgumentException("The given param must contains at least on element", nameof(objs));
+            }
+
+            if (objs.First() is ITrackableEntity)
+            {
+                IEnumerable<ITrackableEntity> entities = objs as IEnumerable<ITrackableEntity>;
+                foreach (var trackableEntity in entities)
+                {
+                    trackableEntity.CreatedAt = DateTime.UtcNow;
+                    trackableEntity.ModifiedAt = DateTime.UtcNow;
+                }
+
             }
 
             await this.Entities.AddRangeAsync(objs);
@@ -478,6 +511,11 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             {
                 throw new ArgumentException("The given object does not exist in DB", nameof(obj));
             }
+            if (obj is ITrackableEntity)
+            {
+                ITrackableEntity entity = obj as ITrackableEntity;
+                entity.ModifiedAt = DateTime.UtcNow;
+            }
 
             this.Entities.Update(obj);
             return obj;
@@ -504,6 +542,11 @@ namespace RandomThoughts.DataAccess.Repositories.Base
             {
                 throw new ArgumentException("The given object does not exist in DB", nameof(obj));
             }
+            if (obj is ITrackableEntity)
+            {
+                ITrackableEntity entity = obj as ITrackableEntity;
+                entity.ModifiedAt = DateTime.UtcNow;
+            }
 
             await Task.Factory.StartNew(() =>
             {
@@ -513,58 +556,78 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         }
 
         /// <summary>
-        ///     Begins tracking objects given in <paramref name="obj"/>
+        ///     Begins tracking objects given in <paramref name="objs"/>
         /// <remarks>
         ///     All the properties will be marked
         ///     as modified. To mark only some properties use the
         ///     <see cref="M:Microsoft.EntityFrameworkCore.DbSet`1.Attach(`0)"/>
         /// </remarks>
         /// </summary>
-        /// <param name="obj">The objects to be marked</param>
-        /// <returns>The given <paramref name="obj"/> after being inserted</returns>
-        public IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> obj)
+        /// <param name="objs">The objects to be marked</param>
+        /// <returns>The given <paramref name="objs"/> after being inserted</returns>
+        public IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> objs)
         {
-            if (obj == null)
+            if (objs == null)
             {
-                throw new ArgumentNullException(nameof(obj), "The given object must not be null");
+                throw new ArgumentNullException(nameof(objs), "The given object must not be null");
             }
 
-            if (!obj.Any())
+            if (!objs.Any())
             {
-                throw new ArgumentException("The given param must contains at least on element", nameof(obj));
+                throw new ArgumentException("The given param must contains at least on element", nameof(objs));
             }
 
-            this.Entities.UpdateRange(obj);
-            return obj;
+            if (objs.First() is ITrackableEntity)
+            {
+                IEnumerable<ITrackableEntity> entities = objs as IEnumerable<ITrackableEntity>;
+                foreach (var trackableEntity in entities)
+                {
+                    trackableEntity.ModifiedAt = DateTime.UtcNow;
+                }
+
+            }
+
+            this.Entities.UpdateRange(objs);
+            return objs;
         }
 
         /// <summary>
-        ///     Asynchronously begins tracking objects given in <paramref name="obj"/>
+        ///     Asynchronously begins tracking objects given in <paramref name="objs"/>
         /// <remarks>
         ///     All the properties will be marked
         ///     as modified. To mark only some properties use the
         ///     <see cref="M:Microsoft.EntityFrameworkCore.DbSet`1.Attach(`0)"/>
         /// </remarks>
         /// </summary>
-        /// <param name="obj">The objects to be marked</param>
-        /// <returns>The given <paramref name="obj"/> after being inserted</returns>
-        public async Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> obj)
+        /// <param name="objs">The objects to be marked</param>
+        /// <returns>The given <paramref name="objs"/> after being inserted</returns>
+        public async Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> objs)
         {
-            if (obj == null)
+            if (objs == null)
             {
-                throw new ArgumentNullException(nameof(obj), "The given object must not be null");
+                throw new ArgumentNullException(nameof(objs), "The given object must not be null");
             }
 
-            if (!obj.Any())
+            if (!objs.Any())
             {
-                throw new ArgumentException("The given param must contains at least on element", nameof(obj));
+                throw new ArgumentException("The given param must contains at least on element", nameof(objs));
+            }
+
+            if (objs.First() is ITrackableEntity)
+            {
+                IEnumerable<ITrackableEntity> entities = objs as IEnumerable<ITrackableEntity>;
+                foreach (var trackableEntity in entities)
+                {
+                    trackableEntity.ModifiedAt = DateTime.UtcNow;
+                }
+
             }
 
             await Task.Factory.StartNew(() =>
             {
-                this.Entities.UpdateRange(obj);
+                this.Entities.UpdateRange(objs);
             });
-            return obj;
+            return objs;
         }
 
         #region UnitOfWork implementation
