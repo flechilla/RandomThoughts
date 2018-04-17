@@ -46,7 +46,7 @@ function displayThoughtDetails(data){
 }
 
 function saveNewThought(){
-    let inputsSelector = $('#thought-edit-modal input, #thought-edit-modal textarea');
+    let inputsSelector = $('#thought-edit-modal input, #thought-edit-modal textarea, #thought-edit-modal select');
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
@@ -114,7 +114,7 @@ function displayThoughtEditModal(thoughtId){
 }
 
 function saveThoughtChanges(thoughtId){
-    let inputsSelector = $('#thought-edit-modal input, #thought-edit-modal textarea');
+    let inputsSelector = $('#thought-edit-modal input, #thought-edit-modal textarea, #thought-edit-modal select');
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
@@ -186,7 +186,7 @@ function insertNewThought(thought) {
     '</div>'+
 '</div>';
     $('#thoughts-container').prepend(element);
-    
+
     $(".thought-view-btn").click(function() {
         let thoughtId = $(this).closest(".thought-inner-container").data("id");
         getThought(thoughtId);        

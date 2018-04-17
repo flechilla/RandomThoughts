@@ -1,3 +1,12 @@
+@using RandomThoughts.Domain.Enums
+
+@{
+    Dictionary<int, string> moods = new Dictionary<int, string>();
+    foreach( ThinkerMood foo in Enum.GetValues(typeof(ThinkerMood)) )
+    {
+        moods.Add((int)foo, foo.ToString());
+    }
+}
 
 <div id="thought-display-modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -29,10 +38,19 @@
             <label for="thought-title">Title</label>
             <input type="text" class="form-control" id="thought-title" name="Title">
         </div>
-        <div class="form-group">
-            <label for="thought-body">Your Thought</label>
-            <textarea rows="5" type="text" class="form-control" id="thought-body" name="Body"></textarea>
-        </div>
+          <div class="form-group">
+              <label for="thought-body">Your Thought</label>
+              <textarea rows="5" type="text" class="form-control" id="thought-body" name="Body"></textarea>
+          </div>
+          <div class="form-group">
+              <label for="thought-body">Mood</label> 
+              <select name="Mood">
+                  @foreach (var mood in moods)
+                  {
+                      <option value="@mood.Key">@mood.Value</option>
+                  }
+              </select>
+          </div>
       </div>
       <div class="modal-footer">
         <button id="save-thought-btn" type="button" class="btn btn-success">Save</button>
