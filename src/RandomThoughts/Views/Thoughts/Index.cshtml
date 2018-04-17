@@ -1,8 +1,28 @@
-﻿
+﻿@using System.Collections
+@using Microsoft.EntityFrameworkCore.Infrastructure
+@using RandomThoughts.Models
+@using RandomThoughts.Models.ThoughtViewModels
+
+
 @{
-    ViewData["Title"] = "Thoughts";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var thoughts = Model as IEnumerable<ThoughtIndexViewModel>;
 }
 
-<h2>Thoughts</h2>
 
+
+<h2>Thoughts</h2>
+<div class="row">
+
+    @foreach (var thought in thoughts)
+    {
+        <div class="thought-inner-container col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">@thought.Title</div>
+                <div class="panel-body">
+                @thought.Body
+                </div>
+            </div>
+        </div>
+    }
+</div>
