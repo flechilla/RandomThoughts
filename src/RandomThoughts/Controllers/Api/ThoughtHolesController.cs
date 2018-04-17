@@ -6,6 +6,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.DataAccess.Repositories.ThoughtHoles;
+using RandomThoughts.Domain;
+using RandomThoughts.Models.ThoughtHoleViewModels;
 
 namespace RandomThoughts.Controllers.Api
 {
@@ -38,8 +40,30 @@ namespace RandomThoughts.Controllers.Api
         
         // POST: api/ThoughtHoles
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]ThoughtHoleCreateViewModel newThoughtHole)
         {
+            if (ModelState.IsValid)
+            {
+                var thoughtHole = _mapper.Map<ThoughtHoleCreateViewModel, ThoughtHole>(newThoughtHole);
+
+                thoughtHole.CreatedBy = this.CurrentUserId;
+                //thoughtHole.ApplicationUserId = this.CurrentUserId; TODO: adds the relation between the Users and the Holes
+
+                var createdThoughtHole = _thoughtHolesRepository.Add(thoughtHole);//TODO: add the auditable and trackable values!!!
+
+                try
+                {
+                    _thoughtHolesRepository.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500);
+                }
+
+                return Created("", createdThoughtHole);
+            }
+
+            return BadRequest(ModelState);
         }
         
         // PUT: api/ThoughtHoles/5
