@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RandomThoughts.Domain.Base;
 
 namespace RandomThoughts.Domain
 {
@@ -11,7 +12,7 @@ namespace RandomThoughts.Domain
     ///     A <see cref="Thought"/> is related to one <see cref="ThoughtHole"/>
     ///     and a <see cref="ThoughtHole"/> is related to multiple <see cref="Thought"/>
     /// </remarks>
-    public class ThoughtHole
+    public class ThoughtHole : AuditableAndTrackableEntity<int>
     {
         /// <summary>
         ///     Gets or sets the Name of the Hole.
