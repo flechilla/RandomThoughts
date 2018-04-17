@@ -13,7 +13,6 @@ using RandomThoughts.Models.ThoughtViewModels;
 namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
-    [Route("Thoughts")]
     public class ThoughtsApiController : BaseApiController
     {
         private readonly IThoughtsRepository _thoughtsRepository;

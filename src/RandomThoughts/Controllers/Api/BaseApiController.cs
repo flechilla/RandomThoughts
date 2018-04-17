@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
-    [Route("api/v1")]
+    [Route("api/v1/[controller]/[action]")]
     public class BaseApiController : Controller
     {
         /// <summary>
