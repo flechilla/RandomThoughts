@@ -62,7 +62,7 @@ function saveNewThought(){
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
-        if(data[key].value==""&&data[key].name!="Id"){
+        if(data[key].value==""&&data[key].name!="Id"&&data[key].name!="ThoughtHoleId"){
             var outerSelector = $('input[name="'+data[key].name+'"]').closest('.form-group');
             if(outerSelector.length == 0)   
                 outerSelector = $('textarea[name="'+data[key].name+'"]').closest('.form-group');
