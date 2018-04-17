@@ -11,26 +11,29 @@ namespace RandomThoughts.Domain
     public class Thought : AuditableAndTrackableEntity<int>
     {
         /// <summary>
-        ///     The title of the Thought
+        ///     Gets or sets the title of the Thought
         /// </summary>
         [Required]
         public string Title { get; set; }
 
         /// <summary>
-        ///     The body for the Thought
+        ///     Gets or sets the body for the Thought
         /// </summary>
         [Required]
         public string Body { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the Mood
+        /// </summary>
         public ThinkerMood Mood { get; set; }
 
         /// <summary>
-        ///     FK to relate the Thought with the creator.
+        ///     Gets or sets FK to relate the Thought with the creator.
         /// </summary>
         public string ApplicationUserId { get; set; }
 
         /// <summary>
-        ///     Navigation Prop. to the creator of the Thought.
+        ///     Gets or sets the Navigation Prop. to the creator of the Thought.
         /// </summary>
         public ApplicationUser ApplicationUser { get; set; }
 
