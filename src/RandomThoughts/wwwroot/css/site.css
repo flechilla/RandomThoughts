@@ -48,3 +48,8 @@
     border: none;
     background-color: transparent;
 }
+
+#thoughts-container{
+    display: flex;
+    flex-flow: row wrap;
+}
