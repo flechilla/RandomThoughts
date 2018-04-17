@@ -24,7 +24,14 @@ $(document).ready(function(){
     $('#thought-edit-modal').on('hidden.bs.modal', function () {
         cleanModal();
     });
+
+    $('#add-new-thoughtHole').click(function(){
+        $('#thoughtHole-edit-modal').modal('show');
+    });
+
 });
+
+/** Thought  functions Start */
 
 /**
  * Get the Thought data from the server.
@@ -199,3 +206,10 @@ function insertNewThought(thought) {
         displayThoughtEditModal(thoughtId);        
     });
 }
+
+/** Thought  functions End */
+
+
+/** Thought Holes functions Start */
+
+/** Thought Holes functions End */
