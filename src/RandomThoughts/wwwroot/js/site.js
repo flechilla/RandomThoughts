@@ -186,4 +186,13 @@ function insertNewThought(thought) {
     '</div>'+
 '</div>';
     $('#thoughts-container').prepend(element);
+    
+    $(".thought-view-btn").click(function() {
+        let thoughtId = $(this).closest(".thought-inner-container").data("id");
+        getThought(thoughtId);        
+    });
+    $(".thought-edit-btn").click(function() {
+        let thoughtId = $(this).closest(".thought-inner-container").data("id");
+        displayThoughtEditModal(thoughtId);        
+    });
 }
