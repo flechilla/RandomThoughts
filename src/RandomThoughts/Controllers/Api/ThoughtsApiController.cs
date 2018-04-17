@@ -13,12 +13,12 @@ using RandomThoughts.Models.ThoughtViewModels;
 namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
-    public class ThoughtsApiController : BaseApiController
+    public class ThoughtsController : BaseApiController
     {
         private readonly IThoughtsRepository _thoughtsRepository;
         private readonly IMapper _mapper;
 
-        public ThoughtsApiController(IHttpContextAccessor httpContextAccessor,
+        public ThoughtsController(IHttpContextAccessor httpContextAccessor,
             IThoughtsRepository thoughtsRepository,
             IMapper mapper) : base(httpContextAccessor)
         {
