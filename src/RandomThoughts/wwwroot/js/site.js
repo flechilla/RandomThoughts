@@ -162,7 +162,8 @@ function saveThoughtChanges(thoughtId){
 }
 
 function editThoughtCard(thought){
-
+    $('.thought-inner-container[data-id="'+thought.id + '"] .thought-title').text(thought.title);
+    $('.thought-inner-container[data-id="'+thought.id + '"] .thought-body').text(thought.body);
 }
 
 function insertNewThought(thought) {
