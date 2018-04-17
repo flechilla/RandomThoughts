@@ -16,5 +16,12 @@ namespace RandomThoughts.Models.ThoughtHoleViewModels
         public int Likes { get; set; }
 
         public int Views { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the value that indicates
+        ///     the amount of Thoughts that this Hole
+        ///     contains.
+        /// </summary>
+        public int AmountOfThought { get; set; }
     }
 }

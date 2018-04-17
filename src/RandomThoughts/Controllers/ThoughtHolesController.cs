@@ -27,18 +27,38 @@ namespace RandomThoughts.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewData["Title"] = "Public Thoughts";
-            var thoughtHoles = _thoughtHolesRepository.ReadAll(_ => true).Select(th=>new ThoughtHole{Name = th.Name, Description = th.Description.Substring(0, 50) + "..."}).ToList();
-            var thoughtHolesVM = _mapper.Map<IEnumerable<ThoughtHole>, IEnumerable<ThoughtHoleIndexViewModel>>(thoughtHoles);
+            ViewData["Title"] = "Public Holes";//TODO: Send the amount of thoughts related with each hole
+            var thoughtHolesVM = _thoughtHolesRepository.
+                ReadAll(_ => true).
+                Select(th => new ThoughtHoleIndexViewModel
+                {
+                    Name = th.Name,
+                    Description = th.Description.Substring(0, 50) + "...",
+                    AmountOfThought = th.Thoughts.Count(),
+                    Likes = th.Likes,
+                    Views = th.Views
+                }).
+                ToList();
+
             return View(thoughtHolesVM);
         }
 
         [HttpGet]
         public IActionResult MyHoles()
         {
-            ViewData["Title"] = "Public Thoughts";
-            var thoughtHoles = _thoughtHolesRepository.ReadAll(th => th.CreatedBy == this.CurrentUserId).Select(th => new ThoughtHole { Name = th.Name, Description = th.Description.Substring(0, 50) + "..." }).ToList();
-            var thoughtHolesVM = _mapper.Map<IEnumerable<ThoughtHole>, IEnumerable<ThoughtHoleIndexViewModel>>(thoughtHoles);
+            ViewData["Title"] = "My Holes";//TODO: Send the amount of thoughts related with each hole
+            var thoughtHolesVM = _thoughtHolesRepository.
+                ReadAll(th => th.CreatedBy == this.CurrentUserId).
+                Select(th => new ThoughtHoleIndexViewModel
+                {
+                    Name = th.Name,
+                    Description = th.Description.Substring(0, 50) + "...",
+                    AmountOfThought = th.Thoughts.Count(),
+                    Likes = th.Likes,
+                    Views = th.Views
+                }).
+                ToList();
+
             return View("Index" ,thoughtHolesVM);
         }
 
