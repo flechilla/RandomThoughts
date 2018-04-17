@@ -50,7 +50,7 @@ function saveNewThought(){
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
-        if(data[key].value==""){
+        if(data[key].value==""&&data[key].name!="Id"){
             var outerSelector = $('input[name="'+data[key].name+'"]').closest('.form-group');
             if(outerSelector.length == 0)   
                 outerSelector = $('textarea[name="'+data[key].name+'"]').closest('.form-group');
@@ -98,12 +98,14 @@ function displayThoughtEditModal(thoughtId){
     var thoughtCntSel = $('.thought-inner-container[data-id="'+thoughtId+'"]');
     let title = thoughtCntSel.find('.thought-title').text();
     let body = thoughtCntSel.find('.thought-body').text();
+    let mood = thoughtCntSel.attr('data-mood');
 
-    $('#thought-edit-modal .modal-body').
-    append('<input type="text" style="display: none;" name="Id" value="'+thoughtId+'">');
+    $('#thought-edit-modal #thought-id').val(thoughtId);
 
     $('#thought-edit-modal #thought-title').val(title);
     $('#thought-edit-modal #thought-body').val(body);
+    $('#thought-edit-modal #thought-mood').val(mood);
+    
 
     $('#save-thought-btn').text("Edit").unbind('click').
     click(function(){
@@ -164,10 +166,11 @@ function saveThoughtChanges(thoughtId){
 function editThoughtCard(thought){
     $('.thought-inner-container[data-id="'+thought.id + '"] .thought-title').text(thought.title);
     $('.thought-inner-container[data-id="'+thought.id + '"] .thought-body').text(thought.body);
+    $('.thought-inner-container[data-id="'+thought.id + '"]').attr('data-mood', thought.mood);
 }
 
 function insertNewThought(thought) {
-    let element = '<div data-id="'+thought.id+'" class="thought-inner-container col-sm-3">\
+    let element = '<div data-mood="'+thought.mood +'" data-id="'+thought.id+'" class="thought-inner-container col-sm-3">\
     <div class="panel panel-default">\
         <div class="panel-heading">\
            <span class="thought-title">'+ thought.title + '</span>\

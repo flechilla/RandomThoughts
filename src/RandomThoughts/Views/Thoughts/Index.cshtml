@@ -20,7 +20,7 @@
 
     @foreach (var thought in thoughts)
     {
-        <div data-id="@(thought.Id)" class="thought-inner-container col-sm-3">
+        <div data-mood="@((int)thought.Mood)" data-id="@(thought.Id)" class="thought-inner-container col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                    <span class="thought-title"> @thought.Title</span>
