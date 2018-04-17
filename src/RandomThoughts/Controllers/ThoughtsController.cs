@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.DataAccess.Repositories.Thoughts;
+using RandomThoughts.Domain;
+using RandomThoughts.Models.ThoughtViewModels;
 
 namespace RandomThoughts.Controllers
 {
-    public class ThoughtsController : Controller
+    public class ThoughtsController : BaseController
     {
         private readonly IThoughtsRepository _thoughtsRepository;
+        private readonly IMapper _mapper;
 
-        public ThoughtsController(IThoughtsRepository thoughtsRepository)
+        public ThoughtsController(IHttpContextAccessor httpContextAccessor,
+            IThoughtsRepository thoughtsRepository,
+            IMapper mapper) : base(httpContextAccessor)
         {
             _thoughtsRepository = thoughtsRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -22,11 +30,29 @@ namespace RandomThoughts.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var currentUserId = HttpContext.User.Identity.Name;
+            ViewData["Title"] = "My Thoughts";
+            ViewData["PersonalThoughts"] = true;
+            var userThoughts = _thoughtsRepository.ReadAll(thought => thought.ApplicationUserId == this.CurrentUserId).ToList();
 
-            var userThoughts = _thoughtsRepository.ReadAll(thought => thought.ApplicationUserId == currentUserId);
+            var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
 
-            return View(userThoughts);
+            return View(userThoughtsVM);
+        }
+
+        /// <summary>
+        ///     Returns all the thoughts that belongs to the current user.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult PublicThoughts()
+        {
+            ViewData["Title"] = "Public Thoughts";
+            ViewData["PersonalThoughts"] = false;
+
+            var userThoughts = _thoughtsRepository.ReadAll(_ => true).ToList();
+
+            var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
+
+            return View("Index", userThoughtsVM);
         }
     }
 }

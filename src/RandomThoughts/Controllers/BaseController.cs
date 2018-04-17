@@ -6,22 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace RandomThoughts.Controllers.Api
+namespace RandomThoughts.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/v1/[controller]/[action]")]
-    public class BaseApiController : Controller
+    public class BaseController : Controller
     {
         /// <summary>
         ///     Gets or sets the Id of the current user.
         /// </summary>
         public string CurrentUserId { get; set; }
-         
 
-        public BaseApiController(IHttpContextAccessor httpContextAccessor)
+        public BaseController(IHttpContextAccessor httpContextAccessor)
         {
             CurrentUserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
-    
     }
 }
