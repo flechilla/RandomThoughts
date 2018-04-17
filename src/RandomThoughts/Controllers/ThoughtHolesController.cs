@@ -33,7 +33,7 @@ namespace RandomThoughts.Controllers
                 Select(th => new ThoughtHoleIndexViewModel
                 {
                     Name = th.Name,
-                    Description = th.Description.Substring(0, 50) + "...",
+                    Description = th.Description.Length > 50? th.Description.Substring(0, 50) + "..." : th.Description,
                     AmountOfThought = th.Thoughts.Count(),
                     Likes = th.Likes,
                     Views = th.Views
@@ -52,7 +52,7 @@ namespace RandomThoughts.Controllers
                 Select(th => new ThoughtHoleIndexViewModel
                 {
                     Name = th.Name,
-                    Description = th.Description.Substring(0, 50) + "...",
+                    Description = th.Description.Length > 50 ? th.Description.Substring(0, 50) + "..." : th.Description,
                     AmountOfThought = th.Thoughts.Count(),
                     Likes = th.Likes,
                     Views = th.Views

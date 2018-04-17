@@ -31,6 +31,9 @@ namespace RandomThoughts.Config
                     dest.CreateAtHumanized = src.CreatedAt.Humanize();
                     dest.ModifiedAtHumanized = src.ModifiedAt.Humanize();
                 });
+
+            this.CreateMap<ThoughtHoleCreateViewModel, ThoughtHole>();
+
         }
     }
 }
