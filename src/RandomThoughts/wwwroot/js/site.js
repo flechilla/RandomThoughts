@@ -80,6 +80,7 @@ function saveNewThought(){
     }).done(function (res) {
         console.log('res', res);      
         toastr.success("The Thought have been created!!!");     
+        insertNewThought(res);
         cleanModal();
 
     }).error(function (jqXHR, textStatus, errorThrown) {
@@ -162,4 +163,26 @@ function saveThoughtChanges(thoughtId){
 
 function editThoughtCard(thought){
 
+}
+
+function insertNewThought(thought) {
+    let element = '<div data-id="'+thought.id+'" class="thought-inner-container col-sm-3">\
+    <div class="panel panel-default">\
+        <div class="panel-heading">\
+           <span class="thought-title">'+ thought.title + '</span>\
+            <span class="thought-action-container pull-right">' +
+                '<button class="thought-view-btn">' +              
+                    '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>\
+                </button>\
+                <button class="thought-edit-btn">'+
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>\
+                </button>\
+            </span>\
+        </div>\
+        <div class="panel-body">\
+        <span class="thought-body">'+thought.body+'</span>'+
+        '</div>'+
+    '</div>'+
+'</div>';
+    $('#thoughts-container').prepend(element);
 }
