@@ -29,7 +29,31 @@ namespace RandomThoughts.Domain
         /// </summary>
         public string ApplicationUserId { get; set; }
 
-        
+        /// <summary>
+        ///     Navigation Prop. to the creator of the Thought.
+        /// </summary>
         public ApplicationUser ApplicationUser { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the container of the Thought.
+        /// </summary>
+        public ThoughtHole ThoughtHole { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the FK to the related <see cref="ThoughtHole"/>
+        /// </summary>
+        public int ThoughtHoleId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the amount of likes for the current Thought.
+        /// </summary>
+        public int Likes { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the amount of views for the current Thought.
+        /// </summary>
+        public int Views { get; set; }
+
+
     }
 }

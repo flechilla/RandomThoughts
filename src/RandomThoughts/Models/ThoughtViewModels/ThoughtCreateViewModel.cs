@@ -7,6 +7,6 @@ namespace RandomThoughts.Models.ThoughtViewModels
 {
     public class ThoughtCreateViewModel : ThoughtBaseViewModel
     {
-
+        public int ThoughtHoleId { get; set; }
     }
 }

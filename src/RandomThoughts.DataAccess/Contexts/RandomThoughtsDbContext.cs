@@ -29,9 +29,14 @@ namespace RandomThoughts.DataAccess.Contexts
         }
 
         /// <summary>
-        ///     Gets or sets the 
+        ///     Gets or sets the <see cref="Thought"/> of the platform.
         /// </summary>
         public DbSet<Thought> Thoughts { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the <see cref="ThoughtHole"/> of the platform.
+        /// </summary>
+        public DbSet<ThoughtHole> ThoughtHoles { get; set; }
     
     }
 }

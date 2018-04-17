@@ -10,6 +10,7 @@ namespace RandomThoughts.Models.ThoughtViewModels
     public class ThoughtBaseViewModel
     {
         [Required]
+        [MaxLength(30)]
         public string Title { get; set; }
 
         [Required]
