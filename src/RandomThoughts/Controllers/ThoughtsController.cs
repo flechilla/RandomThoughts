@@ -36,6 +36,7 @@ namespace RandomThoughts.Controllers
         {
             ViewData["Title"] = "My Thoughts";
             ViewData["PersonalThoughts"] = true;
+            ViewData["MainTitle"] = "My Thoughts";
             var userThoughts = _thoughtsRepository.Entities.Where(thought => thought.ApplicationUserId == this.CurrentUserId).ToList();
 
             var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
@@ -50,6 +51,7 @@ namespace RandomThoughts.Controllers
         public IActionResult PublicThoughts()
         {
             ViewData["Title"] = "Public Thoughts";
+            ViewData["MainTitle"] = "Public Thoughts";
             ViewData["PersonalThoughts"] = false;
 
             var userThoughts = _thoughtsRepository.ReadAll(_ => true).ToList();
@@ -64,11 +66,13 @@ namespace RandomThoughts.Controllers
         ///     with the given <paramref name="holeId"/>.
         /// </summary>
         /// <returns></returns>
-        public IActionResult HoleThoughts(int holeId)
+        public IActionResult HoleThoughts(int holeId, string holeName)
         {
             ViewData["Title"] = "Public Thoughts";
             ViewData["PersonalThoughts"] = false;
             ViewData["HoleId"] = holeId;
+            ViewData["MainTitle"] =$"{holeName}'s Thoughts";
+            
 
             //var holeThoughts = _thoughtsRepository.ReadAll(thought =>
             //{
@@ -76,6 +80,7 @@ namespace RandomThoughts.Controllers
             //}).ToList();
 
             var holeThoughts = _thoughtsRepository.Entities.Where(e=>e.ThoughtHoleId == holeId).ToList();
+            
 
             var holeThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(holeThoughts);
 

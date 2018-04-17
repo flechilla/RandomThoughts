@@ -75,7 +75,8 @@ namespace RandomThoughts.Controllers
         /// <returns></returns>
         public IActionResult HoleThoughts(int holeId)
         {
-            return RedirectToAction("HoleThoughts", "Thoughts", new { holeId = holeId });
+            var holeName = _thoughtHolesRepository.SingleOrDefault(holeId).Name;
+            return RedirectToAction("HoleThoughts", "Thoughts", new { holeId = holeId, holeName });
         
         }
 
