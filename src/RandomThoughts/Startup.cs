@@ -15,6 +15,7 @@ using RandomThoughts.Domain;
 using RandomThoughts.Models;
 using RandomThoughts.Services;
 using AutoMapper;
+using RandomThoughts.Config;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
@@ -31,6 +32,14 @@ namespace RandomThoughts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var autoMapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutoMapperConfig());
+            });
+
+            var mapper = autoMapperConfiguration.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddDbContext<RandomThoughtsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

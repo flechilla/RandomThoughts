@@ -17,11 +17,14 @@ namespace RandomThoughts.Controllers.Api
     public class ThoughtsApiController : BaseApiController
     {
         private readonly IThoughtsRepository _thoughtsRepository;
+        private readonly IMapper _mapper;
 
         public ThoughtsApiController(IHttpContextAccessor httpContextAccessor,
-            IThoughtsRepository thoughtsRepository) : base(httpContextAccessor)
+            IThoughtsRepository thoughtsRepository,
+            IMapper mapper) : base(httpContextAccessor)
         {
             _thoughtsRepository = thoughtsRepository;
+            _mapper = mapper;
         }
 
         // GET: api/Thoughts
@@ -34,7 +37,7 @@ namespace RandomThoughts.Controllers.Api
         {
             var userThoughts = _thoughtsRepository.ReadAll(thought => thought.ApplicationUserId == CurrentUserId).ToList();
 
-            var userThoughtsVM = Mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
+            var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
 
             return userThoughtsVM;
         }
@@ -46,7 +49,7 @@ namespace RandomThoughts.Controllers.Api
             var thought = _thoughtsRepository.Entities.Find(id);
 
             if (thought != null)
-                return Ok(Mapper.Map<Thought, ThoughtIndexViewModel>(thought));
+                return Ok(_mapper.Map<Thought, ThoughtIndexViewModel>(thought));
 
             return NotFound(id);
         }
@@ -57,7 +60,7 @@ namespace RandomThoughts.Controllers.Api
         {
             if (ModelState.IsValid)
             {
-                var thought = Mapper.Map<ThoughtCreateViewModel, Thought>(newThought);
+                var thought = _mapper.Map<ThoughtCreateViewModel, Thought>(newThought);
 
                 var createdThought = _thoughtsRepository.Add(thought);//TODO: add the auditable and trackable values!!!
 
