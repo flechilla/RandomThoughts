@@ -62,6 +62,9 @@ namespace RandomThoughts.Controllers.Api
             {
                 var thought = _mapper.Map<ThoughtCreateViewModel, Thought>(newThought);
 
+                thought.CreatedBy = this.CurrentUserId;
+                thought.ApplicationUserId = this.CurrentUserId;
+
                 var createdThought = _thoughtsRepository.Add(thought);//TODO: add the auditable and trackable values!!!
 
                 try
@@ -97,6 +100,9 @@ namespace RandomThoughts.Controllers.Api
             var originalThought = _thoughtsRepository.Entities.Find(id);
             originalThought.Title = editedThought.Title;
             originalThought.Body = editedThought.Body;
+            originalThought.Mood = editedThought.Mood;
+
+            originalThought.ModifiedBy = this.CurrentUserId;
 
             _thoughtsRepository.Update(originalThought);
 
