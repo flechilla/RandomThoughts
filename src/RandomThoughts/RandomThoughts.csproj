@@ -5,9 +5,7 @@
     <UserSecretsId>aspnet-RandomThoughts-FDA61334-42E3-476C-B9CE-98E500BE3A31</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="Views\ThoughtHoles\Index.cshtml" />
-  </ItemGroup>
+
 
 
 
