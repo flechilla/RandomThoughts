@@ -6,6 +6,10 @@
     {
         moods.Add((int)foo, foo.ToString());
     }
+    if (!ViewData.ContainsKey("HoleId"))
+    {
+        ViewData["HoleId"] = 1;
+    }
 }
 
 <div id="thought-display-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -29,7 +33,11 @@
 <div id="thought-edit-modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <input type="text" style="display: none;" name="Id" id="thought-id" value="">
+        <input type="text" style="display: none;" name="Id" id="thought-id" value="">
+      @if (ViewData.ContainsKey("HoleId"))
+      {
+            <input type="text" style="display: none;" name="ThoughtHoleId" id="thoughtHole-id" value="@(ViewData["HoleId"])">
+      }
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Create a random Thought!!!</h4>
@@ -45,7 +53,7 @@
           </div>
           <div class="form-group">
               <label for="thought-body">Mood</label> 
-              <select name="Mood" id="thought-mood">
+              <select name="Mood" id="thought-mood" class="form-control">
                   @foreach (var mood in moods)
                   {
                       <option value="@mood.Key">@mood.Value</option>
