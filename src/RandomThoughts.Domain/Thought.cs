@@ -40,6 +40,11 @@ namespace RandomThoughts.Domain
         public ThoughtHole ThoughtHole { get; set; }
 
         /// <summary>
+        ///     Gets or sets the FK to the related <see cref="ThoughtHole"/>
+        /// </summary>
+        public int ThoughtHoleId { get; set; }
+
+        /// <summary>
         ///     Gets or sets the amount of likes for the current Thought.
         /// </summary>
         public int Likes { get; set; }
