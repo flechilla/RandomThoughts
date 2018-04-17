@@ -14,8 +14,8 @@ using RandomThoughts.Domain.Enums;
 namespace RandomThoughts.DataAccess.Migrations
 {
     [DbContext(typeof(RandomThoughtsDbContext))]
-    [Migration("20180416195525_CreatesThoughtsTable")]
-    partial class CreatesThoughtsTable
+    [Migration("20180417130619_AddCreatedAtColumnToThoughtsTable")]
+    partial class AddCreatedAtColumnToThoughtsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,6 +198,8 @@ namespace RandomThoughts.DataAccess.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired();
+
+                    b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("CreatedBy");
 
