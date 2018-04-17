@@ -39,6 +39,16 @@ namespace RandomThoughts.Domain
         /// </summary>
         public ThoughtHole ThoughtHole { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the amount of likes for the current Thought.
+        /// </summary>
+        public int Likes { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the amount of views for the current Thought.
+        /// </summary>
+        public int Views { get; set; }
+
 
     }
 }
