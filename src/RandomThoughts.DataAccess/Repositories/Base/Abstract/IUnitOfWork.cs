@@ -21,15 +21,6 @@ namespace RandomThoughts.DataAccess.Repositories.Base
         Task<int> SaveChangesAsync();
 
         /// <summary>
-        /// Provides the set of entities of <typeparamref name="TEntity"/>
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entities</typeparam>
-        /// <typeparam name="TKey">The Key of the Entity.</typeparam>
-        /// <returns>A repository of entities</returns>
-        IBaseRepository<TEntity, TKey> Set<TEntity, TKey>()
-            where TEntity : Entity<TKey>;
-
-        /// <summary>
         /// Executes a raw query to the underlying store
         /// </summary>
         /// <typeparam name="TResult">The type of the entities returned by the query</typeparam>

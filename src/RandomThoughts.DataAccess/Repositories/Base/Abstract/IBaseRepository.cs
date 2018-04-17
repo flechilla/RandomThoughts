@@ -19,7 +19,6 @@ namespace RandomThoughts.DataAccess.Repositories.Base
     public interface IBaseRepository<TEntity, TKey> : IDisposable
         where TEntity : Entity<TKey>
     {
-        IUnitOfWork UnitOfWork { get; set; }
 
         /// <summary>
         ///     Gets the <see cref="DbSet{TEntity}"/> to perform actions on the
