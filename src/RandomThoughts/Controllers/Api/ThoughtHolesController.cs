@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RandomThoughts.Business.ApplicationServices.ThoughtHole;
 using RandomThoughts.DataAccess.Repositories.ThoughtHoles;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtHoleViewModels;
@@ -14,14 +15,14 @@ namespace RandomThoughts.Controllers.Api
     [Produces("application/json")]
     public class ThoughtHolesController : BaseApiController
     {
-        private readonly IThoughtHolesRepository _thoughtHolesRepository;
+        private readonly IThoughtHolesApplicationService _thoughtHolesApplicationService;
         private readonly IMapper _mapper;
 
         public ThoughtHolesController(IHttpContextAccessor httpContextAccessor,
-            IThoughtHolesRepository thoughtHolesRepository,
+            IThoughtHolesApplicationService thoughtHolesApplicationService,
             IMapper mapper) : base(httpContextAccessor)
         {
-            _thoughtHolesRepository = thoughtHolesRepository;
+            _thoughtHolesApplicationService = thoughtHolesApplicationService;
             _mapper = mapper;
         }
         // GET: api/ThoughtHoles
@@ -49,11 +50,11 @@ namespace RandomThoughts.Controllers.Api
                 thoughtHole.CreatedBy = this.CurrentUserId;
                 //thoughtHole.ApplicationUserId = this.CurrentUserId; TODO: adds the relation between the Users and the Holes
 
-                var createdThoughtHole = _thoughtHolesRepository.Add(thoughtHole);//TODO: add the auditable and trackable values!!!
+                var createdThoughtHole = _thoughtHolesApplicationService.Add(thoughtHole);//TODO: add the auditable and trackable values!!!
 
                 try
                 {
-                    _thoughtHolesRepository.SaveChanges();
+                    _thoughtHolesApplicationService.SaveChanges();
                 }
                 catch (Exception ex)
                 {

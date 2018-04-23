@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RandomThoughts.Business.ApplicationServices.Thoughts;
 using RandomThoughts.DataAccess.Repositories.Thoughts;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtViewModels;
@@ -14,14 +15,14 @@ namespace RandomThoughts.Controllers
 {
     public class ThoughtsController : BaseController
     {
-        private readonly IThoughtsRepository _thoughtsRepository;
+        private readonly IThoughtsApplicationService _thoughtsAppService;
         private readonly IMapper _mapper;
 
         public ThoughtsController(IHttpContextAccessor httpContextAccessor,
-            IThoughtsRepository thoughtsRepository,
+            IThoughtsApplicationService thoughtsAppService,
             IMapper mapper) : base(httpContextAccessor)
         {
-            _thoughtsRepository = thoughtsRepository;
+            _thoughtsAppService = thoughtsAppService;
             _mapper = mapper;
             //add the value of the default HOle
             ViewData["HoleId"] = 1;
@@ -37,7 +38,7 @@ namespace RandomThoughts.Controllers
             ViewData["Title"] = "My Thoughts";
             ViewData["PersonalThoughts"] = true;
             ViewData["MainTitle"] = "My Thoughts";
-            var userThoughts = _thoughtsRepository.Entities.Where(thought => thought.ApplicationUserId == this.CurrentUserId).ToList();
+            var userThoughts = _thoughtsAppService.ReadAll(thought => thought.ApplicationUserId == this.CurrentUserId).ToList();
 
             var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
 
@@ -54,7 +55,7 @@ namespace RandomThoughts.Controllers
             ViewData["MainTitle"] = "Public Thoughts";
             ViewData["PersonalThoughts"] = false;
 
-            var userThoughts = _thoughtsRepository.ReadAll(_ => true).ToList();
+            var userThoughts = _thoughtsAppService.ReadAll(_ => true).ToList();
 
             var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
 
@@ -79,7 +80,7 @@ namespace RandomThoughts.Controllers
             //    return thought.ThoughtHoleId == holeId;
             //}).ToList();
 
-            var holeThoughts = _thoughtsRepository.Entities.Where(e=>e.ThoughtHoleId == holeId).ToList();
+            var holeThoughts = _thoughtsAppService.ReadAll(e=>e.ThoughtHoleId == holeId).ToList();
             
 
             var holeThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(holeThoughts);
