@@ -15,6 +15,7 @@ using RandomThoughts.Domain;
 using RandomThoughts.Models;
 using RandomThoughts.Services;
 using AutoMapper;
+using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -52,6 +53,9 @@ namespace RandomThoughts
 
             //adds the configuration of the services for the DataLayer
             services.AddDataAccessServices();
+
+            //adds the configuration of the services for the BusinessLayer
+            services.AddBusinessServices();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
