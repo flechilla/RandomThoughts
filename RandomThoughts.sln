@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.Business", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomThoughts.Business.Tests", "tests\RandomThoughts.Business.Tests\RandomThoughts.Business.Tests.csproj", "{FA91B616-9810-4D9A-9AB5-2F722A84F3D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomThoughts.Test.Common", "tests\RandomThoughts.Test.Common\RandomThoughts.Test.Common.csproj", "{AC81C558-0010-4322-B906-BA59A4177FCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FA91B616-9810-4D9A-9AB5-2F722A84F3D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA91B616-9810-4D9A-9AB5-2F722A84F3D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA91B616-9810-4D9A-9AB5-2F722A84F3D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC81C558-0010-4322-B906-BA59A4177FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC81C558-0010-4322-B906-BA59A4177FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC81C558-0010-4322-B906-BA59A4177FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC81C558-0010-4322-B906-BA59A4177FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
