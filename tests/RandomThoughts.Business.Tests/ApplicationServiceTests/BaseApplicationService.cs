@@ -134,7 +134,7 @@ namespace RandomThoughts.Business.Tests.ApplicationServiceTests
 
             for (int i = 0; i < 10; i++)
             {
-                Thoughts.Add(new Thought { Title = "Thought" + i, Id = i,Body = "Thought Body",  ApplicationUser = user});
+                Thoughts.Add(new Thought { Title = "Thought" + i, Id = i,Body = "Thought Body",  ApplicationUser = user, ThoughtHole = thoughtHole});
             }
 
             await appService.AddRangeAsync(Thoughts);
