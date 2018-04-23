@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
-    <ProjectReference Include="..\src\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
+    <ProjectReference Include="..\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
+    <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
   </ItemGroup>
 
 </Project>
