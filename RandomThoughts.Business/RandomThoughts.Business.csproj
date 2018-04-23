@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
+    <ProjectReference Include="..\src\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
