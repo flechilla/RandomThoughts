@@ -13,4 +13,11 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RandomThoughts.Business\RandomThoughts.Business.csproj" />
+    <ProjectReference Include="..\..\src\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
+    <ProjectReference Include="..\..\src\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
+    <ProjectReference Include="..\RandomThoughts.Test.Common\RandomThoughts.Test.Common.csproj" />
+  </ItemGroup>
+
 </Project>

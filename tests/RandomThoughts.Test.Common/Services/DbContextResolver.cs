@@ -19,7 +19,7 @@ namespace RandomThoughts.Test.Common.Services
         {
             Disposed = false;
             ConnectionString =
-                $"Server=mssql;User=SA;Password=Admin123;Database=Test_{Guid.NewGuid()};MultipleActiveResultSets=true";
+                $"Server=(localdb)\\mssqllocaldb;Database=Test_{Guid.NewGuid()};Trusted_Connection=True;MultipleActiveResultSets=true";
         }
 
         /// <summary>
