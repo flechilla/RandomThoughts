@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RandomThoughts.Business.ApplicationServices.Thoughts;
 using RandomThoughts.DataAccess.Repositories.Thoughts;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtViewModels;
@@ -15,14 +16,14 @@ namespace RandomThoughts.Controllers.Api
     [Produces("application/json")]
     public class ThoughtsController : BaseApiController
     {
-        private readonly IThoughtsRepository _thoughtsRepository;
+        private readonly IThoughtsApplicationService _thoughtsApplicationService;
         private readonly IMapper _mapper;
 
         public ThoughtsController(IHttpContextAccessor httpContextAccessor,
-            IThoughtsRepository thoughtsRepository,
+            IThoughtsApplicationService thoughtsApplicationService,
             IMapper mapper) : base(httpContextAccessor)
         {
-            _thoughtsRepository = thoughtsRepository;
+            _thoughtsApplicationService = thoughtsApplicationService;
             _mapper = mapper;
         }
 
@@ -34,7 +35,7 @@ namespace RandomThoughts.Controllers.Api
         [HttpGet]
         public IEnumerable<ThoughtIndexViewModel> GetUserThoughts()
         {
-            var userThoughts = _thoughtsRepository.ReadAll(thought => thought.ApplicationUserId == CurrentUserId).ToList();
+            var userThoughts = _thoughtsApplicationService.ReadAll(thought => thought.ApplicationUserId == CurrentUserId).ToList();
 
             var userThoughtsVM = _mapper.Map<IEnumerable<Thought>, IEnumerable<ThoughtIndexViewModel>>(userThoughts);
 
@@ -45,7 +46,7 @@ namespace RandomThoughts.Controllers.Api
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(int id)
         {
-            var thought = _thoughtsRepository.Entities.Find(id);
+            var thought = _thoughtsApplicationService.SingleOrDefault(id);
 
             if (thought != null)
                 return Ok(_mapper.Map<Thought, ThoughtIndexViewModel>(thought));
@@ -64,11 +65,11 @@ namespace RandomThoughts.Controllers.Api
                 thought.CreatedBy = this.CurrentUserId;
                 thought.ApplicationUserId = this.CurrentUserId;
 
-                var createdThought = _thoughtsRepository.Add(thought);//TODO: add the auditable and trackable values!!!
+                var createdThought = _thoughtsApplicationService.Add(thought);//TODO: add the auditable and trackable values!!!
 
                 try
                 {
-                    _thoughtsRepository.SaveChanges();
+                    _thoughtsApplicationService.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -91,24 +92,24 @@ namespace RandomThoughts.Controllers.Api
                 ModelState.AddModelError("Id", "The given Id of the edited model doesn't match with the route Id");
                 return BadRequest(ModelState);
             }
-            if (!_thoughtsRepository.Exists(id))
+            if (!_thoughtsApplicationService.Exists(id))
                 return NotFound(id);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var originalThought = _thoughtsRepository.Entities.Find(id);
+            var originalThought = _thoughtsApplicationService.SingleOrDefault(id);
             originalThought.Title = editedThought.Title;
             originalThought.Body = editedThought.Body;
             originalThought.Mood = editedThought.Mood;
 
             originalThought.ModifiedBy = this.CurrentUserId;
 
-            _thoughtsRepository.Update(originalThought);
+            _thoughtsApplicationService.Update(originalThought);
 
 
             try
             {
-                _thoughtsRepository.SaveChanges();
+                _thoughtsApplicationService.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -122,14 +123,14 @@ namespace RandomThoughts.Controllers.Api
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (!_thoughtsRepository.Exists(id))
+            if (!_thoughtsApplicationService.Exists(id))
                 return NotFound(id);
 
-            _thoughtsRepository.Remove(id);
+            _thoughtsApplicationService.Remove(id);
 
             try
             {
-                _thoughtsRepository.SaveChanges();
+                _thoughtsApplicationService.SaveChanges();
             }
             catch (Exception ex)
             {

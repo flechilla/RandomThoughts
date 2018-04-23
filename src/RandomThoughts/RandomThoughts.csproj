@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RandomThoughts.Business\RandomThoughts.Business.csproj" />
     <ProjectReference Include="..\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
     <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
   </ItemGroup>
