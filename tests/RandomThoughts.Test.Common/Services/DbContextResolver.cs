@@ -6,6 +6,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RandomThoughts.DataAccess.Contexts;
+using RandomThoughts.Domain;
 
 namespace RandomThoughts.Test.Common.Services
 {
@@ -19,7 +20,7 @@ namespace RandomThoughts.Test.Common.Services
         {
             Disposed = false;
             ConnectionString =
-                $"Server=(localdb)\\mssqllocaldb;Database=Test_{Guid.NewGuid()};Trusted_Connection=True;MultipleActiveResultSets=true";
+                $"Server=DESKTOP-FDH5115\\MSSQLSERVER12;Database=Test_{Guid.NewGuid()};Trusted_Connection=True;MultipleActiveResultSets=true";
         }
 
         /// <summary>
@@ -71,33 +72,37 @@ namespace RandomThoughts.Test.Common.Services
         /// </summary>
         /// <param name="provider">The provider to use during the tests</param>
         /// <returns>An instance of <see cref="RandomThoughtsDbContext"/></returns>
-        public DbContext SetContext(DbContextProvider provider = DbContextProvider.SqliteInMemory)
+        public DbContext SetContext(DbContextProvider provider = DbContextProvider.SqlServer)
         {
             ProviderToUse = provider;
             if (provider == DbContextProvider.SqliteInMemory)
             {
                 var connection = new SqliteConnection("DataSource=:memory:");
-                connection.Open();
-
-                // Create the schema in the database
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
                     .UseSqlite(connection).Options;
-                Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>) DbContextOptions);
+                Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>)DbContextOptions);
+                connection.Open();
+                Context.Database.EnsureCreated();
+                Context.Database.ExecuteSqlCommand("ALTER TABLE ThoughtHoles ADD CreatedAt datetime");
+                
             }
             else if (provider == DbContextProvider.SqlServer)
             {
                 InitializeConfiguration();
 
                 // Current Assembly where lives DBContexts
-                var asmName = "RandomThoughts.DataAccess.Contexts";
 
 
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
-                    .UseSqlServer(ConnectionString, b => b.MigrationsAssembly(asmName)).Options;
+                    .UseSqlServer(ConnectionString).Options;
                 Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>) DbContextOptions);
+                Context.Database.EnsureCreated();
+                Context.Database.ExecuteSqlCommand(@"IF COL_LENGTH('ThoughtHoles', 'CreatedAt') IS  NULL
+                BEGIN
+                    ALTER TABLE ThoughtHoles ADD CreatedAt datetime2
+                END");
             }
-
-            Context.Database.EnsureCreated();
+            
 
             // I'm not really sure about this, but in SqlServer scenarios
             // We need to drop the database and create it again
@@ -156,4 +161,6 @@ namespace RandomThoughts.Test.Common.Services
             Context?.Dispose();
         }
     }
+
+    
 }
