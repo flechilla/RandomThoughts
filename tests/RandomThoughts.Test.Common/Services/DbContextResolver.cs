@@ -72,7 +72,7 @@ namespace RandomThoughts.Test.Common.Services
         /// </summary>
         /// <param name="provider">The provider to use during the tests</param>
         /// <returns>An instance of <see cref="RandomThoughtsDbContext"/></returns>
-        public DbContext SetContext(DbContextProvider provider = DbContextProvider.SqliteInMemory)
+        public DbContext SetContext(DbContextProvider provider = DbContextProvider.SqlServer)
         {
             ProviderToUse = provider;
             if (provider == DbContextProvider.SqliteInMemory)
@@ -84,8 +84,7 @@ namespace RandomThoughts.Test.Common.Services
                 connection.Open();
                 Context.Database.EnsureCreated();
                 Context.Database.ExecuteSqlCommand("ALTER TABLE ThoughtHoles ADD CreatedAt datetime");
-
-
+                
             }
             else if (provider == DbContextProvider.SqlServer)
             {
@@ -97,7 +96,11 @@ namespace RandomThoughts.Test.Common.Services
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
                     .UseSqlServer(ConnectionString).Options;
                 Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>) DbContextOptions);
-                Context.Database.Migrate();
+                Context.Database.EnsureCreated();
+                Context.Database.ExecuteSqlCommand(@"IF COL_LENGTH('ThoughtHoles', 'CreatedAt') IS  NULL
+                BEGIN
+                    ALTER TABLE ThoughtHoles ADD CreatedAt datetime2
+                END");
             }
             
 
