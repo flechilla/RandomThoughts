@@ -19,7 +19,7 @@ namespace RandomThoughts.Test.Common.Services
         {
             Disposed = false;
             ConnectionString =
-                $"Server=(localdb)\\mssqllocaldb;Database=Test_{Guid.NewGuid()};Trusted_Connection=True;MultipleActiveResultSets=true";
+                $"Server=DESKTOP-FDH5115\\MSSQLSERVER12;Database=Test_{Guid.NewGuid()};Trusted_Connection=True;MultipleActiveResultSets=true";
         }
 
         /// <summary>
@@ -76,28 +76,24 @@ namespace RandomThoughts.Test.Common.Services
             ProviderToUse = provider;
             if (provider == DbContextProvider.SqliteInMemory)
             {
-                var connection = new SqliteConnection("DataSource=:memory:");
-                connection.Open();
-
-                // Create the schema in the database
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
-                    .UseSqlite(connection).Options;
-                Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>) DbContextOptions);
+                    .UseSqlite("DataSource=:memory:").Options;
+                Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>)DbContextOptions);
+               
+
             }
             else if (provider == DbContextProvider.SqlServer)
             {
                 InitializeConfiguration();
 
                 // Current Assembly where lives DBContexts
-                var asmName = "RandomThoughts.DataAccess.Contexts";
 
 
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
-                    .UseSqlServer(ConnectionString, b => b.MigrationsAssembly(asmName)).Options;
+                    .UseSqlServer(ConnectionString).Options;
                 Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>) DbContextOptions);
             }
-
-            Context.Database.EnsureCreated();
+            Context.Database.Migrate();
 
             // I'm not really sure about this, but in SqlServer scenarios
             // We need to drop the database and create it again
@@ -156,4 +152,6 @@ namespace RandomThoughts.Test.Common.Services
             Context?.Dispose();
         }
     }
+
+    
 }

@@ -50,10 +50,10 @@ namespace RandomThoughts.Business.Tests.ApplicationServiceTests
 
             var appService = GetInstance(context);
 
-            appService.Add(new Thought { Id = 1, Title = "Thought1",Body = "Thought Body", ApplicationUser = user, ThoughtHole = thoughtHole});
+            appService.Add(new Thought { Title = "Thought1",Body = "Thought Body", ApplicationUser = user, ThoughtHole = thoughtHole});
             appService.SaveChanges();
 
-            var Thought = appService.SingleOrDefault(1);
+            var Thought = appService.SingleOrDefault(t=>t.Title == "Thought1");
 
             Assert.NotNull(Thought);
             Assert.Equal(Thought.Title, "Thought1");
@@ -91,22 +91,22 @@ namespace RandomThoughts.Business.Tests.ApplicationServiceTests
         public void Test_AddRange()
         {
             var resolver = new DbContextResolver();
-            var context = resolver.SetContext() as RandomThoughtsDbContext;
+            var context = resolver.SetContext(DbContextResolver.DbContextProvider.SqlServer) as RandomThoughtsDbContext;
             var user = new ApplicationUser() { };
             var thoughtHole = new ThoughtHole(){Name = "Thought", Description = "Thought description"};
             var appService = GetInstance(context);
 
             var Thoughts = new List<Thought>(10);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 11; i++)
             {
-                Thoughts.Add(new Thought { Title = "Thought" + i, Id = i,Body = "Thought Body", ApplicationUser = user, ThoughtHole = thoughtHole});
+                Thoughts.Add(new Thought { Title = "Thought" + i, Body = "Thought Body", ApplicationUser = user, ThoughtHole = thoughtHole});
             }
 
             appService.AddRange(Thoughts);
             appService.SaveChanges();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 11; i++)
             {
                 var Thought = appService.SingleOrDefault(i);
 
