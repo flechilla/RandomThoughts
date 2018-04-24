@@ -6,6 +6,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RandomThoughts.DataAccess.Contexts;
+using RandomThoughts.Domain;
 
 namespace RandomThoughts.Test.Common.Services
 {
@@ -76,10 +77,14 @@ namespace RandomThoughts.Test.Common.Services
             ProviderToUse = provider;
             if (provider == DbContextProvider.SqliteInMemory)
             {
+                var connection = new SqliteConnection("DataSource=:memory:");
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
-                    .UseSqlite("DataSource=:memory:").Options;
+                    .UseSqlite(connection).Options;
                 Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>)DbContextOptions);
-               
+                connection.Open();
+                Context.Database.EnsureCreated();
+                Context.Database.ExecuteSqlCommand("ALTER TABLE ThoughtHoles ADD CreatedAt datetime");
+
 
             }
             else if (provider == DbContextProvider.SqlServer)
@@ -92,8 +97,9 @@ namespace RandomThoughts.Test.Common.Services
                 DbContextOptions = new DbContextOptionsBuilder<RandomThoughtsDbContext>()
                     .UseSqlServer(ConnectionString).Options;
                 Context = new RandomThoughtsDbContext((DbContextOptions<RandomThoughtsDbContext>) DbContextOptions);
+                Context.Database.Migrate();
             }
-            Context.Database.Migrate();
+            
 
             // I'm not really sure about this, but in SqlServer scenarios
             // We need to drop the database and create it again

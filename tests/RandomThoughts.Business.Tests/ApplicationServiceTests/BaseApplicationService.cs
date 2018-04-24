@@ -43,7 +43,7 @@ namespace RandomThoughts.Business.Tests.ApplicationServiceTests
         public void Test_Add()
         {
             var resolver = new DbContextResolver();
-            var context = resolver.SetContext(DbContextResolver.DbContextProvider.SqlServer) as RandomThoughtsDbContext;
+            var context = resolver.SetContext() as RandomThoughtsDbContext;
 
             var user = new ApplicationUser();
             var thoughtHole = new ThoughtHole(){Name = "Thought", Description = "Thought description"};
@@ -91,7 +91,7 @@ namespace RandomThoughts.Business.Tests.ApplicationServiceTests
         public void Test_AddRange()
         {
             var resolver = new DbContextResolver();
-            var context = resolver.SetContext(DbContextResolver.DbContextProvider.SqlServer) as RandomThoughtsDbContext;
+            var context = resolver.SetContext() as RandomThoughtsDbContext;
             var user = new ApplicationUser() { };
             var thoughtHole = new ThoughtHole(){Name = "Thought", Description = "Thought description"};
             var appService = GetInstance(context);
