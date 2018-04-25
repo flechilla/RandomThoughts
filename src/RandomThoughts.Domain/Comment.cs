@@ -33,10 +33,6 @@ namespace RandomThoughts.Domain
         /// </summary>
         public string ApplicationUserId { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the Navigation Prop. to the creator of the Thought.
-        /// </summary>
-        public ApplicationUser ApplicationUser { get; set; }
 
         /// <summary>
         ///     Gets or sets the amount of likes for the current Thought.

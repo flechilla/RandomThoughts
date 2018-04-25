@@ -15,10 +15,5 @@ namespace RandomThoughts.Domain
         /// </summary>
         public ICollection<Thought> Thoughts { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the <see cref="Comment"/>
-        ///     related to the User
-        /// </summary>
-        public ICollection<Comment<Thought, int>> Comments { get; set; }
     }
 }
