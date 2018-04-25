@@ -7,6 +7,8 @@ using RandomThoughts.DataAccess.Contexts;
 using RandomThoughts.DataAccess.Repositories.Base;
 using RandomThoughts.DataAccess.Repositories.ThoughtHoles;
 using RandomThoughts.DataAccess.Repositories.Thoughts;
+using RandomThoughts.DataAccess.Repositories.Comments.ThoughtsComments;
+using RandomThoughts.Domain;
 
 namespace RandomThoughts.DataAccess.Extensions
 {
@@ -24,10 +26,9 @@ namespace RandomThoughts.DataAccess.Extensions
         {
             service.AddScoped<IThoughtsRepository, ThoughtsRepository>();
             service.AddScoped<IThoughtHolesRepository, ThoughtHolesRepository>();
+            service.AddScoped<IThoughtsCommentsRepository, ThoughtsCommentsRepository>();
 
             service.AddScoped<ISqlDbContext, RandomThoughtsDbContext>();
-
-
         }
     }
 }
