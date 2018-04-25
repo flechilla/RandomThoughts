@@ -57,6 +57,11 @@ namespace RandomThoughts.Domain
         /// </summary>
         public int Views { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the <see cref="Comment"/>
+        ///     related to the <see cref="Thought"/>
+        /// </summary>
+        public ICollection<Comment<Thought, int>> Comments { get; set; }
 
     }
 }
