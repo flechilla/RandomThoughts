@@ -9,7 +9,7 @@ namespace SeedEngine
     ///     Declares the functionalities and objects that must be
     ///     implemented by the seed classes.
     /// </summary>
-    public interface ISeed<TContext> where TContext : DbContext
+    public interface ISeed<in TContext> where TContext : DbContext
     {
         /// <summary>
         ///     Main method to run the seeds. This MUST contains the 
