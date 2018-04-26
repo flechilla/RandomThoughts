@@ -14,9 +14,10 @@ using RandomThoughts.Domain.Enums;
 namespace RandomThoughts.DataAccess.Migrations
 {
     [DbContext(typeof(RandomThoughtsDbContext))]
-    partial class RandomThoughtsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180426205444_AddCommentsDiscriminator")]
+    partial class AddCommentsDiscriminator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
