@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using RandomThoughts.Business.ApplicationServices.ThoughtHole;
 using RandomThoughts.Business.ApplicationServices.Thoughts;
-using RandomThoughts.Business.ApplicationServices.Comments.ThoughtsComments;
+using RandomThoughts.Business.ApplicationServices.Comments;
 
 
 namespace RandomThoughts.Business.Extensions

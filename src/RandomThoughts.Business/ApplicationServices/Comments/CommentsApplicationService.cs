@@ -4,8 +4,11 @@ using RandomThoughts.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RandomThoughts.Domain.Enums;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace RandomThoughts.Business.ApplicationServices.Comments.ThoughtsComments
+namespace RandomThoughts.Business.ApplicationServices.Comments
 {
     public class CommentsApplicationService : BaseApplicationService<RandomThoughts.Domain.Comments, int>, ICommentsApplicationService
     {
@@ -21,8 +24,21 @@ namespace RandomThoughts.Business.ApplicationServices.Comments.ThoughtsComments
         ///     or to the Presentation layer
         /// </remarks>
         /// </summary>
-        public CommentsApplicationService(IBaseRepository<RandomThoughts.Domain.Comments, int> repository) : base(repository)
+        public CommentsApplicationService(RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository repository) : base(repository)
         {
+        }
+
+        public IQueryable<Domain.Comments> ReadAll((int idparent, Discriminator discriminator) filter)
+        {
+            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+            return repository.ReadAll((filter.idparent, filter.discriminator));
+        }
+
+        public async Task<IQueryable<Domain.Comments>> ReadAllAsync((int idparent, Discriminator discriminator) filter)
+        {
+            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+
+            return await repository.ReadAllAsync((filter.idparent, filter.discriminator));
         }
     }
 }
