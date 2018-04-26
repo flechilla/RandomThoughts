@@ -8,5 +8,7 @@ namespace RandomThoughts.Models.ThoughtCommentViewModel
     public class CommentsCreateViewModel
     {
         public int ParentId { get; set; }
+
+        public int discriminator { get; set; }
     }
 }
