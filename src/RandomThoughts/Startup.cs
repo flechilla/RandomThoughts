@@ -95,6 +95,7 @@ namespace RandomThoughts
                 //are here now to test the seeds
                 UserSeeds.AddOrUpdate(context);
                 ThoughtHoleSeeds.AddOrUpdate(context);
+                ThoughtSeeds.AddOrUpdate(context);
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using RandomThoughts.DataAccess.Contexts;
@@ -15,6 +16,9 @@ namespace RandomThoughts.DataAccess.Seeds
     {
         public static void AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects = 20)
         {
+            if (context.ThoughtHoles.Any())
+                return;
+
             var thoughtHoles = new List<ThoughtHole>(amountOfObjects);
             var lipsumGen = new NLipsum.Core.LipsumGenerator();
 
