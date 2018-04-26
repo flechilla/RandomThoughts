@@ -15,10 +15,7 @@ namespace RandomThoughts.Models.ThoughtCommentViewModel
 
         [Required]
         public string ApplicationUserId { get; set; }
-
-        [Required]
-        public Visibility Visibility { get; set; }
-
+        
         public int Likes { get; set; }
     }
 }

@@ -39,9 +39,5 @@ namespace RandomThoughts.Domain
         /// </summary>
         public int Likes { get; set; }
 
-        /// <summary>
-        /// Gets or sets the visibility level for the Comment
-        /// </summary>
-        public Visibility Visibility { get; set; }
     }
 }
