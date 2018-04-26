@@ -9,7 +9,7 @@ namespace SeedEngine
     ///     Declares the functionalities and objects that must be
     ///     implemented by the seed classes.
     /// </summary>
-    public interface ISeed
+    public interface ISeed<TContext> where TContext : DbContext
     {
         /// <summary>
         ///     Main method to run the seeds. This MUST contains the 
@@ -25,6 +25,6 @@ namespace SeedEngine
         ///     The amount of objects to be added. This should be used as the
         ///     upper bound of the cycle that creates and adds the new objects.
         /// </param>
-        void AddOrUpdate(DbContext context, int amountOfObjects = 20);
+        void AddOrUpdate(TContext context, int amountOfObjects = 20);
     }
 }
