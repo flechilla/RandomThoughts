@@ -26,6 +26,9 @@ namespace RandomThoughts.DataAccess.Contexts
                 .HasForeignKey(t => t.ApplicationUserId);
 
             builder.Entity<Thought>().Property(x => x.ApplicationUserId).IsRequired();
+
+            builder.Entity<Comment<Thought, int>>().Property(x => x.ApplicationUserId).IsRequired();
+
         }
 
         /// <summary>
@@ -37,6 +40,11 @@ namespace RandomThoughts.DataAccess.Contexts
         ///     Gets or sets the <see cref="ThoughtHole"/> of the platform.
         /// </summary>
         public DbSet<ThoughtHole> ThoughtHoles { get; set; }
-    
+
+        /// <summary>
+        ///     Gets or sets the <see cref="Comment"/> of the platform.
+        /// </summary>
+        public DbSet<ThoughtComments> Comments { get; set; }
+
     }
 }
