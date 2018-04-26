@@ -18,6 +18,7 @@ using AutoMapper;
 using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
 using RandomThoughts.DataAccess.Seeds;
+using SeedEngine;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
@@ -87,15 +88,12 @@ namespace RandomThoughts
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
 
-                //TODO: see why the resolver is not resolving this ( problem with the instance of the options)
+                //TODO: have to try to resolve this in the library. Maybe is the SeedEnginge is configured
+                //in the ConfigureServices, this will be possible ;)
                 var context = app.ApplicationServices.GetRequiredService<RandomThoughtsDbContext>();
-                //var context = new RandomThoughtsDbContext(new DbContextOptions<RandomThoughtsDbContext>());
 
-                //seed the DB TODO: These calls won't be here but in the SeedEngine library
-                //are here now to test the seeds
-                UserSeeds.AddOrUpdate(context);
-                ThoughtHoleSeeds.AddOrUpdate(context);
-                ThoughtSeeds.AddOrUpdate(context);
+                //apply all the seeds
+                app.EnsureSeedData(context);
             }
             else
             {
