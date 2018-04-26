@@ -22,7 +22,7 @@ namespace RandomThoughts.Business.ApplicationServices.Comments.Base
     /// </summary>
     /// <typeparam name="TEntity">The type of entity for manipulate</typeparam>
     /// <typeparam name="TKey">The type of the key for that entity</typeparam>
-    public interface ICommentApplicationService<TEntity, TKey> : IBaseApplicationService<Comment<TEntity, TKey>, int> where TEntity:IEntity<TKey>
+    public interface ICommentApplicationService<TEntity, TKey> : IBaseApplicationService<Comment<TEntity, TKey>, int> where TEntity: class, IEntity<TKey>
     {
     }
 }
