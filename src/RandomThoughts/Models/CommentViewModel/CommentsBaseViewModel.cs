@@ -7,7 +7,7 @@ using RandomThoughts.Domain.Enums;
 
 namespace RandomThoughts.Models.ThoughtCommentViewModel
 {
-    public class ThoughtCommentBaseViewModel
+    public class CommentsBaseViewModel
     {
         [Required]
         [MaxLength(255)]
