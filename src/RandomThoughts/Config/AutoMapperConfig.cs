@@ -36,15 +36,15 @@ namespace RandomThoughts.Config
 
             this.CreateMap<ThoughtHoleCreateViewModel, ThoughtHole>();
 
-            this.CreateMap<ThoughtComments, ThoughtCommentIndexViewModel>().AfterMap((src, dest) =>
+            this.CreateMap<Comments, ThoughtCommentIndexViewModel>().AfterMap((src, dest) =>
                {
                    dest.CreateAtHumanized = src.CreatedAt.Humanize();
                    dest.ModifiedAtHumanized = src.ModifiedAt.Humanize();
                });
 
-            this.CreateMap<ThoughtCommentCreateViewModel, ThoughtComments>();
+            this.CreateMap<ThoughtCommentCreateViewModel, Comments>();
 
-            this.CreateMap<ThoughtCommentEditViewModel, ThoughtComments>();
+            this.CreateMap<ThoughtCommentEditViewModel, Comments>();
         }
     }
 }
