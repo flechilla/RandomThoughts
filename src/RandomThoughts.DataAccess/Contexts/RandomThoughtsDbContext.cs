@@ -44,7 +44,7 @@ namespace RandomThoughts.DataAccess.Contexts
         /// <summary>
         ///     Gets or sets the <see cref="Comment"/> of the platform.
         /// </summary>
-        public DbSet<Comment<Thought, int>> Comments { get; set; }
+        public DbSet<ThoughtComments> Comments { get; set; }
 
     }
 }

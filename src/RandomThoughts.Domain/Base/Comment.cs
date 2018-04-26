@@ -10,7 +10,7 @@ using RandomThoughts.Domain.Enums;
 
 namespace RandomThoughts.Domain
 {
-    public class Comment<TEntity,TKey> : AuditableAndTrackableEntity<int> where TEntity:IEntity<TKey>
+    public class Comment<TEntity,TKey> : AuditableAndTrackableEntity<int> where TEntity: class, IEntity<TKey>
     {
         /// <summary>
         /// Gets or sets the body for the Comment

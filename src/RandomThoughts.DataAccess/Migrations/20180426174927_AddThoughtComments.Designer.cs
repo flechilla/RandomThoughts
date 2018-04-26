@@ -14,9 +14,10 @@ using RandomThoughts.Domain.Enums;
 namespace RandomThoughts.DataAccess.Migrations
 {
     [DbContext(typeof(RandomThoughtsDbContext))]
-    partial class RandomThoughtsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180426174927_AddThoughtComments")]
+    partial class AddThoughtComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,9 +203,6 @@ namespace RandomThoughts.DataAccess.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<int>("EntityId");
 
                     b.Property<int>("Likes");
@@ -217,9 +215,7 @@ namespace RandomThoughts.DataAccess.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("Comment<Thought, int>");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Comment<Thought, int>");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("RandomThoughts.Domain.Thought", b =>
@@ -296,16 +292,6 @@ namespace RandomThoughts.DataAccess.Migrations
                     b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("RandomThoughts.Domain.ThoughtComments", b =>
-                {
-                    b.HasBaseType("RandomThoughts.Domain.Comment<RandomThoughts.Domain.Thought, int>");
-
-
-                    b.ToTable("ThoughtComments");
-
-                    b.HasDiscriminator().HasValue("ThoughtComments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
