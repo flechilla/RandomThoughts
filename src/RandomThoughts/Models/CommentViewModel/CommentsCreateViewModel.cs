@@ -7,6 +7,6 @@ namespace RandomThoughts.Models.ThoughtCommentViewModel
 {
     public class CommentsCreateViewModel
     {
-        public int EntityId { get; set; }
+        public int ParentId { get; set; }
     }
 }

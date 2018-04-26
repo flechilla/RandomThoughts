@@ -28,17 +28,18 @@ namespace RandomThoughts.Business.ApplicationServices.Comments
         {
         }
 
-        public IQueryable<Domain.Comments> ReadAll((int idparent, Discriminator discriminator) filter)
+        public IQueryable<Domain.Comments> ReadAll((int idparent, int discriminator) filter)
         {
+            var discriminator = (Discriminator)filter.discriminator;
             var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
-            return repository.ReadAll((filter.idparent, filter.discriminator));
+            return repository.ReadAll((filter.idparent, discriminator));
         }
 
-        public async Task<IQueryable<Domain.Comments>> ReadAllAsync((int idparent, Discriminator discriminator) filter)
+        public async Task<IQueryable<Domain.Comments>> ReadAllAsync((int idparent, int discriminator) filter)
         {
+            var discriminator = (Discriminator)filter.discriminator;
             var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
-
-            return await repository.ReadAllAsync((filter.idparent, filter.discriminator));
+            return await repository.ReadAllAsync((filter.idparent, discriminator));
         }
     }
 }
