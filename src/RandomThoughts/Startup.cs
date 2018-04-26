@@ -94,6 +94,7 @@ namespace RandomThoughts
                 //seed the DB TODO: These calls won't be here but in the SeedEngine library
                 //are here now to test the seeds
                 UserSeeds.AddOrUpdate(context);
+                ThoughtHoleSeeds.AddOrUpdate(context);
             }
             else
             {
