@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.DataAccess",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.Business", "src\RandomThoughts.Business\RandomThoughts.Business.csproj", "{641BB95C-1215-4CA6-BAC7-8667B9E21981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomThoughts.Business.Tests", "tests\RandomThoughts.Business.Tests\RandomThoughts.Business.Tests.csproj", "{FA91B616-9810-4D9A-9AB5-2F722A84F3D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.Business.Tests", "tests\RandomThoughts.Business.Tests\RandomThoughts.Business.Tests.csproj", "{FA91B616-9810-4D9A-9AB5-2F722A84F3D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomThoughts.Test.Common", "tests\RandomThoughts.Test.Common\RandomThoughts.Test.Common.csproj", "{AC81C558-0010-4322-B906-BA59A4177FCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.Test.Common", "tests\RandomThoughts.Test.Common\RandomThoughts.Test.Common.csproj", "{AC81C558-0010-4322-B906-BA59A4177FCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedEngine", "libraries\SeedEngine\SeedEngine.csproj", "{F6302FD7-89CD-4016-8AA5-5A1808E03926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AC81C558-0010-4322-B906-BA59A4177FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC81C558-0010-4322-B906-BA59A4177FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC81C558-0010-4322-B906-BA59A4177FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
