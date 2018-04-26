@@ -1,6 +1,5 @@
-﻿using RandomThoughts.Business.ApplicationServices.Comments.Base;
+﻿using RandomThoughts.Business.Base;
 using RandomThoughts.Domain;
-using RandomThoughts.DataAccess.Repositories.Comments.ThoughtsComments;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,12 +13,12 @@ namespace RandomThoughts.Business.ApplicationServices.Comments.ThoughtsComments
     ///     </para>
     ///     <remarks>
     ///         This object handle the data of the <see cref="Comment{TEntity, TKey}" /> entity
-    ///         through the <see cref="IThoughtsCommentsRepository" /> but when necessary
+    ///         through the <see cref="ICommentsRepository" /> but when necessary
     ///         adda some data or apply operations on the data before pass it to the DataAcces layer
     ///         or to the Presentation layer
     ///     </remarks>
     /// </summary>
-    public interface IThoughtsCommentsApplicationService : ICommentApplicationService<Thought, int>
+    public interface ICommentsApplicationService : IBaseApplicationService<RandomThoughts.Domain.Comments,int>
     {
     }
 }

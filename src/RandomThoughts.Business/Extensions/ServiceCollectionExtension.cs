@@ -23,7 +23,7 @@ namespace RandomThoughts.Business.Extensions
         {
             service.AddScoped<IThoughtsApplicationService, ThoughtsApplicationService>();
             service.AddScoped<IThoughtHolesApplicationService, ThoughtHolesApplicationService>();
-            service.AddScoped<IThoughtsCommentsApplicationService, ThoughtCommentApplicationService>();
+            service.AddScoped<ICommentsApplicationService, CommentsApplicationService>();
         }
     }
 }
