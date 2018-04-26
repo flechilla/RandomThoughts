@@ -20,16 +20,12 @@ namespace SeedEngine
             var seedTypes = contextAssambly.GetTypes()
                 .Where(type => type.GetInterfaces().Any(t => t == typeof(ISeed))).ToArray();
 
-            var seed1 = seedTypes[2];
-
-            var v3 = seed1.GetProperty("OrderToByApplied");
-
-
-            var v2 = seed1.GetProperty("foo").GetValue(seed1, null);
-
-
-
-            var orderedSeeds = seedTypes.OrderBy<Type, int>(t => (int)t.GetProperty("OrderToByApplied").GetValue(t));
+            var orderedSeeds = seedTypes.OrderBy<Type, int>(t =>
+            {
+                var seedInstance = Activator.CreateInstance(t);
+                var order = (int)t.GetProperty("OrderToByApplied").GetValue(seedInstance, null);
+                return order;
+            });
 
             foreach (var seedType in orderedSeeds)
             {
