@@ -27,7 +27,7 @@ namespace RandomThoughts.DataAccess.Contexts
 
             builder.Entity<Thought>().Property(x => x.ApplicationUserId).IsRequired();
 
-            builder.Entity<Comment<Thought, int>>().Property(x => x.ApplicationUserId).IsRequired();
+            builder.Entity<ThoughtComments>().Property(x => x.ApplicationUserId).IsRequired();
 
         }
 
