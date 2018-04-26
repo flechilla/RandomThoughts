@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\libraries\SeedEngine\SeedEngine.csproj" />
     <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
   </ItemGroup>
 

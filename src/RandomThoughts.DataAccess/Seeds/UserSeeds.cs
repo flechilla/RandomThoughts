@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using RandomThoughts.DataAccess.Contexts;
@@ -14,14 +15,20 @@ namespace RandomThoughts.DataAccess.Seeds
     /// the <see cref="ApplicationUser"/>
     public class UserSeeds : ISeed<RandomThoughtsDbContext>
     {
-        public void AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects = 20)
+        public static void AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects = 20)
         {
+            if (context.Users.Any())
+                return;
+
             var mainUser = new ApplicationUser()
             {
                 Email = "admin@gmail.com",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
                 EmailConfirmed = true, 
                 NickName = "admin",
-                UserName = "admin"
+                UserName = "admin@gmail.com",
+                NormalizedUserName = "ADMIN@GMAIL.COM",
+                SecurityStamp = Guid.NewGuid().ToString()
             };
 
             var passHasher = new PasswordHasher<ApplicationUser>();
@@ -33,6 +40,11 @@ namespace RandomThoughts.DataAccess.Seeds
             context.Users.Add(mainUser);
 
             context.SaveChanges();
+        }
+
+        void ISeed<RandomThoughtsDbContext>.AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects)
+        {
+            AddOrUpdate(context, amountOfObjects);
         }
     }
 }

@@ -17,6 +17,7 @@ using RandomThoughts.Services;
 using AutoMapper;
 using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
+using RandomThoughts.DataAccess.Seeds;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
@@ -42,11 +43,19 @@ namespace RandomThoughts
             services.AddSingleton(mapper);
 
             services.AddDbContext<RandomThoughtsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<RandomThoughtsDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<DbContextOptions<RandomThoughtsDbContext>>(_ =>
+            {
+                var optionBuilder =  new DbContextOptionsBuilder<RandomThoughtsDbContext>();
+                optionBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+                return optionBuilder.Options;
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -77,6 +86,14 @@ namespace RandomThoughts
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
+
+                //TODO: see why the resolver is not resolving this ( problem with the instance of the options)
+                var context = app.ApplicationServices.GetRequiredService<RandomThoughtsDbContext>();
+                //var context = new RandomThoughtsDbContext(new DbContextOptions<RandomThoughtsDbContext>());
+
+                //seed the DB TODO: These calls won't be here but in the SeedEngine library
+                //are here now to test the seeds
+                UserSeeds.AddOrUpdate(context);
             }
             else
             {
