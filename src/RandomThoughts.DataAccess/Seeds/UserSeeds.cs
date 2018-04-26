@@ -13,9 +13,8 @@ namespace RandomThoughts.DataAccess.Seeds
     /// <see cref="ApplicationUser" />
     public class UserSeeds : ISeed<RandomThoughtsDbContext>
     {
+        /// <inheritdoc />
         public int OrderToByApplied => 1;
-
-        public static int foo => 3;
 
         public void AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects = 20)
         {
@@ -40,7 +39,6 @@ namespace RandomThoughts.DataAccess.Seeds
             mainUser.PasswordHash = hashedPass;
 
             context.Users.Add(mainUser);
-
             context.SaveChanges();
         }
     }

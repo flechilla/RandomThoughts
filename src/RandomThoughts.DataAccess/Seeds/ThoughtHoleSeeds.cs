@@ -10,12 +10,11 @@ namespace RandomThoughts.DataAccess.Seeds
 {
     /// <inheritdoc />
     /// Contains the implementation of the
-    /// <see cref="ThoughtHole" />
-    /// objects
+    /// <see cref="ThoughtHole" /> objects
     public class ThoughtHoleSeeds : ISeed<RandomThoughtsDbContext>
     {
+        ///<inheritdoc />
         public int OrderToByApplied => 2;
-
 
         public void AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects = 20)
         {

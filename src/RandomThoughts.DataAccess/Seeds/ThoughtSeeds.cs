@@ -12,6 +12,7 @@ namespace RandomThoughts.DataAccess.Seeds
 {
     public class ThoughtSeeds : ISeed<RandomThoughtsDbContext>
     {
+        /// <inheritdoc />
         public int OrderToByApplied => 3;
 
         public void AddOrUpdate(RandomThoughtsDbContext context, int amountOfObjects = 20)
@@ -41,7 +42,7 @@ namespace RandomThoughts.DataAccess.Seeds
                     var newThought = new Thought
                     {
                         Title = lipsumGen.GenerateSentences(1)[0],
-                        Body = stringArrayFlatter(
+                        Body = string.Join("",
                             lipsumGen.GenerateParagraphs(new Random(DateTime.UtcNow.Millisecond).Next(1, 10))),
                         ThoughtHole = thoughtHole,
                         ApplicationUserId = user.Id,
@@ -58,16 +59,6 @@ namespace RandomThoughts.DataAccess.Seeds
 
             context.Thoughts.AddRange(thoughts);
             context.SaveChanges();
-        }
-
-        private static string stringArrayFlatter(string[] paragraphs)
-        {
-            var output = new StringBuilder();
-
-            foreach (var p in paragraphs)
-                output.Append(p);
-
-            return output.ToString();
         }
     }
 }
