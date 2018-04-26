@@ -7,6 +7,8 @@ using Humanizer;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtHoleViewModels;
 using RandomThoughts.Models.ThoughtViewModels;
+using RandomThoughts.Models.ThoughtCommentViewModel;
+
 
 namespace RandomThoughts.Config
 {
@@ -34,6 +36,15 @@ namespace RandomThoughts.Config
 
             this.CreateMap<ThoughtHoleCreateViewModel, ThoughtHole>();
 
+            this.CreateMap<Comment<Thought, int>, ThoughtCommentIndexViewModel>().AfterMap((src, dest) =>
+               {
+                   dest.CreateAtHumanized = src.CreatedAt.Humanize();
+                   dest.ModifiedAtHumanized = src.ModifiedAt.Humanize();
+               });
+
+            this.CreateMap<ThoughtCommentCreateViewModel, Comment<Thought, int>>();
+
+            this.CreateMap<ThoughtCommentEditViewModel, Comment<Thought, int>>();
         }
     }
 }
