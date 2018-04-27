@@ -14,8 +14,9 @@ namespace SeedEngine
 {
     public static class ApplySeeds
     {
-        public static void EnsureSeedData<T>(this IApplicationBuilder app, T context) where T: DbContext
+        public static void EnsureSeedData<T>(this IApplicationBuilder app) where T: DbContext
         {
+            var context = app.ApplicationServices.GetService(typeof(T)) as T;
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
