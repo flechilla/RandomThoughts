@@ -7,7 +7,7 @@ using Humanizer;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtHoleViewModels;
 using RandomThoughts.Models.ThoughtViewModels;
-using RandomThoughts.Models.ThoughtCommentViewModel;
+using RandomThoughts.Models.CommentViewModel;
 
 
 namespace RandomThoughts.Config
