@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using RandomThoughts.DataAccess.Contexts;
 using RandomThoughts.Domain;
-using SeedEngine;
+using SeedEngine.Core;
 
 namespace RandomThoughts.DataAccess.Seeds
 {

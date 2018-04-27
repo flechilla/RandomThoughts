@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SeedEngine
+namespace SeedEngine.Utilities
 {
     /// <summary>
     ///     Contains functionalities that extends the
@@ -34,11 +31,12 @@ namespace SeedEngine
         }
 
         /// <summary>
-        ///     Mark as 'deleted' all Selected entities
+        ///     Mark as 'deleted' all the objects in the
+        ///     given <paramref name="context"/> of type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">Entity Type</typeparam>
         /// <param name="context">The <see cref="DbContext"/> to check</param>
-        public static void DeleteAll<T>(this DbContext context)
+        public static void MarkAsDeleted<T>(this DbContext context)
             where T : class
         {
             foreach (var p in context.Set<T>())

@@ -19,6 +19,7 @@ using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
 using RandomThoughts.DataAccess.Seeds;
 using SeedEngine;
+using SeedEngine.Core;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
@@ -44,19 +45,20 @@ namespace RandomThoughts
             services.AddSingleton(mapper);
 
             services.AddDbContext<RandomThoughtsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), 
+                ServiceLifetime.Transient, ServiceLifetime.Transient);
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<RandomThoughtsDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<DbContextOptions<RandomThoughtsDbContext>>(_ =>
-            {
-                var optionBuilder =  new DbContextOptionsBuilder<RandomThoughtsDbContext>();
-                optionBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            //services.AddTransient<DbContextOptions<RandomThoughtsDbContext>>(_ =>
+            //{
+            //    var optionBuilder =  new DbContextOptionsBuilder<RandomThoughtsDbContext>();
+            //    optionBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
-                return optionBuilder.Options;
-            });
+            //    return optionBuilder.Options;
+            //});
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -90,10 +92,10 @@ namespace RandomThoughts
 
                 //TODO: have to try to resolve this in the library. Maybe is the SeedEnginge is configured
                 //in the ConfigureServices, this will be possible ;)
-                var context = app.ApplicationServices.GetRequiredService<RandomThoughtsDbContext>();
+               // var context = app.ApplicationServices.GetRequiredService<RandomThoughtsDbContext>();
 
                 //apply all the seeds
-                app.EnsureSeedData(context);
+                app.EnsureSeedData<RandomThoughtsDbContext>();
             }
             else
             {

@@ -6,7 +6,7 @@ using NLipsum.Core;
 using RandomThoughts.DataAccess.Contexts;
 using RandomThoughts.Domain;
 using RandomThoughts.Domain.Enums;
-using SeedEngine;
+using SeedEngine.Core;
 
 namespace RandomThoughts.DataAccess.Seeds
 {
