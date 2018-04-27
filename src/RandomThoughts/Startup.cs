@@ -45,8 +45,7 @@ namespace RandomThoughts
             services.AddSingleton(mapper);
 
             services.AddDbContext<RandomThoughtsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), 
-                ServiceLifetime.Transient, ServiceLifetime.Transient);
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<RandomThoughtsDbContext>()
