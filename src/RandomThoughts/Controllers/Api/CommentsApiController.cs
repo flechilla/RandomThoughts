@@ -25,40 +25,52 @@ namespace RandomThoughts.Controllers.Api
             this._commentsApplicationService = commentsApplicationService;
         }
 
-        [HttpGet("{id}")]
-        public IEnumerable<CommentsIndexViewModel> Get(int id, int discriminator)
+        [HttpGet]
+        public IEnumerable<CommentsIndexViewModel> Get(int ParentId, int discriminator)
         {
-            var comments = this._commentsApplicationService.ReadAll((id, discriminator)).ToList();
+            var comments = this._commentsApplicationService.ReadAll((ParentId, discriminator)).ToList();
+            
             var commentsView = _mapper.Map<IEnumerable<Comments>, IEnumerable<CommentsIndexViewModel>>(comments);
 
             return commentsView;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var comment = _commentsApplicationService.SingleOrDefault(id);
+
+            if (comment != null)
+                return Ok(_mapper.Map<Comments, CommentsIndexViewModel>(comment));
+
+            return NotFound(id);
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody]CommentsCreateViewModel newComment)
         {
-            if(ModelState.IsValid)
+            newComment.ApplicationUserId = CurrentUserNickName;
+           
+                
+            var comment = _mapper.Map<CommentsCreateViewModel, Comments>(newComment);
+
+            comment.Likes = 0;
+            comment.ParentDiscriminator = (RandomThoughts.Domain.Enums.Discriminator)newComment.discriminator;
+            comment.ApplicationUserId = this.CurrentUserNickName;
+            this._commentsApplicationService.Add(comment);
+
+            try
             {
-                var comment = _mapper.Map<CommentsCreateViewModel, Comments>(newComment);
-
-                comment.Likes = 0;
-                comment.ParentDiscriminator = (RandomThoughts.Domain.Enums.Discriminator)newComment.discriminator;
-                comment.ApplicationUserId = this.CurrentUserNickName;
-                this._commentsApplicationService.Add(comment);
-
-                try
-                {
-                    _commentsApplicationService.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500);
-                }
-
-                return Created("", comment);
+                _commentsApplicationService.SaveChanges();
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
+            return Created("", comment);
             
-            return BadRequest(ModelState);            
+            
         }
 
         [HttpPut("{id}")]
