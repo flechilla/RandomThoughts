@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RandomThoughts.Models.ThoughtCommentViewModel
 {
-    public class CommentsCreateViewModel
+    public class CommentsCreateViewModel : CommentsBaseViewModel
     {
         public int ParentId { get; set; }
 
