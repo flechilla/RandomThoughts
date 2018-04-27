@@ -17,20 +17,20 @@ namespace SeedEngine
             if(!context.AllMigrationsApplied())
                 throw new Exception("The migrations must be applied in order to run the Seeds.");
 
-            var seedTypes = contextAssambly.GetTypes()
-                .Where(type => type.GetInterfaces().Any(t => t == typeof(ISeed))).ToArray();
+            var seedInstances = contextAssambly.GetTypes()
+                .Where(type => type.GetInterfaces().Any(t => t == typeof(ISeed))).
+                Select(t=>(t, Activator.CreateInstance(t)));
 
-            var orderedSeeds = seedTypes.OrderBy<Type, int>(t =>
+            var orderedSeeds = seedInstances.OrderBy<(Type, object), int>(tuple =>
             {
-                var seedInstance = Activator.CreateInstance(t);
-                var order = (int)t.GetProperty("OrderToByApplied").GetValue(seedInstance, null);
+                var order = (int)tuple.Item1.GetProperty("OrderToByApplied").GetValue(tuple.Item2, null);
                 return order;
             });
 
-            foreach (var seedType in orderedSeeds)
+            foreach (var seedTuple in orderedSeeds)
             {
-                seedType.GetMethod("AddOrUpdate")
-                    .Invoke(null, new List<object>() { context, 100 }
+                seedTuple.Item1.GetMethod("AddOrUpdate")
+                    .Invoke(seedTuple.Item2, new List<object>() { context, 100 }
                         .ToArray());
                 context.SaveChanges();
             }
