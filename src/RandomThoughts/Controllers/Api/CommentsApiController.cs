@@ -8,16 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.Business.ApplicationServices.Comments;
 using RandomThoughts.DataAccess.Repositories.Comments;
 using RandomThoughts.Domain;
-using RandomThoughts.Models.ThoughtCommentViewModel;
+using RandomThoughts.Models.CommentViewModel;
 
 namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
-    public class CommentsApiController : BaseApiController
+    public class CommentsController : BaseApiController
     {
         private readonly IMapper _mapper;
         private readonly ICommentsApplicationService _commentsApplicationService;
-        public CommentsApiController(IHttpContextAccessor httpContextAccessor,
+        public CommentsController(IHttpContextAccessor httpContextAccessor,
             IMapper mapper,
             ICommentsApplicationService commentsApplicationService) : base(httpContextAccessor)
         {
@@ -25,7 +25,7 @@ namespace RandomThoughts.Controllers.Api
             this._commentsApplicationService = commentsApplicationService;
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public IEnumerable<CommentsIndexViewModel> Get(int id, int discriminator)
         {
             var comments = this._commentsApplicationService.ReadAll((id, discriminator)).ToList();

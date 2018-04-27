@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using RandomThoughts.Domain.Enums;
 
-namespace RandomThoughts.Models.ThoughtCommentViewModel
+namespace RandomThoughts.Models.CommentViewModel
 {
     public class CommentsBaseViewModel
     {
