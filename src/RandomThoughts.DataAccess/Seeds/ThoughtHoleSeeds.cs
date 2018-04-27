@@ -5,6 +5,7 @@ using NLipsum.Core;
 using RandomThoughts.DataAccess.Contexts;
 using RandomThoughts.Domain;
 using SeedEngine;
+using SeedEngine.Core;
 
 namespace RandomThoughts.DataAccess.Seeds
 {

@@ -19,6 +19,7 @@ using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
 using RandomThoughts.DataAccess.Seeds;
 using SeedEngine;
+using SeedEngine.Core;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
