@@ -96,8 +96,14 @@ function displayThoughtDetails(data){
 
     }).done(function (res) {
         console.log('res', res);
-        $('#comment-edit-modal .modal-footer > button').data("id", data.id);        
+        $('#comment-edit-modal .modal-footer > button').data("id", data.id);
+        $('#thought-inner-container > button').data("id", data.id);
         console.log(data.id);
+        console.log(res);
+        if (res.length == 0) {
+            $('#thought-display-modal .modalCommentTitle > h5').html('');
+            $('#thought-display-modal .modalComment-body > p').html('');
+        }
         for (var i = 0; i < res.length; i++) {
             $('#thought-display-modal .modalCommentTitle > span > button').data("id", res[i].id);            
             $('#thought-display-modal .comment-edit-btn').data("id", res[i].id);            

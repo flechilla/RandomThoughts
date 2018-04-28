@@ -28,7 +28,8 @@ namespace RandomThoughts.Controllers.Api
         [HttpGet]
         public IEnumerable<CommentsIndexViewModel> Get(int ParentId, int discriminator)
         {
-            var comments = this._commentsApplicationService.ReadAll((ParentId, discriminator)).ToList();
+            var comments = this._commentsApplicationService.ReadAllAsync((ParentId, discriminator)).Result;
+            
             
             var commentsView = _mapper.Map<IEnumerable<Comments>, IEnumerable<CommentsIndexViewModel>>(comments);
 
