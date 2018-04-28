@@ -86,7 +86,7 @@ function displayThoughtDetails(data){
 
     dataJson['discriminator'] = 0;
     dataJson['ParentId'] = data.id;
-
+    currentId = data.id;
     console.log(dataJson);
     $.ajax({
         type: "GET",
@@ -99,16 +99,12 @@ function displayThoughtDetails(data){
         $('#comment-edit-modal .modal-footer > button').data("id", data.id);
         $('#thought-inner-container > button').data("id", data.id);
         console.log(data.id);
+        $('#thought-display-modal .modalCommentTitle >').remove();
         console.log(res);
-        if (res.length == 0) {
-            $('#thought-display-modal .modalCommentTitle > h5').html('');
-            $('#thought-display-modal .modalComment-body > p').html('');
-        }
         for (var i = 0; i < res.length; i++) {
-            $('#thought-display-modal .modalCommentTitle > span > button').data("id", res[i].id);            
-            $('#thought-display-modal .comment-edit-btn').data("id", res[i].id);            
-            $('#thought-display-modal .modalCommentTitle > h5').html(res[i].applicationUserId);
-            $('#thought-display-modal .modalComment-body > p').html(res[i].body);
+            $('#thought-display-modal .modalCommentTitle').append("<h5>" + res[i].applicationUserId + "</h5>");
+            $('#thought-display-modal .modalCommentTitle').append("<span class=\"thought-action-container pull-right\"><button data-id=\"" + res[i].id + "\" class=\"comment-view-btn\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span></button><button data-id=\"" + res[i].id + "\" class=\"comment-edit-btn\"><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></button></span></div>");
+            $('#thought-display-modal .modalCommentTitle').append("<div class=\"modalComment-body\"><p>" + res[i].body + "</p></div>");
         }
         $('#thought-display-modal').modal('show');
 
