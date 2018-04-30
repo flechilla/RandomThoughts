@@ -10,11 +10,9 @@ namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]/[action]")]
-    public class BaseApiController : Controller
+    public class BaseApiController : Controller, IBaseApiController
     {
-        /// <summary>
-        ///     Gets or sets the Id of the current user.
-        /// </summary>
+
         public string CurrentUserId { get; set; }
         public string CurrentUserNickName { get; set; }
 
@@ -23,6 +21,6 @@ namespace RandomThoughts.Controllers.Api
             CurrentUserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             CurrentUserNickName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
         }
-    
+
     }
 }

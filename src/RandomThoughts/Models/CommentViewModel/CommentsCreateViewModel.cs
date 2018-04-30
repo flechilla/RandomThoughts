@@ -9,6 +9,5 @@ namespace RandomThoughts.Models.CommentViewModel
     {
         public int ParentId { get; set; }
 
-        public int discriminator { get; set; }
     }
 }

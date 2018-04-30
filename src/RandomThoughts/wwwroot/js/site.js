@@ -84,14 +84,13 @@ function displayThoughtDetails(data){
     let form = new FormData();
     
 
-    dataJson['discriminator'] = 0;
     dataJson['ParentId'] = data.id;
     currentId = data.id;
     console.log(dataJson);
     $.ajax({
         type: "GET",
         data: dataJson,
-        url: apiHost + 'Comments/get/',
+        url: apiHost + 'Thoughts/GetAllComments/',
         contentType: "application/json"
 
     }).done(function (res) {
@@ -330,14 +329,13 @@ function saveCommentChanges(commentId) {
         dataJson[x.name] = x.value;
     });
 
-    dataJson['discriminator'] = 0;
     dataJson['ParentId'] = currentId;
 
     console.log(data);
     $.ajax({
         type: "PUT",
         data: JSON.stringify(dataJson),
-        url: apiHost + 'Comments/put/' + commentId,
+        url: apiHost + 'Thoughts/PutComment/' + commentId,
         contentType: "application/json"
 
     }).done(function (res) {
@@ -383,14 +381,13 @@ function saveNewComment() {
         dataJson[x.name] = x.value;
     });
 
-    dataJson['discriminator'] = 0;
     dataJson['ParentId'] = currentId;
 
     console.log(dataJson);
     $.ajax({
         type: "POST",
         data: JSON.stringify(dataJson),
-        url: apiHost + 'Comments/post',
+        url: apiHost + 'Thoughts/PostComment/',
         contentType: "application/json"
 
     }).done(function (res) {
