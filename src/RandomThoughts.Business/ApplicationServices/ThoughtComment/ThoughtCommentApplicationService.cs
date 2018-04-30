@@ -17,16 +17,22 @@ namespace RandomThoughts.Business.ApplicationServices.ThoughtComment
         {
         }
 
-        public IQueryable<Domain.Comments> ReadAll((int idparent, int discriminator) filter)
+        public void AddComment(Domain.Comments comments)
         {
-            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
-            return repository.ReadAll((filter.idparent, Discriminator.Thought));
+            comments.ParentDiscriminator = Discriminator.Thought;
+            this.Add(comments);
         }
 
-        public async Task<IQueryable<Domain.Comments>> ReadAllAsync((int idparent, int discriminator) filter)
+        public IQueryable<Domain.Comments> ReadAll(int idparent)
         {
             var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
-            return await repository.ReadAllAsync((filter.idparent, Discriminator.Thought));
+            return repository.ReadAll((idparent, Discriminator.Thought));
+        }
+
+        public async Task<IQueryable<Domain.Comments>> ReadAllAsync(int idparent)
+        {
+            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+            return await repository.ReadAllAsync((idparent, Discriminator.Thought));
         }
     }
 }

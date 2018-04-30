@@ -7,5 +7,6 @@ namespace RandomThoughts.Business.ApplicationServices.ThoughtComment
 {
     public interface IThoughtCommentApplicationService: ICommentsApplicationService
     {
+
     }
 }
