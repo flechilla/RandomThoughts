@@ -57,6 +57,9 @@ namespace RandomThoughts.Domain
         /// </summary>
         public int Views { get; set; }
 
-
+        /// <summary>
+        /// Gets or sets the visibility for the thoughts
+        /// </summary>
+        public Visibility Visibility { get; set; }
     }
 }
