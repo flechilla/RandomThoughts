@@ -10,6 +10,12 @@
     {
         ViewData["HoleId"] = 1;
     }
+
+    Dictionary<int, string> visibility = new Dictionary<int, string>();
+    foreach (Visibility item in Enum.GetValues(typeof(Visibility)))
+    {
+        visibility.Add((int)item, item.ToString());
+    }
 }
 
 <div id="thought-display-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -57,6 +63,15 @@
                   @foreach (var mood in moods)
                   {
                       <option value="@mood.Key">@mood.Value</option>
+                  }
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="thought-body">Visibility</label>
+              <select name="Visibility" id="thought-mood" class="form-control">
+                  @foreach (var item in visibility)
+                  {
+                      <option value="@item.Key">@item.Value</option>
                   }
               </select>
           </div>
