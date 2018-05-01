@@ -9,11 +9,20 @@ $(document).ready(function(){
         let thoughtId = $(this).closest(".thought-inner-container").data("id");
         getThought(thoughtId);        
     });
+    $(".thoughtHole-view-btn").click(function () {
+        let thoughtHoleId = $(this).closest(".thoughtHole-inner-container").data("id");
+        getThoughtHole(thoughtHoleId);
+    });
     $(".thought-edit-btn").click(function() {
         let thoughtId = $(this).closest(".thought-inner-container").data("id");
         displayThoughtEditModal(thoughtId);        
     });
-    $('#add-new-thought').click(function(){
+    $(".thoughtHole-edit-btn").click(function () {
+        let thoughtHoleId = $(this).closest(".thoughtHole-inner-container").data("id");
+        displayThoughtHoleEditModal(thoughtId);
+    });
+    $('#add-new-thought').click(function () {
+        $('#save-thought-btn').text("Save");
         $('#thought-edit-modal').modal('show');
     });
     $('#save-thought-btn').click(function(e){
@@ -113,18 +122,12 @@ function displayThoughtEditModal(thoughtId){
     let mood = thoughtCntSel.attr('data-mood');
     let visibility = thoughtCntSel.attr('data-visibility');
 
-    console.log(visibility);
-
     $('#thought-edit-modal #thought-id').val(thoughtId);
 
     $('#thought-edit-modal #thought-title').val(title);
     $('#thought-edit-modal #thought-body').val(body);
     $('#thought-edit-modal #thought-mood').val(mood);
     $('#thought-edit-modal #thought-visibility').val(visibility);
-
-    console.log(mood);
-    
-    
 
     $('#save-thought-btn').text("Edit").unbind('click').
     click(function(){
@@ -224,6 +227,30 @@ function insertNewThought(thought) {
 
 
 /** Thought Holes functions Start */
+
+/**
+ * Get the ThoughtHole data from the server.
+ * @param  {number} thoughtHoleId The Id of the selected Thought
+ */
+function getThoughtHole(thoughtHoleId) {
+
+    $.get(apiHost + 'ThoughtHoles/get/' + thoughtHoleId, function (data) {
+        displayThoughtHoleDetails(data);
+    });
+    console.log(apiHost);
+    console.log(thoughtHoleId);
+}
+/**
+ * TODO: Add the dates to the modal.
+ */
+function displayThoughtHoleDetails(data) {
+    var v = data.visibility == 0 ? " (Private)" : " (Public)";
+    console.log(data.visibility);
+    $('#thoughtHole-display-modal .modal-title').html(data.title + v);
+    $('#thoughtHole-display-modal .modal-body > p').html(data.body);
+    $('#thoughtHole-display-modal').modal('show');
+}
+
 function saveNewThoughtHole(){
     let inputsSelector = $('#thoughtHole-edit-modal input, #thoughtHole-edit-modal textarea, #thoughtHole-edit-modal select');
     var data = inputsSelector.serializeArray();
@@ -286,12 +313,15 @@ function insertNewThoughtHole(hole) {
         </div>\
     </div>\
 </div>';
+
+    console.log("Hello World");
+
 //<a href="@Url.Action("HoleThoughts", new {holeId = thoughtHole.Id})">
     $('#thoughtHoles-container').prepend(element);
 
     $(".thoughtHole-view-btn").click(function() {
         let thoughtId = $(this).closest(".thought-inner-container").data("id");
-        getThoughtHole(thoughtId);        
+        getThoughtHole(thoughtId);
     });
     $(".thoughtHole-edit-btn").click(function() {
         let thoughtId = $(this).closest(".thought-inner-container").data("id");
