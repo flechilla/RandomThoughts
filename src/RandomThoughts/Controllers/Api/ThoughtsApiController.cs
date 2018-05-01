@@ -16,7 +16,7 @@ using RandomThoughts.Business.ApplicationServices.ThoughtComment;
 namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
-    public class ThoughtsController : BaseApiController, ICommentController
+    public class ThoughtsController : CommentApiController
     {
         private readonly IThoughtsApplicationService _thoughtsApplicationService;
         private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace RandomThoughts.Controllers.Api
         public ThoughtsController(IHttpContextAccessor httpContextAccessor,
             IThoughtsApplicationService thoughtsApplicationService,
             IThoughtCommentApplicationService thoughtCommentApplicationService,
-            IMapper mapper) : base(httpContextAccessor)
+            IMapper mapper) : base(httpContextAccessor, thoughtCommentApplicationService, mapper)
         {
             _thoughtsApplicationService = thoughtsApplicationService;
             _mapper = mapper;
@@ -145,100 +145,6 @@ namespace RandomThoughts.Controllers.Api
             return StatusCode(204);
         }
 
-        public IEnumerable<CommentsIndexViewModel> GetAllComments(int ParentId)
-        {
-            var comments = this._thoughtCommentApplicationService.ReadAllAsync(ParentId).Result;
-
-
-            var commentsView = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentsIndexViewModel>>(comments);
-
-            return commentsView;
-        }
-
-        public IActionResult GetComments(int id)
-        {
-            var comment = _thoughtCommentApplicationService.SingleOrDefault(id);
-
-            if (comment != null)
-                return Ok(_mapper.Map<Comment, CommentsIndexViewModel>(comment));
-
-            return NotFound(id);
-        }
-
-        public IActionResult PostComment([FromBody] CommentsCreateViewModel newComment)
-        {
-            newComment.ApplicationUserId = CurrentUserNickName;
-
-
-            var comment = _mapper.Map<CommentsCreateViewModel, Comment>(newComment);
-
-            comment.Likes = 0;
-            comment.ParentDiscriminator = RandomThoughts.Domain.Enums.Discriminator.Thought;
-            comment.ApplicationUserId = this.CurrentUserNickName;
-            this._thoughtCommentApplicationService.AddComment(comment);
-
-            try
-            {
-                _thoughtCommentApplicationService.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-
-            return Created("", comment);
-
-        }
-
-        public IActionResult PutComment(int id, [FromBody] CommentsEditViewModel commentsEdit)
-        {
-            if (id != commentsEdit.Id)
-            {
-                ModelState.AddModelError("Id", "The given Id of the edited model doesn't match with the route Id");
-                return BadRequest(ModelState);
-            }
-            if (!_thoughtCommentApplicationService.Exists(id))
-                return NotFound(id);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var originalComment = _thoughtCommentApplicationService.SingleOrDefault(id);
-            originalComment.Body = commentsEdit.Body;
-
-            originalComment.ModifiedBy = this.CurrentUserId;
-
-            _thoughtCommentApplicationService.Update(originalComment);
-
-
-            try
-            {
-                _thoughtCommentApplicationService.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-
-            return Ok(originalComment);
-        }
-
-        public IActionResult DeleteComment(int id)
-        {
-            if (!_thoughtCommentApplicationService.Exists(id))
-                return NotFound(id);
-
-            _thoughtCommentApplicationService.Remove(id);
-
-            try
-            {
-                _thoughtCommentApplicationService.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-
-            return StatusCode(204);
-        }
+        
     }
 }

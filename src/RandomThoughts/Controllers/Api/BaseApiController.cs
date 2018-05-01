@@ -10,7 +10,7 @@ namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]/[action]")]
-    public class BaseApiController : Controller, IBaseApiController
+    public class BaseApiController : Controller
     {
 
         public string CurrentUserId { get; set; }
