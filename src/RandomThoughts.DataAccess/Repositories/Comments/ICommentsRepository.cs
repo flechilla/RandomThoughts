@@ -20,7 +20,9 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
         ///     Filter the comments in the table based on
         ///     the given parentID and Discriminator
         /// </summary>
-        IQueryable<RandomThoughts.Domain.Comment> ReadAll((int idparent, Discriminator discriminator) filter);
+        IQueryable<Comment> ReadAll((int idparent, Discriminator discriminator) filter);
+
+        IQueryable<Comment> ReadAll((int idparent, Discriminator discriminator) filter, int count);
         #endregion
 
         #region Async Members
@@ -30,7 +32,9 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
         /// </summary>
         /// <param name="filter">A function to be applied in each element of the table</param>
         /// <returns>The elements that satisfy the predicate <paramref name="filter"/></returns>
-        Task<IQueryable<RandomThoughts.Domain.Comment>> ReadAllAsync((int idparent, Discriminator discriminator) filter);
+        Task<IQueryable<Comment>> ReadAllAsync((int idparent, Discriminator discriminator) filter);
+
+        Task<IQueryable<Comment>> ReadAllAsync((int idparent, Discriminator discriminator) filter, int count);
         #endregion
     }
 }

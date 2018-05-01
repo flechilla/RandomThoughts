@@ -14,29 +14,105 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
 {
     class CommentsRepository : BaseRepository<RandomThoughts.Domain.Comment, int>, ICommentsRepository
     {
-        private SqlConnection sqlConnection;
         public CommentsRepository(RandomThoughtsDbContext dbContext) : base(dbContext)
         {
 
         }
         /// <summary>
         /// method for get all comments related with discriminator
-        /// TODO: use Dapper
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IQueryable<Domain.Comment> ReadAll((int idparent, Discriminator discriminator) filter)
+        public IQueryable<Comment> ReadAll((int idparent, Discriminator discriminator) filter)
         {
-            return this.Entities.Where(ent => ent.Id == filter.idparent && ent.ParentDiscriminator == filter.discriminator);            
+
+            try
+            {
+                var conn = DbConnection.ConnectionString;
+                using (var IDbConnection = new SqlConnection(conn))
+                {
+                    IDbConnection.Open();
+                    var result = IDbConnection.Query("SELECT * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new { discriminator = filter.discriminator, ParentId = filter.idparent });
+                    IDbConnection.Close();
+                    //TODO: Solve problem
+                    return (result as IQueryable<Comment>);
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// get comments for given discriminator and parentId, and take Count
+        /// </summary>
+        /// <param name="filter">Filters for Search in Comments</param>
+        /// <param name="count">Number of Comment to take</param>
+        /// <returns></returns>
+        public IQueryable<Comment> ReadAll((int idparent, Discriminator discriminator) filter, int count)
+        {
+            try
+            {
+                var conn = DbConnection.ConnectionString;
+                using (var IDbConnection = new SqlConnection(conn))
+                {
+                    IDbConnection.Open();
+                    var result = IDbConnection.Query("SELECT TOP(@count) * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new {count = count, discriminator = filter.discriminator, ParentId = filter.idparent });
+                    IDbConnection.Close();
+                    //TODO: Solve problem
+                    return (result as IQueryable<Comment>);
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
-        public async Task<IQueryable<Domain.Comment>> ReadAllAsync((int idparent, Discriminator discriminator) filter)
+        public async Task<IQueryable<Comment>> ReadAllAsync((int idparent, Discriminator discriminator) filter)
         {
-           
-            return await Task.Factory.StartNew(() =>
+            try
             {
-                return this.Entities.Where(ent => ent.ParentId == filter.idparent && ent.ParentDiscriminator == filter.discriminator);
-            });
+                var conn = DbConnection.ConnectionString;
+                using (var IDbConnection = new SqlConnection(conn))
+                {
+                    IDbConnection.Open();
+                    var result = IDbConnection.Query("SELECT * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new { discriminator = filter.discriminator, ParentId = filter.idparent });
+                    IDbConnection.Close();
+                    return await Task.Factory.StartNew(() =>
+                    {
+                        //TODO: Solve problem
+                        return result as IQueryable<Comment>;
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }           
+        }
+
+        public async Task<IQueryable<Comment>> ReadAllAsync((int idparent, Discriminator discriminator) filter, int count)
+        {
+            try
+            {
+                var conn = DbConnection.ConnectionString;
+                using (var IDbConnection = new SqlConnection(conn))
+                {
+                    IDbConnection.Open();
+                    var result = IDbConnection.Query("SELECT TOP(@count) * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new {count = count, discriminator = filter.discriminator, ParentId = filter.idparent });
+                    IDbConnection.Close();
+                    return await Task.Factory.StartNew(() =>
+                    {
+                        //TODO: Solve problem
+                        return result as IQueryable<Comment>;
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

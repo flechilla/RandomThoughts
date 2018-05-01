@@ -25,7 +25,7 @@ namespace RandomThoughts.Controllers.Api
         }
         public IEnumerable<CommentsIndexViewModel> GetAllComments(int ParentId)
         {
-            var comments = this._commentApplicationService.ReadAllAsync(ParentId).Result;
+            var comments = this._commentApplicationService.ReadAll(ParentId);
 
 
             var commentsView = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentsIndexViewModel>>(comments);
