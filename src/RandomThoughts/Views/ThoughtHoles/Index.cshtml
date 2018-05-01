@@ -21,7 +21,7 @@
 
     @foreach (var thoughtHole in thoughtHoles)
     {
-        <div data-likes="@thoughtHole.Likes" data-views="@thoughtHole.Views" data-amountOfThoughts="@(thoughtHole.AmountOfThought)" data-id="@(thoughtHole.Id)" class="thoughtHole-inner-container col-sm-3">
+        <div data-likes="@thoughtHole.Likes" data-visibility="@thoughtHole.Visibility" data-views="@thoughtHole.Views" data-amountOfThoughts="@(thoughtHole.AmountOfThought)" data-id="@(thoughtHole.Id)" class="thoughtHole-inner-container col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                    <span class="thought-title"> <a href="@Url.Action("HoleThoughts", new {holeId = thoughtHole.Id})">@thoughtHole.Name</a> </span>

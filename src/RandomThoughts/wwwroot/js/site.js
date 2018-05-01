@@ -225,7 +225,7 @@ function insertNewThought(thought) {
 
 /** Thought Holes functions Start */
 function saveNewThoughtHole(){
-    let inputsSelector = $('#thoughtHole-edit-modal input, #thoughtHole-edit-modal textarea');
+    let inputsSelector = $('#thoughtHole-edit-modal input, #thoughtHole-edit-modal textarea, #thoughtHole-edit-modal select');
     var data = inputsSelector.serializeArray();
     let hasError = false;
     for(key in data){
@@ -268,7 +268,7 @@ function saveNewThoughtHole(){
 }
 
 function insertNewThoughtHole(hole) {
-    let element = '<div data-likes="'+hole.likes +'" data-views="'+hole.views+'"  data-id="'+hole.Id+'" class="thoughtHole-inner-container col-sm-3">\
+    let element = '<div data-likes="' + hole.likes + '" data-visibility="' + hole.visibility + '" data-views="' + hole.views + '"  data-id="' + hole.Id +'" class="thoughtHole-inner-container col-sm-3">\
     <div class="panel panel-default">\
         <div class="panel-heading">\
            <span class="thought-title">'+ hole.name + '</span>'+
