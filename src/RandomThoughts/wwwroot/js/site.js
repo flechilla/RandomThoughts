@@ -11,8 +11,6 @@ $(document).ready(function(){
     });
     $(".thoughtHole-view-btn").click(function () {
         let thoughtHoleId = $(this).closest(".thoughtHole-inner-container").data("id");
-        console.log("aqui");
-        console.log(thoughtHoleId);
         getThoughtHole(thoughtHoleId);
     });
     $(".thought-edit-btn").click(function() {
@@ -21,7 +19,7 @@ $(document).ready(function(){
     });
     $(".thoughtHole-edit-btn").click(function () {
         let thoughtHoleId = $(this).closest(".thoughtHole-inner-container").data("id");
-        displayThoughtHoleEditModal(thoughtId);
+        displayThoughtHoleEditModal(thoughtHoleId);
     });
     $('#add-new-thought').click(function () {
         $('#save-thought-btn').text("Save");
@@ -55,7 +53,6 @@ $(document).ready(function(){
  */
 function getThought(thoughtId){
     $.get(apiHost + 'thoughts/get/' + thoughtId, function (data) {
-        console.log(data);
         displayThoughtDetails(data);
     });
 }
@@ -124,6 +121,10 @@ function displayThoughtEditModal(thoughtId){
     let body = thoughtCntSel.find('.thought-body').text();
     let mood = thoughtCntSel.attr('data-mood');
     let visibility = thoughtCntSel.attr('data-visibility');
+
+    console.log(title);
+    console.log(body);
+    console.log(visibility);
 
     $('#thought-edit-modal #thought-id').val(thoughtId);
 
@@ -238,10 +239,7 @@ function insertNewThought(thought) {
 function getThoughtHole(thoughtHoleId) {
 
     $.get(apiHost + 'ThoughtHoles/get/' + thoughtHoleId, function (data) {
-        console.log("antes");
-        console.log(data);
         displayThoughtHoleDetails(data);
-        console.log("despues");
     });
 }
 /**
@@ -335,4 +333,80 @@ function cleanHoleModal(){
     $('#thoughtHole-edit-modal input, #thoughtHole-edit-modal textarea').val('');
     $('#thoughtHole-edit-modal').modal('hide');
 }
+
+function displayThoughtHoleEditModal(thoughtHoleId) {
+    var thoughtHoleCntSel = $('.thoughtHole-inner-container[data-id="'+thoughtHoleId+'"]');
+    let name = thoughtHoleCntSel.find('.thoughtHole-name').text();
+    let description = thoughtHoleCntSel.find('.thoughtHole-description').text();
+    let visibility = thoughtHoleCntSel.attr('data-visibility');
+
+    console.log(name);
+    console.log(description);
+    console.log(visibility);
+
+    $('#thoughtHole-edit-modal #thoughtHole-name').val(name);
+    $('#thoughtHole-edit-modal #thoughtHole-description').val(description);
+    $('#thoughtHole-edit-modal #thoughtHole-visibility').val(visibility);
+
+    $('save-ThoughtHole-btn').text('Edit').unbind('click').
+        click(function () {
+            saveThoughtHoleChanges(thoughtHoleId);
+        });
+    $('#thoughtHole-edit-modal').modal('show');
+}
+
+function saveThoughtHoleChanges(thoughtHoleId) {
+    let inputsSelector = $('#thoughtHole-edit-modal input, #thoughtHole-edit-modal textarea, #thoughtHole-edit-modal select');
+    var data = inputsSelector.serializeArray();
+    let hasError = false;
+    for (key in data) {
+        if (data[key].value == "") {
+            var outerSelector = $('input[name="' + data[key].name + '"]').closest('.form-group');
+
+            if (outerSelector.length == 0)
+                outerSelector = $('textarea[name="' + data[key].name + '"]').closest('.form-group');
+
+            outerSelector.addClass('has-error');
+            console.log(data[key]);
+            hasError = true;
+        }
+    }
+    if (hasError) {
+        toastr.error('There are some error in the form, please fix them', 'Opps');
+        return false;
+    }
+
+    let dataJson = {};
+    let form = new FormData();
+    data.map(function (x) {
+        dataJson[x.name] = x.value;
+    });
+
+    console.log(data);
+    $.ajax({
+        type: "PUT",
+        data: JSON.stringify(dataJson),
+        url: apiHost + 'ThoughtHoles/put/' + thoughtId,
+        contentType: "application/json"
+
+    }).done(function (res) {
+        console.log('res', res);
+        toastr.success("The Thought have been modified!!!");
+        $(".thoughtHole-edit-btn").unbind('click').click(function () {
+            let thoughtId = $(this).closest(".thoughtHole-inner-container").data("id");
+            displayThoughtEditModal(thoughtId);
+        });
+        cleanModal();
+        editThoughtHoleCard(res);
+    }).error(function (jqXHR, textStatus, errorThrown) {
+        toastr.error('There is an error in the server, please try again :(', 'Opps');
+    });
+}
+
+function editThoughtHoleCard(thoughtHole) {
+    $('.thoughtHole-inner-container[data-id="' + thoughtHole.id + '"] .thoughtHole-name').text(thoughtHole.name);
+    $('.thoughtHole-inner-container[data-id="' + thoughtHole.id + '"] .thoughtHole-description').text(thoughtHole.description);
+    $('.thoughtHole-inner-container[data-id="' + thoughtHole.id + '"]').attr('data-visibility', thoughtHole.visibility);
+}
+
 /** Thought Holes functions End */
