@@ -7,7 +7,7 @@ using System.Text;
 
 namespace RandomThoughts.Domain
 {
-    public class Comments : AuditableAndTrackableEntity<int>
+    public class Comment : AuditableAndTrackableEntity<int>
     {
         /// <summary>
         ///     Gets or sets FK to relate the Thought with the creator.

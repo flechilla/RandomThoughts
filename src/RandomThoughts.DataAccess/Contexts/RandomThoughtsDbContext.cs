@@ -27,7 +27,7 @@ namespace RandomThoughts.DataAccess.Contexts
 
             builder.Entity<Thought>().Property(x => x.ApplicationUserId).IsRequired();
 
-            builder.Entity<Comments>().Property(x => x.ApplicationUserId).IsRequired();
+            builder.Entity<Comment>().Property(x => x.ApplicationUserId).IsRequired();
 
         }
 
@@ -44,7 +44,7 @@ namespace RandomThoughts.DataAccess.Contexts
         /// <summary>
         ///     Gets or sets the <see cref="Comment"/> of the platform.
         /// </summary>
-        public DbSet<Comments> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
     }
 }

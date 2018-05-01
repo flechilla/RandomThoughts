@@ -61,7 +61,7 @@ namespace RandomThoughts.Domain
         ///     Gets or sets the <see cref="Comment"/>
         ///     related to the <see cref="Thought"/>
         /// </summary>
-        public ICollection<Comments> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
     }
 }

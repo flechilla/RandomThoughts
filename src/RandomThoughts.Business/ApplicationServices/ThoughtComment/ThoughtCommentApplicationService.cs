@@ -11,25 +11,25 @@ using RandomThoughts.Domain.Enums;
 
 namespace RandomThoughts.Business.ApplicationServices.ThoughtComment
 {
-    public class ThoughtCommentApplicationService : BaseApplicationService<RandomThoughts.Domain.Comments,int>, IThoughtCommentApplicationService
+    public class ThoughtCommentApplicationService : BaseApplicationService<RandomThoughts.Domain.Comment,int>, IThoughtCommentApplicationService
     {
         public ThoughtCommentApplicationService(ICommentsRepository repository) : base(repository)
         {
         }
 
-        public void AddComment(Domain.Comments comments)
+        public void AddComment(Domain.Comment comments)
         {
             comments.ParentDiscriminator = Discriminator.Thought;
             this.Add(comments);
         }
 
-        public IQueryable<Domain.Comments> ReadAll(int idparent)
+        public IQueryable<Domain.Comment> ReadAll(int idparent)
         {
             var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
             return repository.ReadAll((idparent, Discriminator.Thought));
         }
 
-        public async Task<IQueryable<Domain.Comments>> ReadAllAsync(int idparent)
+        public async Task<IQueryable<Domain.Comment>> ReadAllAsync(int idparent)
         {
             var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
             return await repository.ReadAllAsync((idparent, Discriminator.Thought));

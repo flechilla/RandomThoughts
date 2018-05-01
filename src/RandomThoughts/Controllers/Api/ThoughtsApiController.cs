@@ -150,7 +150,7 @@ namespace RandomThoughts.Controllers.Api
             var comments = this._thoughtCommentApplicationService.ReadAllAsync(ParentId).Result;
 
 
-            var commentsView = _mapper.Map<IEnumerable<Comments>, IEnumerable<CommentsIndexViewModel>>(comments);
+            var commentsView = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentsIndexViewModel>>(comments);
 
             return commentsView;
         }
@@ -160,7 +160,7 @@ namespace RandomThoughts.Controllers.Api
             var comment = _thoughtCommentApplicationService.SingleOrDefault(id);
 
             if (comment != null)
-                return Ok(_mapper.Map<Comments, CommentsIndexViewModel>(comment));
+                return Ok(_mapper.Map<Comment, CommentsIndexViewModel>(comment));
 
             return NotFound(id);
         }
@@ -170,7 +170,7 @@ namespace RandomThoughts.Controllers.Api
             newComment.ApplicationUserId = CurrentUserNickName;
 
 
-            var comment = _mapper.Map<CommentsCreateViewModel, Comments>(newComment);
+            var comment = _mapper.Map<CommentsCreateViewModel, Comment>(newComment);
 
             comment.Likes = 0;
             comment.ParentDiscriminator = RandomThoughts.Domain.Enums.Discriminator.Thought;
