@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.Business.ApplicationServices.ThoughtHole;
 using RandomThoughts.DataAccess.Repositories.ThoughtHoles;
 using RandomThoughts.Domain;
+using RandomThoughts.Domain.Enums;
 using RandomThoughts.Models.ThoughtHoleViewModels;
 
 namespace RandomThoughts.Controllers.Api
@@ -25,20 +26,34 @@ namespace RandomThoughts.Controllers.Api
             _thoughtHolesApplicationService = thoughtHolesApplicationService;
             _mapper = mapper;
         }
+
         // GET: api/ThoughtHoles
+        /// <summary>
+        /// Get all <see cref="ThoughtHole"/> that are public.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ThoughtHoleIndexViewModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            var thoughtHoles = _thoughtHolesApplicationService.ReadAll(thoughtHole => thoughtHole.Visibility == Visibility.Public).ToList();
+
+            var thoughtHolesVM = _mapper.Map<IEnumerable<ThoughtHole>, IEnumerable<ThoughtHoleIndexViewModel>>(thoughtHoles);
+
+            return thoughtHolesVM;
         }
 
         // GET: api/ThoughtHoles/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var thoughtHole = _thoughtHolesApplicationService.SingleOrDefault(id);
+
+            if (thoughtHole != null)
+                return Ok(_mapper.Map<ThoughtHole, ThoughtHoleIndexViewModel>(thoughtHole));
+
+            return NotFound(id);
         }
-        
+
         // POST: api/ThoughtHoles
         [HttpPost]
         public IActionResult Post([FromBody]ThoughtHoleCreateViewModel newThoughtHole)

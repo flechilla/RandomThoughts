@@ -40,7 +40,8 @@ namespace RandomThoughts.Controllers
                     AmountOfThought = th.Thoughts.Count(),
                     Likes = th.Likes,
                     Views = th.Views,
-                    Id = th.Id
+                    Id = th.Id,
+                    Visibility = th.Visibility
                 }).
                 ToList();
 
@@ -75,9 +76,7 @@ namespace RandomThoughts.Controllers
         {
             var holeName = _thoughtHolesAppService.SingleOrDefault(holeId).Name;
             return RedirectToAction("HoleThoughts", "Thoughts", new { holeId = holeId, holeName });
-        
         }
-
 
     }
 }

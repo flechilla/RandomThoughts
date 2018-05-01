@@ -11,6 +11,8 @@ $(document).ready(function(){
     });
     $(".thoughtHole-view-btn").click(function () {
         let thoughtHoleId = $(this).closest(".thoughtHole-inner-container").data("id");
+        console.log("aqui");
+        console.log(thoughtHoleId);
         getThoughtHole(thoughtHoleId);
     });
     $(".thought-edit-btn").click(function() {
@@ -52,7 +54,8 @@ $(document).ready(function(){
  * @param  {number} thoughtId The Id of the selected Thought
  */
 function getThought(thoughtId){
-    $.get(apiHost+'thoughts/get/'+thoughtId, function(data){
+    $.get(apiHost + 'thoughts/get/' + thoughtId, function (data) {
+        console.log(data);
         displayThoughtDetails(data);
     });
 }
@@ -235,19 +238,19 @@ function insertNewThought(thought) {
 function getThoughtHole(thoughtHoleId) {
 
     $.get(apiHost + 'ThoughtHoles/get/' + thoughtHoleId, function (data) {
+        console.log("antes");
+        console.log(data);
         displayThoughtHoleDetails(data);
+        console.log("despues");
     });
-    console.log(apiHost);
-    console.log(thoughtHoleId);
 }
 /**
  * TODO: Add the dates to the modal.
  */
 function displayThoughtHoleDetails(data) {
     var v = data.visibility == 0 ? " (Private)" : " (Public)";
-    console.log(data.visibility);
-    $('#thoughtHole-display-modal .modal-title').html(data.title + v);
-    $('#thoughtHole-display-modal .modal-body > p').html(data.body);
+    $('#thoughtHole-display-modal .modal-title').html(data.name + v);
+    $('#thoughtHole-display-modal .modal-body > p').html(data.description);
     $('#thoughtHole-display-modal').modal('show');
 }
 
@@ -309,22 +312,20 @@ function insertNewThoughtHole(hole) {
             </span>\
         </div>\
         <div class="panel-body">\
-        <span class="thought-body">'+hole.description +'</span>\
+        <span class="thought-body">'+hole.description+'</span>\
         </div>\
     </div>\
 </div>';
-
-    console.log("Hello World");
 
 //<a href="@Url.Action("HoleThoughts", new {holeId = thoughtHole.Id})">
     $('#thoughtHoles-container').prepend(element);
 
     $(".thoughtHole-view-btn").click(function() {
-        let thoughtId = $(this).closest(".thought-inner-container").data("id");
+        let thoughtId = $(this).closest(".thoughtHole-inner-container").data("id");
         getThoughtHole(thoughtId);
     });
     $(".thoughtHole-edit-btn").click(function() {
-        let thoughtId = $(this).closest(".thought-inner-container").data("id");
+        let thoughtId = $(this).closest(".thoughtHole-inner-container").data("id");
         displayThoughtHoleEditModal(thoughtId);        
     });
 }
