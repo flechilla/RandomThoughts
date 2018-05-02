@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using RandomThoughts.Business.ApplicationServices.ThoughtHole;
 using RandomThoughts.Business.ApplicationServices.Thoughts;
+using RandomThoughts.Business.ApplicationServices.Comments;
+using RandomThoughts.Business.ApplicationServices.ThoughtComment;
 
 namespace RandomThoughts.Business.Extensions
 {
@@ -21,6 +23,7 @@ namespace RandomThoughts.Business.Extensions
         {
             service.AddScoped<IThoughtsApplicationService, ThoughtsApplicationService>();
             service.AddScoped<IThoughtHolesApplicationService, ThoughtHolesApplicationService>();
+            service.AddScoped<IThoughtCommentApplicationService, ThoughtCommentApplicationService>();
         }
     }
 }

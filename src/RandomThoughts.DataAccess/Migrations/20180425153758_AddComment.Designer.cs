@@ -14,9 +14,10 @@ using RandomThoughts.Domain.Enums;
 namespace RandomThoughts.DataAccess.Migrations
 {
     [DbContext(typeof(RandomThoughtsDbContext))]
-    partial class RandomThoughtsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180425153758_AddComment")]
+    partial class AddComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +188,7 @@ namespace RandomThoughts.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RandomThoughts.Domain.Comment", b =>
+            modelBuilder.Entity("RandomThoughts.Domain.Comment<RandomThoughts.Domain.Thought, int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -202,21 +203,19 @@ namespace RandomThoughts.DataAccess.Migrations
 
                     b.Property<string>("CreatedBy");
 
+                    b.Property<int>("EntityId");
+
                     b.Property<int>("Likes");
 
                     b.Property<DateTime>("ModifiedAt");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<int>("ParentDiscriminator");
-
-                    b.Property<int>("ParentId");
-
-                    b.Property<int?>("ThoughtId");
+                    b.Property<int>("Visibility");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ThoughtId");
+                    b.HasIndex("EntityId");
 
                     b.ToTable("Comments");
                 });
@@ -342,11 +341,12 @@ namespace RandomThoughts.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RandomThoughts.Domain.Comment", b =>
+            modelBuilder.Entity("RandomThoughts.Domain.Comment<RandomThoughts.Domain.Thought, int>", b =>
                 {
-                    b.HasOne("RandomThoughts.Domain.Thought")
+                    b.HasOne("RandomThoughts.Domain.Thought", "Entity")
                         .WithMany("Comments")
-                        .HasForeignKey("ThoughtId");
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RandomThoughts.Domain.Thought", b =>
