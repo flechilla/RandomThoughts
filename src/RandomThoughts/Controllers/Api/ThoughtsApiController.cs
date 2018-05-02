@@ -9,22 +9,27 @@ using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.Business.ApplicationServices.Thoughts;
 using RandomThoughts.DataAccess.Repositories.Thoughts;
 using RandomThoughts.Domain;
+using RandomThoughts.Models.CommentViewModel;
 using RandomThoughts.Models.ThoughtViewModels;
+using RandomThoughts.Business.ApplicationServices.ThoughtComment;
 
 namespace RandomThoughts.Controllers.Api
 {
     [Produces("application/json")]
-    public class ThoughtsController : BaseApiController
+    public class ThoughtsController : CommentApiController
     {
         private readonly IThoughtsApplicationService _thoughtsApplicationService;
         private readonly IMapper _mapper;
+        private readonly IThoughtCommentApplicationService _thoughtCommentApplicationService;
 
         public ThoughtsController(IHttpContextAccessor httpContextAccessor,
             IThoughtsApplicationService thoughtsApplicationService,
-            IMapper mapper) : base(httpContextAccessor)
+            IThoughtCommentApplicationService thoughtCommentApplicationService,
+            IMapper mapper) : base(httpContextAccessor, thoughtCommentApplicationService, mapper)
         {
             _thoughtsApplicationService = thoughtsApplicationService;
             _mapper = mapper;
+            _thoughtCommentApplicationService = thoughtCommentApplicationService;
         }
 
         // GET: api/Thoughts
@@ -140,6 +145,6 @@ namespace RandomThoughts.Controllers.Api
             return StatusCode(204);
         }
 
-       
+        
     }
 }

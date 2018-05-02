@@ -14,9 +14,10 @@ using RandomThoughts.Domain.Enums;
 namespace RandomThoughts.DataAccess.Migrations
 {
     [DbContext(typeof(RandomThoughtsDbContext))]
-    partial class RandomThoughtsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180426205444_AddCommentsDiscriminator")]
+    partial class AddCommentsDiscriminator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +188,7 @@ namespace RandomThoughts.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RandomThoughts.Domain.Comment", b =>
+            modelBuilder.Entity("RandomThoughts.Domain.Comments", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -342,7 +343,7 @@ namespace RandomThoughts.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RandomThoughts.Domain.Comment", b =>
+            modelBuilder.Entity("RandomThoughts.Domain.Comments", b =>
                 {
                     b.HasOne("RandomThoughts.Domain.Thought")
                         .WithMany("Comments")
