@@ -84,8 +84,38 @@ namespace RandomThoughts.Controllers.Api
         
         // PUT: api/ThoughtHoles/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]ThoughtHoleEditViewModel editedThoughtHole)
         {
+            if (id != editedThoughtHole.Id)
+            {
+                ModelState.AddModelError("Id", "The given Id of the edited model doesn't match with the route Id");
+                return BadRequest(ModelState);
+            }
+
+            if (!_thoughtHolesApplicationService.Exists(id))
+                return NotFound(id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var originalThoughtHole = _thoughtHolesApplicationService.SingleOrDefault(id);
+            originalThoughtHole.Name = editedThoughtHole.Name;
+            originalThoughtHole.Description = editedThoughtHole.Description;
+            originalThoughtHole.Visibility = editedThoughtHole.Visibility;
+
+            originalThoughtHole.ModifiedBy = this.CurrentUserId;
+
+            _thoughtHolesApplicationService.Update(originalThoughtHole);
+
+            try
+            {
+                _thoughtHolesApplicationService.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
+            return Ok(originalThoughtHole);
         }
         
         // DELETE: api/ApiWithActions/5

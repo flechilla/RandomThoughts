@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Shared\Thoughts\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

@@ -44,7 +44,7 @@
 .hs-100{
     margin-top: 100px;
 }
-.thought-action-container > button{
+.thought-action-container, .thoughtHole-action-container > button {
     border: none;
     background-color: transparent;
 }

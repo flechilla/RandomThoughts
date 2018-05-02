@@ -39,10 +39,14 @@ $(document).ready(function(){
         cleanModal();
     });
 
-    $('#add-new-thoughtHole').click(function(){
+    $('#add-new-thoughtHole').click(function () {
+        $('#save-thought-btn').text("Save");
         $('#thoughtHole-edit-modal').modal('show');
     });
 
+    $('#thoughtHole-edit-modal').on('hidden.bs.modal', function () {
+        cleanHoleModal();
+    });
 });
 
 /** Thought  functions Start */
@@ -299,18 +303,18 @@ function insertNewThoughtHole(hole) {
     let element = '<div data-likes="' + hole.likes + '" data-visibility="' + hole.visibility + '" data-views="' + hole.views + '"  data-id="' + hole.Id +'" class="thoughtHole-inner-container col-sm-3">\
     <div class="panel panel-default">\
         <div class="panel-heading">\
-           <span class="thought-title">'+ hole.name + '</span>'+
-            '<span class="thought-action-container pull-right">' +    
-                '<button class="thought-view-btn">' +                 
+           <span class="thoughtHole-name">'+ hole.name + '</span>'+
+            '<span class="thoughtHole-action-container pull-right">' +    
+                '<button class="thoughtHole-view-btn">' +                 
                     '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>\
                 </button>\
-                <button class="thought-edit-btn">\
+                <button class="thoughtHole-edit-btn">\
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>\
                 </button>\
             </span>\
         </div>\
         <div class="panel-body">\
-        <span class="thought-body">'+hole.description+'</span>\
+        <span class="thoughtHole-description">'+hole.description+'</span>\
         </div>\
     </div>\
 </div>';
@@ -336,7 +340,7 @@ function cleanHoleModal(){
 
 function displayThoughtHoleEditModal(thoughtHoleId) {
     var thoughtHoleCntSel = $('.thoughtHole-inner-container[data-id="'+thoughtHoleId+'"]');
-    let name = thoughtHoleCntSel.find('.thoughtHole-name').text();
+    let name = thoughtHoleCntSel.find('.thoughtHole-name').attr('data-name');
     let description = thoughtHoleCntSel.find('.thoughtHole-description').text();
     let visibility = thoughtHoleCntSel.attr('data-visibility');
 
@@ -348,7 +352,7 @@ function displayThoughtHoleEditModal(thoughtHoleId) {
     $('#thoughtHole-edit-modal #thoughtHole-description').val(description);
     $('#thoughtHole-edit-modal #thoughtHole-visibility').val(visibility);
 
-    $('save-ThoughtHole-btn').text('Edit').unbind('click').
+    $('#save-thoughtHole-btn').text("Edit").unbind('click').
         click(function () {
             saveThoughtHoleChanges(thoughtHoleId);
         });
@@ -356,6 +360,7 @@ function displayThoughtHoleEditModal(thoughtHoleId) {
 }
 
 function saveThoughtHoleChanges(thoughtHoleId) {
+    console.log("sdfds");
     let inputsSelector = $('#thoughtHole-edit-modal input, #thoughtHole-edit-modal textarea, #thoughtHole-edit-modal select');
     var data = inputsSelector.serializeArray();
     let hasError = false;
@@ -382,26 +387,31 @@ function saveThoughtHoleChanges(thoughtHoleId) {
         dataJson[x.name] = x.value;
     });
 
+    console.log("ID = ", thoughtHoleId);
     console.log(data);
     $.ajax({
         type: "PUT",
         data: JSON.stringify(dataJson),
-        url: apiHost + 'ThoughtHoles/put/' + thoughtId,
+        url: apiHost + 'ThoughtHoles/put/'+thoughtHoleId,
         contentType: "application/json"
 
     }).done(function (res) {
         console.log('res', res);
+        console.log("here");
         toastr.success("The Thought have been modified!!!");
         $(".thoughtHole-edit-btn").unbind('click').click(function () {
-            let thoughtId = $(this).closest(".thoughtHole-inner-container").data("id");
-            displayThoughtEditModal(thoughtId);
+            console.log("HIHIHI");
+            let thId = $(this).closest(".thoughtHole-inner-container").data("id");
+            console.log("thId = ", thId);
+            displayThoughtHoleEditModal(thoughtHoleId);
         });
-        cleanModal();
+        cleanHoleModal();
         editThoughtHoleCard(res);
     }).error(function (jqXHR, textStatus, errorThrown) {
         toastr.error('There is an error in the server, please try again :(', 'Opps');
     });
 }
+
 
 function editThoughtHoleCard(thoughtHole) {
     $('.thoughtHole-inner-container[data-id="' + thoughtHole.id + '"] .thoughtHole-name').text(thoughtHole.name);
