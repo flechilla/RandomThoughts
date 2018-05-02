@@ -27,7 +27,6 @@ namespace RandomThoughts.Controllers.Api
         {
             var comments = this._commentApplicationService.ReadAll(ParentId);
 
-
             var commentsView = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentsIndexViewModel>>(comments);
 
             return commentsView;

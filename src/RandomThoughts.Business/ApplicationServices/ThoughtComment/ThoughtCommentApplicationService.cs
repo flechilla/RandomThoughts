@@ -25,25 +25,25 @@ namespace RandomThoughts.Business.ApplicationServices.ThoughtComment
 
         public IQueryable<Domain.Comment> ReadAll(int idparent)
         {
-            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+            var repository = (Repository as ICommentsRepository);
             return repository.ReadAll((idparent, Discriminator.Thought));
         }
 
         public IQueryable<Comment> ReadAll(int idparent, int Count)
         {
-            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+            var repository = (Repository as ICommentsRepository);
             return repository.ReadAll((idparent, Discriminator.Thought),Count);
         }
 
         public async Task<IQueryable<Comment>> ReadAllAsync(int idparent)
         {
-            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+            var repository = (Repository as ICommentsRepository);
             return await repository.ReadAllAsync((idparent, Discriminator.Thought));
         }
 
         public async Task<IQueryable<Comment>> ReadAllAsync(int idparent, int Count)
         {
-            var repository = (Repository as RandomThoughts.DataAccess.Repositories.Comments.ICommentsRepository);
+            var repository = (Repository as ICommentsRepository);
             return await repository.ReadAllAsync((idparent, Discriminator.Thought),Count);
         }
     }

@@ -12,7 +12,7 @@ using Dapper;
 
 namespace RandomThoughts.DataAccess.Repositories.Comments
 {
-    class CommentsRepository : BaseRepository<RandomThoughts.Domain.Comment, int>, ICommentsRepository
+    class CommentsRepository : BaseRepository<Comment, int>, ICommentsRepository
     {
         public CommentsRepository(RandomThoughtsDbContext dbContext) : base(dbContext)
         {
@@ -32,10 +32,9 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
                 using (var IDbConnection = new SqlConnection(conn))
                 {
                     IDbConnection.Open();
-                    var result = IDbConnection.Query("SELECT * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new { discriminator = filter.discriminator, ParentId = filter.idparent });
+                    var result = IDbConnection.Query<Comment>("SELECT * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new { discriminator = filter.discriminator, ParentId = filter.idparent });
                     IDbConnection.Close();
-                    //TODO: Solve problem
-                    return (result as IQueryable<Comment>);
+                    return result.AsQueryable();
                 }
             }
             catch (Exception e)
@@ -57,10 +56,9 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
                 using (var IDbConnection = new SqlConnection(conn))
                 {
                     IDbConnection.Open();
-                    var result = IDbConnection.Query("SELECT TOP(@count) * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new {count = count, discriminator = filter.discriminator, ParentId = filter.idparent });
+                    var result = IDbConnection.Query<Comment>("SELECT TOP(@count) * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new {count = count, discriminator = filter.discriminator, ParentId = filter.idparent });
                     IDbConnection.Close();
-                    //TODO: Solve problem
-                    return (result as IQueryable<Comment>);
+                    return result.AsQueryable();
                 }
             }
             catch (Exception e)
@@ -77,12 +75,11 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
                 using (var IDbConnection = new SqlConnection(conn))
                 {
                     IDbConnection.Open();
-                    var result = IDbConnection.Query("SELECT * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new { discriminator = filter.discriminator, ParentId = filter.idparent });
+                    var result = IDbConnection.Query<Comment>("SELECT * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new { discriminator = filter.discriminator, ParentId = filter.idparent });
                     IDbConnection.Close();
                     return await Task.Factory.StartNew(() =>
                     {
-                        //TODO: Solve problem
-                        return result as IQueryable<Comment>;
+                        return result.AsQueryable();
                     });
                 }
             }
@@ -100,12 +97,11 @@ namespace RandomThoughts.DataAccess.Repositories.Comments
                 using (var IDbConnection = new SqlConnection(conn))
                 {
                     IDbConnection.Open();
-                    var result = IDbConnection.Query("SELECT TOP(@count) * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new {count = count, discriminator = filter.discriminator, ParentId = filter.idparent });
+                    var result = IDbConnection.Query<Comment>("SELECT TOP(@count) * FROM Comments WHERE ParentId = @ParentId AND ParentDiscriminator = @discriminator ", new {count = count, discriminator = filter.discriminator, ParentId = filter.idparent });
                     IDbConnection.Close();
                     return await Task.Factory.StartNew(() =>
                     {
-                        //TODO: Solve problem
-                        return result as IQueryable<Comment>;
+                        return result.AsQueryable();
                     });
                 }
             }
