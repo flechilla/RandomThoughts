@@ -105,6 +105,15 @@ function displayThoughtDetails(data){
             $('#thought-display-modal .modalCommentTitle').append("<span class=\"thought-action-container pull-right\"><button data-id=\"" + res[i].id + "\" class=\"comment-view-btn\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span></button><button data-id=\"" + res[i].id + "\" class=\"comment-edit-btn\"><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></button></span></div>");
             $('#thought-display-modal .modalCommentTitle').append("<div class=\"modalComment-body\"><p>" + res[i].body + "</p></div>");
         }
+        $(".comment-view-btn").click(function () {
+            let commentId = $(this).data("id");
+            getComment(commentId);
+        });
+        $(".comment-edit-btn").click(function () {
+            let commentId = $(this).data("id");
+            console.log(commentId);
+            displayCommentEditModal(commentId);
+        });
         $('#thought-display-modal').modal('show');
 
         cleanCommentModal();
@@ -277,7 +286,8 @@ function cleanCommentModal() {
     $('#comment-edit-modal').modal('hide');
 }
 function getComment(commentId) {
-    $.get(apiHost + 'Comments/get/' + commentId, function (data) {
+    console.log(commentId);
+    $.get(apiHost + 'Thoughts/GetComment/' + commentId, function (data) {
         displayCommentsDetails(data);
     });
 }
@@ -328,8 +338,8 @@ function saveCommentChanges(commentId) {
     data.map(function (x) {
         dataJson[x.name] = x.value;
     });
-
     dataJson['ParentId'] = currentId;
+    dataJson['Id'] = commentId;
 
     console.log(data);
     $.ajax({

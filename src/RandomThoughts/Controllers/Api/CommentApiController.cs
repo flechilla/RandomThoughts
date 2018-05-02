@@ -11,6 +11,7 @@ using RandomThoughts.Domain;
 
 namespace RandomThoughts.Controllers.Api
 {
+    [Produces("application/json")]
     public abstract class CommentApiController : BaseApiController
     {
         private readonly ICommentsApplicationService _commentApplicationService;
@@ -23,6 +24,8 @@ namespace RandomThoughts.Controllers.Api
             _mapper = mapper;
             _commentApplicationService = commentApplicationService;
         }
+
+        [HttpGet]
         public IEnumerable<CommentsIndexViewModel> GetAllComments(int ParentId)
         {
             var comments = this._commentApplicationService.ReadAll(ParentId);
@@ -32,7 +35,8 @@ namespace RandomThoughts.Controllers.Api
             return commentsView;
         }
 
-        public IActionResult GetComments(int id)
+        [HttpGet("{id}")]
+        public IActionResult GetComment(int id)
         {
             var comment = _commentApplicationService.SingleOrDefault(id);
 
@@ -42,6 +46,7 @@ namespace RandomThoughts.Controllers.Api
             return NotFound(id);
         }
 
+        [HttpPost]
         public IActionResult PostComment([FromBody] CommentsCreateViewModel newComment)
         {
             newComment.ApplicationUserId = CurrentUserNickName;
@@ -67,6 +72,7 @@ namespace RandomThoughts.Controllers.Api
 
         }
 
+        [HttpPut("{id}")]
         public IActionResult PutComment(int id, [FromBody] CommentsEditViewModel commentsEdit)
         {
             if (id != commentsEdit.Id)
@@ -99,6 +105,7 @@ namespace RandomThoughts.Controllers.Api
             return Ok(originalComment);
         }
 
+        [HttpDelete]
         public IActionResult DeleteComment(int id)
         {
             if (!_commentApplicationService.Exists(id))
