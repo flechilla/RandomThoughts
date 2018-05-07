@@ -18,5 +18,6 @@ namespace RandomThoughts.Models.ThoughtViewModels
 
         public ThinkerMood Mood { get; set; }
 
+        public Visibility Visibility { get; set; }
     }
 }

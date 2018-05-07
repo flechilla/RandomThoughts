@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using RandomThoughts.Business.ApplicationServices.ThoughtHole;
 using RandomThoughts.DataAccess.Repositories.ThoughtHoles;
 using RandomThoughts.Domain;
+using RandomThoughts.Domain.Enums;
 using RandomThoughts.Models.ThoughtHoleViewModels;
 
 namespace RandomThoughts.Controllers.Api
@@ -25,20 +26,34 @@ namespace RandomThoughts.Controllers.Api
             _thoughtHolesApplicationService = thoughtHolesApplicationService;
             _mapper = mapper;
         }
+
         // GET: api/ThoughtHoles
+        /// <summary>
+        /// Get all <see cref="ThoughtHole"/> that are public.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ThoughtHoleIndexViewModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            var thoughtHoles = _thoughtHolesApplicationService.ReadAll(thoughtHole => thoughtHole.Visibility == Visibility.Public).ToList();
+
+            var thoughtHolesVM = _mapper.Map<IEnumerable<ThoughtHole>, IEnumerable<ThoughtHoleIndexViewModel>>(thoughtHoles);
+
+            return thoughtHolesVM;
         }
 
         // GET: api/ThoughtHoles/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var thoughtHole = _thoughtHolesApplicationService.SingleOrDefault(id);
+
+            if (thoughtHole != null)
+                return Ok(_mapper.Map<ThoughtHole, ThoughtHoleIndexViewModel>(thoughtHole));
+
+            return NotFound(id);
         }
-        
+
         // POST: api/ThoughtHoles
         [HttpPost]
         public IActionResult Post([FromBody]ThoughtHoleCreateViewModel newThoughtHole)
@@ -69,8 +84,38 @@ namespace RandomThoughts.Controllers.Api
         
         // PUT: api/ThoughtHoles/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]ThoughtHoleEditViewModel editedThoughtHole)
         {
+            if (id != editedThoughtHole.Id)
+            {
+                ModelState.AddModelError("Id", "The given Id of the edited model doesn't match with the route Id");
+                return BadRequest(ModelState);
+            }
+
+            if (!_thoughtHolesApplicationService.Exists(id))
+                return NotFound(id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var originalThoughtHole = _thoughtHolesApplicationService.SingleOrDefault(id);
+            originalThoughtHole.Name = editedThoughtHole.Name;
+            originalThoughtHole.Description = editedThoughtHole.Description;
+            originalThoughtHole.Visibility = editedThoughtHole.Visibility;
+
+            originalThoughtHole.ModifiedBy = this.CurrentUserId;
+
+            _thoughtHolesApplicationService.Update(originalThoughtHole);
+
+            try
+            {
+                _thoughtHolesApplicationService.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
+            return Ok(originalThoughtHole);
         }
         
         // DELETE: api/ApiWithActions/5

@@ -11,6 +11,7 @@ using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtHoleViewModels;
 using RandomThoughts.Models.ThoughtViewModels;
 using RandomThoughts.Business.ApplicationServices.ThoughtHole;
+using RandomThoughts.Domain.Enums;
 
 namespace RandomThoughts.Controllers
 {
@@ -32,7 +33,7 @@ namespace RandomThoughts.Controllers
         {
             ViewData["Title"] = "Public Holes";//TODO: Send the amount of thoughts related with each hole
             var thoughtHolesVM = _thoughtHolesAppService.
-                ReadAll(_ => true).
+                ReadAll(thoughHole => thoughHole.Visibility == Visibility.Public).
                 Select(th => new ThoughtHoleIndexViewModel
                 {
                     Name = th.Name,
@@ -40,7 +41,8 @@ namespace RandomThoughts.Controllers
                     AmountOfThought = th.Thoughts.Count(),
                     Likes = th.Likes,
                     Views = th.Views,
-                    Id = th.Id
+                    Id = th.Id,
+                    Visibility = th.Visibility
                 }).
                 ToList();
 
@@ -75,9 +77,7 @@ namespace RandomThoughts.Controllers
         {
             var holeName = _thoughtHolesAppService.SingleOrDefault(holeId).Name;
             return RedirectToAction("HoleThoughts", "Thoughts", new { holeId = holeId, holeName });
-        
         }
-
 
     }
 }

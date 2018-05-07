@@ -58,6 +58,11 @@ namespace RandomThoughts.Domain
         public int Views { get; set; }
 
         /// <summary>
+        /// Gets or sets the visibility for the thoughts
+        /// </summary>
+        public Visibility Visibility { get; set; }
+        
+        /// <summary>
         ///     Gets or sets the <see cref="Comment"/>
         ///     related to the <see cref="Thought"/>
         /// </summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using RandomThoughts.Domain.Base;
+using RandomThoughts.Domain.Enums;
 
 namespace RandomThoughts.Domain
 {
@@ -43,5 +44,10 @@ namespace RandomThoughts.Domain
         ///     Gets or sets the amount of views of the current Hole.
         /// </summary>
         public int Views { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visibility for the ThoughtHole
+        /// </summary>
+        public Visibility Visibility { get; set; }
     }
 }

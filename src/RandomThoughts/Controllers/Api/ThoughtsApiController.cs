@@ -106,6 +106,7 @@ namespace RandomThoughts.Controllers.Api
             originalThought.Title = editedThought.Title;
             originalThought.Body = editedThought.Body;
             originalThought.Mood = editedThought.Mood;
+            originalThought.Visibility = editedThought.Visibility;
 
             originalThought.ModifiedBy = this.CurrentUserId;
 

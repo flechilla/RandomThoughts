@@ -21,7 +21,12 @@
 
     @foreach (var thought in thoughts)
     {
+<<<<<<< HEAD
+       
+        <div data-mood="@((int)thought.Mood)" data-id="@(thought.Id)" class="thought-inner-container col-sm-3">
+=======
         <div data-mood="@((int)thought.Mood)" data-visibility="@((int)thought.Visibility)" data-id="@(thought.Id)" class="thought-inner-container col-sm-3">
+>>>>>>> feature/implementThoughtVisibility
             <div class="panel panel-default">
                 <div class="panel-heading">
                    <span class="thought-title"> @thought.Title</span>
@@ -35,7 +40,8 @@
                     </span>
                 </div>
                 <div class="panel-body">
-                <span class="thought-body">@thought.Body</span>
+                <span  class="thought-body">@thought.Body</span>
+                    
                 </div>
             </div>
         </div>
