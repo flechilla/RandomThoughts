@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.Business.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomThoughts.Test.Common", "tests\RandomThoughts.Test.Common\RandomThoughts.Test.Common.csproj", "{AC81C558-0010-4322-B906-BA59A4177FCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedEngine", "libraries\SeedEngine\SeedEngine.csproj", "{F6302FD7-89CD-4016-8AA5-5A1808E03926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeedEngine", "libraries\SeedEngine\SeedEngine.csproj", "{F6302FD7-89CD-4016-8AA5-5A1808E03926}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityClient", "src\IdentityClient\IdentityClient.csproj", "{A9E07E5E-2E54-4559-9451-5729926EB0AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6302FD7-89CD-4016-8AA5-5A1808E03926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E07E5E-2E54-4559-9451-5729926EB0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E07E5E-2E54-4559-9451-5729926EB0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E07E5E-2E54-4559-9451-5729926EB0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E07E5E-2E54-4559-9451-5729926EB0AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
