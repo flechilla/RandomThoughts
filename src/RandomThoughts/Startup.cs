@@ -77,6 +77,11 @@ namespace RandomThoughts
                 c.SwaggerDoc("v1", new Info { Title = "RandomThought Api", Version = "v1" });
             });
 
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(IdentityConfig.GetApiResources())
+                .AddInMemoryClients(IdentityConfig.GetClients());
+
 
         }
 
@@ -104,6 +109,8 @@ namespace RandomThoughts
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {
