@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libraries\SeedEngine\SeedEngine.csproj" />
     <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
   </ItemGroup>
 
@@ -23,6 +22,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0-preview1-final" />
     <PackageReference Include="NLipsum" Version="1.1.0" />
+    <PackageReference Include="SmartSeeder" Version="0.0.1" />
 
   </ItemGroup>
     <ItemGroup>
