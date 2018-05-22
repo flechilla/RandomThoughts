@@ -20,7 +20,7 @@
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.1-dev-00771" />
-    <PackageReference Include="SmartSeeder" Version="0.0.1" />
+    <PackageReference Include="SmartSeeder" Version="1.0.0-rc1-beta" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
 
@@ -33,10 +33,21 @@
     <ProjectReference Include="..\RandomThoughts.Business\RandomThoughts.Business.csproj" />
     <ProjectReference Include="..\RandomThoughts.DataAccess\RandomThoughts.DataAccess.csproj" />
     <ProjectReference Include="..\RandomThoughts.Domain\RandomThoughts.Domain.csproj" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0-preview1-final" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Views\Shared\Thoughts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SeedEngine">
+    </Reference>
   </ItemGroup>
 
 </Project>

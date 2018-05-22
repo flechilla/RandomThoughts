@@ -3,25 +3,22 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RandomThoughts.DataAccess.Contexts;
-using RandomThoughts.Domain.Enums;
 
-namespace RandomThoughts.DataAccess.Migrations
+namespace RandomThoughts.Migrations
 {
     [DbContext(typeof(RandomThoughtsDbContext))]
-    [Migration("20180417193240_AddColumnsToThoughtsTable")]
-    partial class AddColumnsToThoughtsTable
+    [Migration("20180522155851_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-preview1-28290")
+                .HasAnnotation("ProductVersion", "2.1.0-rc1-32029")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -51,7 +48,8 @@ namespace RandomThoughts.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -126,7 +124,8 @@ namespace RandomThoughts.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -188,10 +187,48 @@ namespace RandomThoughts.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RandomThoughts.Domain.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
+
+                    b.Property<string>("Body")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<int>("Dislikes");
+
+                    b.Property<int>("Likes");
+
+                    b.Property<DateTime>("ModifiedAt");
+
+                    b.Property<string>("ModifiedBy");
+
+                    b.Property<int>("ParentDiscriminator");
+
+                    b.Property<int>("ParentId");
+
+                    b.Property<int?>("ThoughtId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThoughtId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("RandomThoughts.Domain.Thought", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired();
@@ -211,12 +248,14 @@ namespace RandomThoughts.DataAccess.Migrations
 
                     b.Property<int>("Mood");
 
-                    b.Property<int?>("ThoughtHoleId");
+                    b.Property<int>("ThoughtHoleId");
 
                     b.Property<string>("Title")
                         .IsRequired();
 
                     b.Property<int>("Views");
+
+                    b.Property<int>("Visibility");
 
                     b.HasKey("Id");
 
@@ -230,7 +269,8 @@ namespace RandomThoughts.DataAccess.Migrations
             modelBuilder.Entity("RandomThoughts.Domain.ThoughtHole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -247,6 +287,8 @@ namespace RandomThoughts.DataAccess.Migrations
                     b.Property<string>("Name");
 
                     b.Property<int>("Views");
+
+                    b.Property<int>("Visibility");
 
                     b.HasKey("Id");
 
@@ -309,6 +351,13 @@ namespace RandomThoughts.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("RandomThoughts.Domain.Comment", b =>
+                {
+                    b.HasOne("RandomThoughts.Domain.Thought")
+                        .WithMany("Comments")
+                        .HasForeignKey("ThoughtId");
+                });
+
             modelBuilder.Entity("RandomThoughts.Domain.Thought", b =>
                 {
                     b.HasOne("RandomThoughts.Domain.ApplicationUser", "ApplicationUser")
@@ -318,7 +367,8 @@ namespace RandomThoughts.DataAccess.Migrations
 
                     b.HasOne("RandomThoughts.Domain.ThoughtHole", "ThoughtHole")
                         .WithMany("Thoughts")
-                        .HasForeignKey("ThoughtHoleId");
+                        .HasForeignKey("ThoughtHoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

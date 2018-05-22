@@ -18,8 +18,6 @@ using AutoMapper;
 using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
 using RandomThoughts.DataAccess.Seeds;
-using SeedEngine;
-using SeedEngine.Core;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
@@ -44,8 +42,11 @@ namespace RandomThoughts
             var mapper = autoMapperConfiguration.CreateMapper();
             services.AddSingleton(mapper);
 
+            var migrationAssembly = "RandomThoughts";
+
             services.AddDbContext<RandomThoughtsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                builder => builder.MigrationsAssembly(migrationAssembly) ));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<RandomThoughtsDbContext>()
@@ -93,8 +94,6 @@ namespace RandomThoughts
                 //in the ConfigureServices, this will be possible ;)
                // var context = app.ApplicationServices.GetRequiredService<RandomThoughtsDbContext>();
 
-                //apply all the seeds
-                app.EnsureSeedData<RandomThoughtsDbContext>();
             }
             else
             {
