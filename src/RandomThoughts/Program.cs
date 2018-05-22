@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RandomThoughts.DataAccess.Contexts;
 using Serilog;
 using Serilog.Events;
+using SeedEngine.Core;
 
 namespace RandomThoughts
 {
@@ -27,7 +30,14 @@ namespace RandomThoughts
             try
             {
                 Log.Information("Starting web host");
-                BuildWebHost(args).Run();
+                var host = BuildWebHost(args);
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    Seeder.EnsureSeedData<RandomThoughtsDbContext>(scope);
+                }
+
+                host.Run();
                 return 0;
             }
             catch (Exception ex)
