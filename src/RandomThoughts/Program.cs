@@ -30,14 +30,11 @@ namespace RandomThoughts
             try
             {
                 Log.Information("Starting web host");
-                var host = BuildWebHost(args);
 
-                using (var scope = host.Services.CreateScope())
-                {
-                    Seeder.EnsureSeedData<RandomThoughtsDbContext>(scope);
-                }
+                BuildWebHost(args)
+                    .EnsureSeedData<RandomThoughtsDbContext>()
+                    .Run();
 
-                host.Run();
                 return 0;
             }
             catch (Exception ex)
