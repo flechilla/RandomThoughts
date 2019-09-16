@@ -8,6 +8,7 @@ import { HeadComponent } from '@src/app/head/head.component';
 import { LeftPanelComponent } from '@src/app/left-panel/left-panel.component';
 import { FooterComponent } from '@src/app/footer/footer.component';
 import { LoginComponent } from '@src/app/login/login.component';
+import { ThoughtCardComponent } from '@src/app/thought-card/thought-card.component';
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -24,6 +25,7 @@ import { LoginComponent } from '@src/app/login/login.component';
     LeftPanelComponent,
     FooterComponent,
     LoginComponent,
+    ThoughtCardComponent,
   ],
   imports: [
     NativeScriptModule,
