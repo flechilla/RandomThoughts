@@ -9,7 +9,6 @@ import { LeftPanelComponent } from "@src/app/left-panel/left-panel.component";
 import { FooterComponent } from "@src/app/footer/footer.component";
 import { LoginComponent } from "@src/app/login/login.component";
 import { SharedModule } from "@src/app/shared/shared.module";
-import { ThoughtHoleWallComponent } from "@src/app/thought-hole-wall/thought-hole-wall.component";
 
 @NgModule({
   declarations: [
@@ -17,8 +16,7 @@ import { ThoughtHoleWallComponent } from "@src/app/thought-hole-wall/thought-hol
     HeadComponent,
     LeftPanelComponent,
     FooterComponent,
-    LoginComponent,
-    ThoughtHoleWallComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
