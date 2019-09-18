@@ -8,7 +8,7 @@ import { HeadComponent } from '@src/app/head/head.component';
 import { LeftPanelComponent } from '@src/app/left-panel/left-panel.component';
 import { FooterComponent } from '@src/app/footer/footer.component';
 import { LoginComponent } from '@src/app/login/login.component';
-import { ThoughtCardComponent } from '@src/app/thought-card/thought-card.component';
+import { ThoughtCardComponent } from '@src/app/thought/thought-card/thought-card.component.and';
 import { ToughtHoleWallComponent } from '@src/app/tought-hole-wall/tought-hole-wall.component';
 import { ThoughtHoleWallComponent } from '@src/app/thought-hole-wall/thought-hole-wall.component';
 

@@ -8,7 +8,6 @@ import { HeadComponent } from "@src/app/head/head.component";
 import { LeftPanelComponent } from "@src/app/left-panel/left-panel.component";
 import { FooterComponent } from "@src/app/footer/footer.component";
 import { LoginComponent } from "@src/app/login/login.component";
-import { ThoughtCardComponent } from "@src/app/thought-card/thought-card.component";
 import { SharedModule } from "@src/app/shared/shared.module";
 import { ThoughtHoleWallComponent } from "@src/app/thought-hole-wall/thought-hole-wall.component";
 
@@ -19,7 +18,6 @@ import { ThoughtHoleWallComponent } from "@src/app/thought-hole-wall/thought-hol
     LeftPanelComponent,
     FooterComponent,
     LoginComponent,
-    ThoughtCardComponent,
     ThoughtHoleWallComponent
   ],
   imports: [
