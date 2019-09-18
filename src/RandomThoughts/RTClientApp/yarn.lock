@@ -106,31 +106,12 @@
     rxjs "6.4.0"
     source-map "0.7.3"
 
-"@angular-devkit/core@8.2.2", "@angular-devkit/core@~8.2.0":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.2.2.tgz#f7239b6fca785c5a85fbe7684f807b8fa41311d4"
-  integrity sha512-qA1lK/OQhNptCxoEGbTryn6yeFS1F/e/EiUTwgU/j4DkBwPyYGE8iqWBd/cgI9AVqQaRSLLhVWXtDPxoNL0TKg==
-  dependencies:
-    ajv "6.10.2"
-    fast-json-stable-stringify "2.0.0"
-    magic-string "0.25.3"
-    rxjs "6.4.0"
-    source-map "0.7.3"
-
 "@angular-devkit/schematics@8.1.3":
   version "8.1.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-8.1.3.tgz#09d6e9d054ba09795325e81c35f2e0a0a56c862b"
   integrity sha512-nz3b0uXu3w3PPLq4D+ersjeX/AyW3Amq7UwXa8lZFoJ0oc8cPjXW+h4D56rNw2GbOGZX7aaNe/Cxd9SBt0wF2A==
   dependencies:
     "@angular-devkit/core" "8.1.3"
-    rxjs "6.4.0"
-
-"@angular-devkit/schematics@~8.2.0":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-8.2.2.tgz#45699cf3df6b3330f22e657390fe3a0e5ac1f9dc"
-  integrity sha512-wAbP+IriWgTSLR4prezuFlLbxMZMGXiN0FNH2i/v8MfxNXCBiEvD4YtD/8s8YRsZs+IW7sp3bErSD/EIlS4DyQ==
-  dependencies:
-    "@angular-devkit/core" "8.2.2"
     rxjs "6.4.0"
 
 "@angular/animations@^8.2.6":
@@ -338,17 +319,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@nativescript/schematics@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@nativescript/schematics/-/schematics-0.7.1.tgz#785ed888423307d0ef2872739c04eedc6d403ec2"
-  integrity sha512-HyLay/AvzTc1ks4FX9zh78e+yk56Pf3kp8VbsCW8FmwFseT9rnRlR9VNk70cVaw8uscGm2ve0pdFQypinX1w3Q==
-  dependencies:
-    "@angular-devkit/core" "~8.2.0"
-    "@angular-devkit/schematics" "~8.2.0"
-    "@nativescript/tslint-rules" "~0.0.3"
-    "@phenomnomnominal/tsquery" "^3.0.0"
-
-"@nativescript/tslint-rules@~0.0.2", "@nativescript/tslint-rules@~0.0.3":
+"@nativescript/tslint-rules@~0.0.2":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@nativescript/tslint-rules/-/tslint-rules-0.0.4.tgz#96bc16be4c20310c4ce6b3c8c84c373c52656ac3"
   integrity sha512-GqnCjOriYmYplVPiC3X0MmjTfuj4KGC6ivELtLW839si6aky2FYaoY1NSVs2jRmKlTDYcY/ezQezeoG+OS5nYQ==
@@ -366,7 +337,7 @@
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
 
-"@phenomnomnominal/tsquery@^3.0.0", "@phenomnomnominal/tsquery@~3.0.0":
+"@phenomnomnominal/tsquery@~3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@phenomnomnominal/tsquery/-/tsquery-3.0.0.tgz#6f2f4dbf6304ff52b12cc7a5b979f20c3794a22a"
   integrity sha512-SW8lKitBHWJ9fAYkJ9kJivuctwNYCh3BUxLdH0+XiR1GPBiu+7qiZzh8p8jqlj1LgVC1TbvfNFroaEsmYlL8Iw==
@@ -884,16 +855,6 @@ ajv@6.10.0:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@6.10.2, ajv@^6.1.0, ajv@^6.5.5:
-  version "6.10.2"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"
-  integrity sha512-TXtUUEYHuaTEbLZWIKUr5pmBuhDLy+8KYtPYdcV8qC+pOZL+NKqYwvWSRrVXHn+ZmRRAu8vJTAznH7Oag6RVRw==
-  dependencies:
-    fast-deep-equal "^2.0.1"
-    fast-json-stable-stringify "^2.0.0"
-    json-schema-traverse "^0.4.1"
-    uri-js "^4.2.2"
-
 ajv@^5.0.0:
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
@@ -903,6 +864,16 @@ ajv@^5.0.0:
     fast-deep-equal "^1.0.0"
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
+
+ajv@^6.1.0, ajv@^6.5.5:
+  version "6.10.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"
+  integrity sha512-TXtUUEYHuaTEbLZWIKUr5pmBuhDLy+8KYtPYdcV8qC+pOZL+NKqYwvWSRrVXHn+ZmRRAu8vJTAznH7Oag6RVRw==
+  dependencies:
+    fast-deep-equal "^2.0.1"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.4.1"
+    uri-js "^4.2.2"
 
 amdefine@>=0.0.4:
   version "1.0.1"
