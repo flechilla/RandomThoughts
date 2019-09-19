@@ -78,6 +78,8 @@ namespace RandomThoughts
                 c.SwaggerDoc("v1", new Info { Title = "RandomThought Api", Version = "v1" });
             });
 
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
 
         }
 
