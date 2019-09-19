@@ -123,6 +123,5 @@
   },
   "defaultProject": "RTClientApp",
   "cli": {
-    "defaultCollection": "@nativescript/schematics"
   }
 }
