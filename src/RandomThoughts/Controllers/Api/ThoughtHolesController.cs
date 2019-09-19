@@ -33,8 +33,24 @@ namespace RandomThoughts.Controllers.Api
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<ThoughtHoleIndexViewModel> Get()
+        public IEnumerable<ThoughtHoleIndexViewModel> GetAllPublic()
         {
+            var thoughtHoles = _thoughtHolesApplicationService.ReadAll(thoughtHole => thoughtHole.Visibility == Visibility.Public).ToList();
+
+            var thoughtHolesVM = _mapper.Map<IEnumerable<ThoughtHole>, IEnumerable<ThoughtHoleIndexViewModel>>(thoughtHoles);
+
+            return thoughtHolesVM;
+        }
+
+          // GET: api/ThoughtHoles
+        /// <summary>
+        /// Get all <see cref="ThoughtHole"/> that are public.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<ThoughtHoleIndexViewModel> GetAllPersonalHoles()
+        {
+            // TODO: Get the user ID and filter the Holes that belongs to the user
             var thoughtHoles = _thoughtHolesApplicationService.ReadAll(thoughtHole => thoughtHole.Visibility == Visibility.Public).ToList();
 
             var thoughtHolesVM = _mapper.Map<IEnumerable<ThoughtHole>, IEnumerable<ThoughtHoleIndexViewModel>>(thoughtHoles);
