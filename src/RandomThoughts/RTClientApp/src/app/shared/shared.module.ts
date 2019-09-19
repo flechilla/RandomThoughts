@@ -1,7 +1,7 @@
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { NgModule } from "@angular/core";
-import { MatInputModule, MatFormFieldModule, MatSidenavModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSidenavModule, MatCardModule, MatGridListModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -10,6 +10,8 @@ import { MatInputModule, MatFormFieldModule, MatSidenavModule } from '@angular/m
     MatInputModule,
     MatFormFieldModule,
     MatSidenavModule,
+    MatCardModule,
+    MatGridListModule,
   ],
   exports: [
     MatButtonModule,
@@ -17,6 +19,8 @@ import { MatInputModule, MatFormFieldModule, MatSidenavModule } from '@angular/m
     MatInputModule,
     MatFormFieldModule,
     MatSidenavModule,
+    MatCardModule,
+    MatGridListModule,
   ]
 })
 export class SharedModule {}
