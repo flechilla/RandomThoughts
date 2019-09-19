@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThoughtHoleWallComponent } from './thought-hole-wall/thought-hole-wall.component';
 import { RouterModule } from '@angular/router';
 import { ThoughtHoleRoutes } from './thoght-hole.routes';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../common/shared/shared.module';
 import { MatGridListModule } from '@angular/material';
 
 

@@ -8,10 +8,8 @@ import { HeadComponent } from "@src/app/head/head.component";
 import { LeftPanelComponent } from "@src/app/left-panel/left-panel.component";
 import { FooterComponent } from "@src/app/footer/footer.component";
 import { LoginComponent } from "@src/app/login/login.component";
-import { SharedModule } from "@src/app/shared/shared.module";
 import { ThoughtModule } from './thought/thought.module';
 import { ThoughtHoleModule } from './thought-hole/thought-hole.module';
-import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [

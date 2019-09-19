@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThoughtCardComponent } from './thought-card/thought-card.component';
 import { MatCardModule } from '@angular/material';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../common/shared/shared.module';
 
 
 
