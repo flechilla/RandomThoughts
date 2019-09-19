@@ -15,7 +15,9 @@ using RandomThoughts.Domain;
 using RandomThoughts.Models;
 using RandomThoughts.Services;
 using AutoMapper;
+using RandomThoughts.Business.Extensions;
 using RandomThoughts.Config;
+using RandomThoughts.DataAccess.Seeds;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomThoughts
@@ -40,18 +42,32 @@ namespace RandomThoughts
             var mapper = autoMapperConfiguration.CreateMapper();
             services.AddSingleton(mapper);
 
+            var migrationAssembly = "RandomThoughts";
+
             services.AddDbContext<RandomThoughtsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                builder => builder.MigrationsAssembly(migrationAssembly) ));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<RandomThoughtsDbContext>()
                 .AddDefaultTokenProviders();
+
+            //services.AddTransient<DbContextOptions<RandomThoughtsDbContext>>(_ =>
+            //{
+            //    var optionBuilder =  new DbContextOptionsBuilder<RandomThoughtsDbContext>();
+            //    optionBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            //    return optionBuilder.Options;
+            //});
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
             //adds the configuration of the services for the DataLayer
             services.AddDataAccessServices();
+
+            //adds the configuration of the services for the BusinessLayer
+            services.AddBusinessServices();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -61,6 +77,8 @@ namespace RandomThoughts
             {
                 c.SwaggerDoc("v1", new Info { Title = "RandomThought Api", Version = "v1" });
             });
+
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
 
         }
@@ -73,6 +91,11 @@ namespace RandomThoughts
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
+
+                //TODO: have to try to resolve this in the library. Maybe is the SeedEnginge is configured
+                //in the ConfigureServices, this will be possible ;)
+               // var context = app.ApplicationServices.GetRequiredService<RandomThoughtsDbContext>();
+
             }
             else
             {

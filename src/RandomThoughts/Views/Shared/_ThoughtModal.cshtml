@@ -10,6 +10,12 @@
     {
         ViewData["HoleId"] = 1;
     }
+
+    Dictionary<int, string> visibility = new Dictionary<int, string>();
+    foreach (Visibility item in Enum.GetValues(typeof(Visibility)))
+    {
+        visibility.Add((int)item, item.ToString());
+    }
 }
 
 <div id="thought-display-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -22,9 +28,19 @@
       <div class="modal-body">
         <p>One fine body&hellip;</p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+      <h1>Comments</h1>
+      <div id="comment-details" class="modalCommentTitle">
+        <h5></h5>
+        <span class="thought-action-container pull-right">
+            
+        </span>
+       </div>
+        <div class="modalComment-body">
+            <p></p>
+        </div>
+        <div id="thought-inner-container" class="modal-footer">
+            <button id="add-new-comment" type="button" class="btn btn-success pull-right">Create Comment</button>
+        </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -60,6 +76,15 @@
                   }
               </select>
           </div>
+          <div class="form-group">
+              <label for="thought-body">Visibility</label>
+              <select name="Visibility" id="thought-visibility" class="form-control">
+                  @foreach (var item in visibility)
+                  {
+                      <option value="@item.Key">@item.Value</option>
+                  }
+              </select>
+          </div>
       </div>
       <div class="modal-footer">
         <button id="save-thought-btn" type="button" class="btn btn-success">Save</button>
@@ -68,3 +93,4 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+

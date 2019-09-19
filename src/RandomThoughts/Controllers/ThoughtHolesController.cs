@@ -10,31 +10,30 @@ using RandomThoughts.DataAccess.Repositories.Thoughts;
 using RandomThoughts.Domain;
 using RandomThoughts.Models.ThoughtHoleViewModels;
 using RandomThoughts.Models.ThoughtViewModels;
+using RandomThoughts.Business.ApplicationServices.ThoughtHole;
+using RandomThoughts.Domain.Enums;
 
 namespace RandomThoughts.Controllers
 {
     public class ThoughtHolesController : BaseController
     {
-        private readonly IThoughtHolesRepository _thoughtHolesRepository;
+        private readonly IThoughtHolesApplicationService _thoughtHolesAppService;
         private readonly IMapper _mapper;
-        private readonly IThoughtsRepository _thoughtsRepository;
 
         public ThoughtHolesController(IHttpContextAccessor httpContextAccessor,
-            IThoughtHolesRepository thoughtHolesRepository,
-            IMapper mapper,
-            IThoughtsRepository thoughtsRepository) : base(httpContextAccessor)
+            IThoughtHolesApplicationService thoughtHolesAppService,
+            IMapper mapper) : base(httpContextAccessor)
         {
-            _thoughtHolesRepository = thoughtHolesRepository;
+            _thoughtHolesAppService = thoughtHolesAppService;
             _mapper = mapper;
-            _thoughtsRepository = thoughtsRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             ViewData["Title"] = "Public Holes";//TODO: Send the amount of thoughts related with each hole
-            var thoughtHolesVM = _thoughtHolesRepository.
-                ReadAll(_ => true).
+            var thoughtHolesVM = _thoughtHolesAppService.
+                ReadAll(thoughHole => thoughHole.Visibility == Visibility.Public).
                 Select(th => new ThoughtHoleIndexViewModel
                 {
                     Name = th.Name,
@@ -42,7 +41,8 @@ namespace RandomThoughts.Controllers
                     AmountOfThought = th.Thoughts.Count(),
                     Likes = th.Likes,
                     Views = th.Views,
-                    Id = th.Id
+                    Id = th.Id,
+                    Visibility = th.Visibility
                 }).
                 ToList();
 
@@ -53,7 +53,7 @@ namespace RandomThoughts.Controllers
         public IActionResult MyHoles()
         {
             ViewData["Title"] = "My Holes";//TODO: Send the amount of thoughts related with each hole
-            var thoughtHolesVM = _thoughtHolesRepository.
+            var thoughtHolesVM = _thoughtHolesAppService.
                 ReadAll(th => th.CreatedBy == this.CurrentUserId).
                 Select(th => new ThoughtHoleIndexViewModel
                 {
@@ -75,11 +75,9 @@ namespace RandomThoughts.Controllers
         /// <returns></returns>
         public IActionResult HoleThoughts(int holeId)
         {
-            var holeName = _thoughtHolesRepository.SingleOrDefault(holeId).Name;
+            var holeName = _thoughtHolesAppService.SingleOrDefault(holeId).Name;
             return RedirectToAction("HoleThoughts", "Thoughts", new { holeId = holeId, holeName });
-        
         }
-
 
     }
 }

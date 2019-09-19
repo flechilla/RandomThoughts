@@ -14,5 +14,6 @@ namespace RandomThoughts.Domain
         ///     related to the User
         /// </summary>
         public ICollection<Thought> Thoughts { get; set; }
+
     }
 }
