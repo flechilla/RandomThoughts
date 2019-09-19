@@ -7,6 +7,10 @@ export const AppRoutes: Routes = [
         redirectTo: 'my-thoughts'
     },
     {
+        path: '**',
+        redirectTo: 'my-thoughts'
+    },
+    {
         path: 'my-thoughts',
         loadChildren: './thought-hole/thought-hole.module#ThoughtHoleModule'
     }
