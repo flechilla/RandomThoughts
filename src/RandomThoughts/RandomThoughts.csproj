@@ -6,6 +6,13 @@
     <TypeScriptToolsVersion>3.5</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="RTClientApp\**" />
+    <Content Remove="RTClientApp\**" />
+    <EmbeddedResource Remove="RTClientApp\**" />
+    <None Remove="RTClientApp\**" />
+  </ItemGroup>
+
 
 
 
