@@ -10,11 +10,26 @@ export const XsrfPostUrl = `${AppDomainUrl}/values`;
 //Thought Holes
 export const GetAllPublicHoles = `${AppDomainUrl}/ThoughtHoles/GetAllPublic`;
 export const GetAllPersonalHoles = `${AppDomainUrl}/ThoughtHoles/GetAllPersonalHoles`;
-// Needs and Id in the last segment of the URL
+// Needs an Id in the last segment of the URL
 export const GetHoleById = `${AppDomainUrl}/ThoughtHoles/Get`;
 export const PostHole = `${AppDomainUrl}/ThoughtHoles/Post`;
-// Needs and Id in the last segment of the URL
+// Needs an Id in the last segment of the URL
 export const PutHole = `${AppDomainUrl}/ThoughtHoles/Put`;
-// Needs and Id in the last segment of the URL
+// Needs an Id in the last segment of the URL
 export const DeleteHole = `${AppDomainUrl}/ThoughtHoles/Delete`;
 
+// Thoughts
+export const GetUserThoughts = `${AppDomainUrl}/Thoughts/GetUserThoughts`;
+export const GetThought = `${AppDomainUrl}/Thoughts/GetThought`;
+export const PostThought = `${AppDomainUrl}/Thoughts/PostThought`;
+// Needs the THoughtId Id in the last segment of the URL
+export const PutThought = `${AppDomainUrl}/Thoughts/PutThought`;
+// Needs the THoughtId Id in the last segment of the URL
+export const DeleteThought = `${AppDomainUrl}/Thoughts/DeleteThought`;
+// Needs the THoughtId Id in the last segment of the URL
+export const GetAllComments = `${AppDomainUrl}/Thoughts/GetAllComments`;
+// Needs the THoughtId Id in the last segment of the URL
+export const PutComment = `${AppDomainUrl}/Thoughts/PutComment`;
+// Needs the THoughtId Id in the last segment of the URL
+export const DeleteComment = `${AppDomainUrl}/Thoughts/DeleteComment`;
+export const PostComment = `${AppDomainUrl}/Thoughts/PostComment`;
